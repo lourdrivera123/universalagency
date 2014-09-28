@@ -29,8 +29,6 @@ class InterviewRepository {
 		$applicant_notification = $this->notification->notify_applicant_for_interview_today($interview->event_date_time, $interview->applicant_id);
 
 		return $interview;
-		
 	}
-
 
 }
