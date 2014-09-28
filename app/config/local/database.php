@@ -9,7 +9,7 @@ return [
 			'host'      => 'localhost',
 			'database'  => 'universal_agency',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'universal123',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
