@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'universalagency.mysql.eu1.frbit.com',
-			'database'  => 'universalagency',
-			'username'  => 'universalagency',
-			'password'  => 'ewYSEWJJH7C3OOZC',
+			'host'      => 'localhost',
+			'database'  => 'universal_agency',
+			'username'  => 'root',
+			'password'  => 'universal123',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
