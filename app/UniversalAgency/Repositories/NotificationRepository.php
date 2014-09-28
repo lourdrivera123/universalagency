@@ -217,7 +217,7 @@ class NotificationRepository {
 		$notification->from_userid = getAdminId();
 		$notification->to_userid = $to_userid;
 		$notification->subject = 'You have an interview';
-		$notification->message = 'Important reminder! You have a scheduled interview on '.$timestamp.'. Our Staff will call you so please be present.';
+		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Our Staff will call you so please be present.';
 		$notification->save();
 
 		return $notification;
@@ -230,7 +230,7 @@ class NotificationRepository {
 		$notification->from_userid = getAdminId();
 		$notification->to_userid = $to_userid;
 		$notification->subject = 'You have an interview';
-		$notification->message = 'Important reminder! You have a scheduled interview on '.$timestamp.'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant.';
+		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant.';
 		$notification->save();
 
 		return $notification;
@@ -243,7 +243,7 @@ class NotificationRepository {
 		$notification->from_userid = getAdminId();
 		$notification->to_userid = $to_userid;
 		$notification->subject = 'You have an interview';
-		$notification->message = 'Important reminder! You have a scheduled interview on '.$timestamp.'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant.';
+		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant.';
 		$notification->save();
 
 		return $notification;
@@ -256,7 +256,7 @@ class NotificationRepository {
 		$notification->from_userid = getAdminId();
 		$notification->to_userid = $to_userid;
 		$notification->subject = 'You have an interview';
-		$notification->message = 'Important reminder! You have a scheduled interview on '.$timestamp.'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant.';
+		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant.';
 		$notification->save();
 
 		return $notification;
