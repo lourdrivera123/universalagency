@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.gmail.com',
+	'host' => 'newmexico.pw',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'universalagencynotification@gmail.com',
+	'username' => 'smtp@newmexico.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => 'universal123',
+	'password' => 'test1234',
 
 	/*
 	|--------------------------------------------------------------------------
