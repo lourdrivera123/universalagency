@@ -26,8 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(
 	[
-
-		'local' => ['Zemskie', 'Alv-PC', 'owner-PC', 'DexsTear'],
+		'development' => ['Zemskie', 'Alv-PC', 'owner-PC', 'DexsTear'],
 		'homestead' => ['homestead'],
 	]
 );

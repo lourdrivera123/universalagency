@@ -16,7 +16,7 @@ class InterviewRepository {
 	function searchForInterviewsToday()
 	{
 		// $interviews = Interview::where(DATE('event_date_time'), '=', Carbon::now()->toDateString());
-		$interviews  = Interview::whereBetween('event_date_time', [ Carbon\Carbon::now()->toDateString().' 00:00:00', Carbon\Carbon::now()->toDateString().' 23:59:59'])->get();
+		$interviews  = Interview::whereBetween('event_date_time', [ Carbon::now()->toDateString().' 00:00:00', Carbon::now()->toDateString().' 23:59:59'])->get();
 
 		return $interviews;
 	}
