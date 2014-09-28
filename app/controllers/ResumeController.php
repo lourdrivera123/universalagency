@@ -47,7 +47,8 @@ class ResumeController extends \BaseController {
 		$educations = $resume->education()->get();
 		$jobs = $resume->jobhistory()->get();
 		$resumepdf = $resume->resumepdf()->first();
-		
+		$attachments = Auth::user()->userattachment()->get();
+
 		if(!is_null(getIQResult())) {
 			$iqresult = getIQResult();
 			$iqdescription = $this->iqtest->identifyIq($iqresult->result);
@@ -65,7 +66,8 @@ class ResumeController extends \BaseController {
 		->withIqresult($iqresult)
 		->withIqdescription($iqdescription)
 		->withJobs($jobs)
-		->withResumepdf($resumepdf);
+		->withResumepdf($resumepdf)
+		->withAttachments($attachments);
 	}
 
 	function create()
