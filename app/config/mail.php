@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'lourdrivera123@gmail.com',
+	'username' => 'universalagencynotification@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => 'zemgust123',
+	'password' => 'universal1234',
 
 	/*
 	|--------------------------------------------------------------------------
