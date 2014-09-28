@@ -1,0 +1,8 @@
+InvitatioExpiration:
+	type: cron
+	script: htdocs/artisan
+	args:
+		-"universalagency:invitationexpiration"
+	interval:
+		minute: 0
+		hour:	12

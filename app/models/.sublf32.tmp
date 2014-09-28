@@ -1,0 +1,7 @@
+<?php
+
+class Sss extends \Eloquent {
+	protected $fillable = [];
+
+	protected $table = 'sss';
+}

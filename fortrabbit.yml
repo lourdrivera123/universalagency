@@ -1,0 +1,13 @@
+---
+
+version: 1
+
+# strategy: fullsync
+
+# excludes:
+# 	- vendor/
+# 	- app/storage
+
+# composer:
+# 	mode: always
+# 	method: install
