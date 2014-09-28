@@ -81,4 +81,9 @@ class InterviewController extends \BaseController {
 		return View::make('applicant.applicantinterviewee');
 	}	
 
+	function thankyoufortheinterview()
+	{
+		return View::make('applicant.thankyoufortheinterview');
+	}
+
 }
