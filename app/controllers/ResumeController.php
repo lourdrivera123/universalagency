@@ -41,11 +41,12 @@ class ResumeController extends \BaseController {
 		$iqresult = "";
 		$iqdescription = "";
 		$personalityresult = "";
-		
+
 		$resume = Auth::user()->resume()->first();
 		$attachments = Userattachment::all();
 		$educations = $resume->education()->get();
 		$jobs = $resume->jobhistory()->get();
+		$resumepdf = $resume->resumepdf()->first();
 		
 		if(!is_null(getIQResult())) {
 			$iqresult = getIQResult();
@@ -63,7 +64,8 @@ class ResumeController extends \BaseController {
 		->withPersonalityresult($personalityresult)
 		->withIqresult($iqresult)
 		->withIqdescription($iqdescription)
-		->withJobs($jobs);
+		->withJobs($jobs)
+		->withResumepdf($resumepdf);
 	}
 
 	function create()

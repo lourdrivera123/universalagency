@@ -50,7 +50,7 @@
 					<div class="col-md-8 col-sm-8">
 					
 					<center>
-						<img src="{{ URL::asset('images/stabilizer.jpg') }}" class="img-rounded img-responsive" style="width:250px; height:250px; ">
+						<img src="{{ URL::asset('images/stabilizer.png') }}" class="img-rounded img-responsive" style="width:250px; height:250px; ">
 					</center><br><br>
 						<div class="content-box content-style3">
 							<div class="content-style3-icon icon-users-outline"></div>
@@ -69,7 +69,7 @@
 					<div class="col-md-8 col-sm-8">
 
 					<center>
-						<img src="{{ URL::asset('images/crisis_manager.jpg') }}" class="img-rounded img-responsive" style="width:250px; height:250px; ">
+						<img src="{{ URL::asset('images/crisismgr.png') }}" class="img-rounded img-responsive" style="width:250px; height:250px; ">
 					</center><br><br>
 
 						<div class="content-box content-style3">
@@ -90,7 +90,7 @@
 					<div class="col-md-8 col-sm-8">
 
 					<center>
-						<img src="{{ URL::asset('images/big_picture.jpg') }}" class="img-rounded img-responsive" style="width:250px; height:250px; ">
+						<img src="{{ URL::asset('images/bigpiture.png') }}" class="img-rounded img-responsive" style="width:250px; height:250px; ">
 					</center><br><br>
 
 						<div class="content-box content-style3">
@@ -110,7 +110,7 @@
 					<div class="col-md-8 col-sm-8">
 
 					<center>
-						<img src="{{ URL::asset('images/harmonizer.jpg') }}" class="img-rounded img-responsive" style="width:250px; height:250px; ">
+						<img src="{{ URL::asset('images/harmonizer.png') }}" class="img-rounded img-responsive" style="width:250px; height:250px; ">
 					</center><br><br>
 
 						<div class="content-box content-style3">
