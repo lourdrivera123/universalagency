@@ -3,18 +3,22 @@ use UniversalAgency\Repositories\ResumeRepository;
 use UniversalAgency\Repositories\JobCategoriesRepository;
 use UniversalAgency\Forms\FormValidationException;
 use UniversalAgency\Forms\ResumeForm;
+use UniversalAgency\Repositories\IqTestRepository;
 
 class ResumeController extends \BaseController {
 
 	protected $resume;
 	protected $resumeForm;
 	protected $jobcategory;
+	protected $iqtest;
 
-	function __construct(ResumeRepository $resume, ResumeForm $resumeForm, JobCategoriesRepository $jobcategory)	
+	function __construct(ResumeRepository $resume, ResumeForm $resumeForm, 
+		JobCategoriesRepository $jobcategory, IqTestRepository $iqtest)	
 	{
 		$this->resume = $resume;
 		$this->resumeForm = $resumeForm;
 		$this->jobcategory = $jobcategory;
+		$this->iqtest = $iqtest;
 	}
 
 	function employerside()
@@ -34,15 +38,30 @@ class ResumeController extends \BaseController {
 
 	function profile()
 	{
+		$iqresult = "";
+		$iqdescription = "";
+		$personalityresult = "";
 		$resume = Auth::user()->resume()->first();
 		$attachments = Userattachment::all();
 		$educations = $resume->education()->get();
 		$jobs = $resume->jobhistory()->get();
+		
+		if(!is_null(getIQResult())) {
+			$iqresult = getIQResult();
+			$iqdescription = $this->iqtest->identifyIq($iqresult->result);
+		}
 
+		if(!is_null(getPersonalityResult())) {
+			$personalityresult = getPersonalityResult();	
+		}
+		
 		return View::make('applicant.profile')
 		->withResume($resume)
 		->withEducations($educations)
 		->withAttachments($attachments)
+		->withPersonalityresult($personalityresult)
+		->withIqresult($iqresult)
+		->withIqdescription($iqdescription)
 		->withJobs($jobs);
 	}
 
