@@ -39,124 +39,6 @@ class NotificationRepository {
 		return $notification;
 	}
 	
-	// function sendTakePersonalityTestAndIqTest( $employerid, $to_userid, $jobid)
-	// {
-	// 	$job = Job::find($jobid);
-
-	// 	$notification = new Notification;
-	// 	$notification->from_userid = getAdminId();
-	// 	$notification->to_userid = $to_userid;
-	// 	$notification->employerid = $employerid;
-	// 	$notification->jobid = $jobid;
-	// 	$notification->subject = 'Please Take the Following Tests for "'.$job->job_title.'"';
-	// 	$notification->message = 'Thank you for accepting the invitation. Please complete the tests below.
-	// 	<br/><br/>
-
-	// 	<a href="../../personalitytest" class="btn btn-primary" target="_blank">Personality Test</a>
-	// 	<a href="../../iqtest" class="btn btn-primary" target="_blank">IQ Test</a>
-
-	// 	<br/><br/>
-	// 	';
-	// 	$notification->save();
-
-	// 	return $notification;
-	// }
-
-	// function sendTakePersonalityTest( $employerid, $to_userid, $jobid)
-	// {
-	// 	$job = Job::find($jobid);
-	// 	$notification = new Notification;
-	// 	$notification->from_userid = getAdminId();
-	// 	$notification->to_userid = $to_userid;
-	// 	$notification->employerid = $employerid;
-	// 	$notification->jobid = $jobid;
-	// 	$notification->subject = 'Please Take the Following Tests for "'.$job->job_title.'"';
-	// 	$notification->message = 'Thank you for accepting the invitation. Please complete the test below.
-	// 	<br/><br/>
-	// 	<a href="../../personalitytest" target="_blank">Personality Test</a>
-	// 	<br/><br/>';
-	// 	$notification->save();
-
-	// 	return $notification;
-	// }
-
-	// function sendTakeIqTest( $employerid, $to_userid, $jobid)
-	// {
-	// 	$job = Job::find($jobid);
-	// 	$notification = new Notification;
-	// 	$notification->from_userid = getAdminId();
-	// 	$notification->to_userid = $to_userid;
-	// 	$notification->employerid = $employerid;
-	// 	$notification->jobid = $jobid;
-	// 	$notification->subject = 'Please Take the Following Tests for "'.$job->job_title.'"';
-	// 	$notification->message = 'Thank you for accepting the invitation. Please complete the test below.
-	// 	<br/><br/>
-	// 	<a href="../../iqtest" target="_blank">IQ Test</a>
-	// 	<br/><br/>';
-	// 	$notification->save();
-
-	// 	return $notification;
-	// }	
-
-	// function sendTakePersonalityTestAndIqTestUponApprovingRequest( $employerid, $to_userid, $jobid)
-	// {
-	// 	$job = Job::find($jobid);
-
-	// 	$notification = new Notification;
-	// 	$notification->from_userid = getAdminId();
-	// 	$notification->to_userid = $to_userid;
-	// 	$notification->employerid = $employerid;
-	// 	$notification->jobid = $jobid;
-	// 	$notification->subject = 'Your Request to "'.$job->job_title.'" has been approved';
-	// 	$notification->message = 'Please complete the following tests to proceed.
-	// 	<br/><br/>
-
-	// 	<a href="../../personalitytest" class="btn btn-primary" target="_blank">Personality Test</a>
-	// 	<a href="../../iqtest" class="btn btn-primary" target="_blank">IQ Test</a>
-
-	// 	<br/><br/>
-	// 	';
-	// 	$notification->save();
-
-	// 	return $notification;
-	// }
-
-	// function sendTakePersonalityTestUponApprovingRequest( $employerid, $to_userid, $jobid)
-	// {
-	// 	$job = Job::find($jobid);
-
-	// 	$notification = new Notification;
-	// 	$notification->from_userid = getAdminId();
-	// 	$notification->to_userid = $to_userid;
-	// 	$notification->employerid = $employerid;
-	// 	$notification->jobid = $jobid;
-	// 	$notification->subject = 'Your Request to "'.$job->job_title.'" has been approved';
-	// 	$notification->message = 'Please complete the following test to proceed.
-	// 	<br/><br/>
-	// 	<a href="../../personalitytest" target="_blank">Personality Test</a>
-	// 	<br/><br/>';
-	// 	$notification->save();
-
-	// 	return $notification;
-	// }
-
-	// function sendTakeIqTestUponApprovingRequest( $employerid, $to_userid, $jobid)
-	// {
-	// 	$notification = new Notification;
-	// 	$notification->from_userid = getAdminId();
-	// 	$notification->to_userid = $to_userid;
-	// 	$notification->employerid = $employerid;
-	// 	$notification->jobid = $jobid;
-	// 	$notification->subject = 'Your Request to "'.$job->job_title.'" has been approved';
-	// 	$notification->message = 'Please complete the following test to proceed.
-	// 	<br/><br/>
-	// 	<a href="../../iqtest" target="_blank">IQ Test</a>
-	// 	<br/><br/>';
-	// 	$notification->save();
-
-	// 	return $notification;
-	// }
-
 	function sendApproveRequest( $jobtitle, $firstname, $to_userid, $employerid, $jobid )
 	{
 		$notification = new Notification;
@@ -217,7 +99,7 @@ class NotificationRepository {
 		$notification->from_userid = getAdminId();
 		$notification->to_userid = $to_userid;
 		$notification->subject = 'You have an interview';
-		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Our Staff will call you so please be present.';
+		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Our Staff will call you on the specified date and time, so please be present. Please <a href="../../applicantinterviewee">click here</a> to go through the interview page';
 		$notification->save();
 
 		return $notification;
@@ -230,7 +112,7 @@ class NotificationRepository {
 		$notification->from_userid = getAdminId();
 		$notification->to_userid = $to_userid;
 		$notification->subject = 'You have an interview';
-		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant.';
+		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant. Please <a href="../../staffinterviewer">click here</a> to go through the interview page';
 		$notification->save();
 
 		return $notification;
@@ -243,7 +125,7 @@ class NotificationRepository {
 		$notification->from_userid = getAdminId();
 		$notification->to_userid = $to_userid;
 		$notification->subject = 'You have an interview';
-		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant.';
+		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant. Please <a href="../../staffinterviewer">click here</a> to go through the interview page';
 		$notification->save();
 
 		return $notification;
@@ -256,7 +138,7 @@ class NotificationRepository {
 		$notification->from_userid = getAdminId();
 		$notification->to_userid = $to_userid;
 		$notification->subject = 'You have an interview';
-		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Please be present 10 - 20 minutes before the schedule, to prepare calling the applicant.';
+		$notification->message = 'Important reminder! You have a scheduled interview on '.daydatetimestring($timestamp).'. Please be present 10 - 20 minutes before the schedule, to prepare for the call. Please <a href="../../applicantinterviewee">click here</a> to go through the interview page';
 		$notification->save();
 
 		return $notification;

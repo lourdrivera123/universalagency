@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'universal_agency',
+			'database'  => 'universalagency',
 			'username'  => 'root',
 			'password'  => 'universal123',
 			'charset'   => 'utf8',
