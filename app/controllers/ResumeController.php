@@ -41,6 +41,7 @@ class ResumeController extends \BaseController {
 		$iqresult = "";
 		$iqdescription = "";
 		$personalityresult = "";
+		
 		$resume = Auth::user()->resume()->first();
 		$attachments = Userattachment::all();
 		$educations = $resume->education()->get();

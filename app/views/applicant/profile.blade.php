@@ -208,7 +208,10 @@
                     <div class="tab-pane" id="tab_attachment">
                         @if(count($attachments) > 0)
                         @foreach($attachments as $attachment)
-                        <img src="{{ URL::asset($attachment->path) }}">
+                        <!--  <img src="{{ URL::asset($attachment->path) }}"> -->
+                        <div class="row">
+                            
+                        </div>
                         @endforeach
                         @endif
                     </div>
@@ -225,7 +228,7 @@
                                 <center><h5> The Big Picture Peson </h5></center>
 
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Big Picture Person. You like conceptualizing a project and
+                                    <span class="dropcaps">Y</span>our career personality type is The Big Picture Person. You like conceptualizing a project and
                                     enjoy debating with others. You get your best ideas when you have someone to bounce them off of and you feel most
                                     comfortable when you feel you have a handle on the future of your work.
                                 </label><br><br>
@@ -239,7 +242,7 @@
                                 <center><h5> The Stabilizer </h5></center>
 
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Stabilizer. You like order and are purpose-minded.
+                                    <span class="dropcaps">Y</span>our career personality type is The Stabilizer. You like order and are purpose-minded.
                                     You also prefer to engage internally and are very thoughtful. A work environment where you
                                     can work quietly and gather information before making a decision is best for you.
                                 </label><br><br>
@@ -253,7 +256,7 @@
                                 <center><h5> The Crisis Manager </h5></center>
 
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Crisis Manager. You like creative freedom and are action-minded.
+                                    <span class="dropcaps">Y</span>our career personality type is The Crisis Manager. You like creative freedom and are action-minded.
                                     You can get restless so you need a work environment that offers variety. You also prefer to engage internally and are
                                     very thoughtful. A work environment where you can work quietly and gather information before making 
                                     a decision is best for you.
@@ -268,7 +271,7 @@
                                 <center><h5> The Harmonizer </h5></center>
 
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career pesonality type is The Harmonizer. You like harmony and enjoy helping others. You are also
+                                    <span class="dropcaps">Y</span>our career pesonality type is The Harmonizer. You like harmony and enjoy helping others. You are also
                                     nergized by what is happening outside of yourself and find that you get restless when you go too long
                                     without external stimulation.
                                 </label><br><br>
@@ -286,8 +289,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our IQ score is 
-                                    <strong style="font-size:30px;"> {{ $iqresult->result }} </strong>. 
+                                    <span class="dropcaps">Y</span>our IQ score is 
+                                    <strong style="font-size:20px;"> {{ $iqresult->result }} </strong>. 
                                     A person whose IQ score is {{ $iqresult->result }} is considered to have 
                                     <b> {{ $iqdescription }} </b><br><br>
                                 </label>
@@ -305,7 +308,7 @@
                                 <center><h5> The Big Picture Peson </h5></center>
 
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Big Picture Person. You like conceptualizing a project and
+                                    <span class="dropcaps">Y</span>our career personality type is The Big Picture Person. You like conceptualizing a project and
                                     enjoy debating with others. You get your best ideas when you have someone to bounce them off of and you feel most
                                     comfortable when you feel you have a handle on the future of your work.
                                 </label><br><br>
@@ -319,7 +322,7 @@
                                 <center><h5> The Stabilizer </h5></center>
 
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Stabilizer. You like order and are purpose-minded.
+                                    <span class="dropcaps">Y</span>our career personality type is The Stabilizer. You like order and are purpose-minded.
                                     You also prefer to engage internally and are very thoughtful. A work environment where you
                                     can work quietly and gather information before making a decision is best for you.
                                 </label><br><br>
@@ -333,7 +336,7 @@
                                 <center><h5> The Crisis Manager </h5></center>
 
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Crisis Manager. You like creative freedom and are action-minded.
+                                    <span class="dropcaps">Y</span>our career personality type is The Crisis Manager. You like creative freedom and are action-minded.
                                     You can get restless so you need a work environment that offers variety. You also prefer to engage internally and are
                                     very thoughtful. A work environment where you can work quietly and gather information before making 
                                     a decision is best for you.
@@ -348,7 +351,7 @@
                                 <center><h5> The Harmonizer </h5></center>
 
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career pesonality type is The Harmonizer. You like harmony and enjoy helping others. You are also
+                                    <span class="dropcaps">Y</span>our career pesonality type is The Harmonizer. You like harmony and enjoy helping others. You are also
                                     nergized by what is happening outside of yourself and find that you get restless when you go too long
                                     without external stimulation.
                                 </label><br><br>
@@ -379,8 +382,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <label style="text-align:justify;">
-                                        <span class="dropcaps dropcaps-color-style">Y</span>our IQ score is 
-                                        <strong style="font-size:30px;"> {{ $iqresult->result }} </strong>. 
+                                        <span class="dropcaps">Y</span>our IQ score is 
+                                        <strong style="font-size:20px;"> {{ $iqresult->result }} </strong>. 
                                         A person whose IQ score is {{ $iqresult->result }} is considered to have 
                                         <b> {{ $iqdescription }} </b><br><br>
                                     </label>
