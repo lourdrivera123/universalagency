@@ -206,79 +206,178 @@
                         <div class="space-sep10"></div>
                     </div>
                     <div class="tab-pane" id="tab_attachment">
-                        @if(count($attachments) > 0)
-                        @foreach($attachments as $attachment)
-                        <img src="{{ URL::asset($attachment->path) }}">
-                        @endforeach
+                      <div class="row">
+                            <!-- Resume pdf here, each user must have a pdf, cause it generates every time they create their resume -->
+                            <a href="{{ URL::to($resumepdf->path) }}" target="_blank">Resume</a>
+
+                            <!-- Attachments here, it is not mandatory -->
+                            @if( !is_null($attachments) )
+                                @foreach($attachments as $attachment)
+                                    <a href="{{ URL::to($attachment->path) }}" target="_blank">{{ $attachment->name }}</a>
+                                @endforeach
+                            @endif
+                      </div>
+                  </div>
+
+                  <div class="tab-pane" id="tab_results">
+                    @if(!empty($personalityresult) && !empty($iqresult)) <!-- NAAY SULOD ANG DUHA -->
+                    <div class="title-block clearfix">
+                        <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> Personality Test </h3>
+                        <div class="title-seperator"></div>
+                    </div>
+                    <div class="row">
+                        @if($personalityresult->result == 'bigPicture')
+                        <div class="col-md-12">
+                            <center><h5> The Big Picture Peson </h5></center>
+
+                            <label style="text-align:justify;">
+                                <span class="dropcaps">Y</span>our career personality type is The Big Picture Person. You like conceptualizing a project and
+                                enjoy debating with others. You get your best ideas when you have someone to bounce them off of and you feel most
+                                comfortable when you feel you have a handle on the future of your work.
+                            </label><br><br>
+
+                            <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
+                        </div>
+                        @endif
+
+                        @if($personalityresult->result == 'stabili')
+                        <div class="col-md-12">
+                            <center><h5> The Stabilizer </h5></center>
+
+                            <label style="text-align:justify;">
+                                <span class="dropcaps">Y</span>our career personality type is The Stabilizer. You like order and are purpose-minded.
+                                You also prefer to engage internally and are very thoughtful. A work environment where you
+                                can work quietly and gather information before making a decision is best for you.
+                            </label><br><br>
+
+                            <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
+                        </div>
+                        @endif
+
+                        @if($personalityresult->result == 'crisisMgr')
+                        <div class="col-md-12">
+                            <center><h5> The Crisis Manager </h5></center>
+
+                            <label style="text-align:justify;">
+                                <span class="dropcaps">Y</span>our career personality type is The Crisis Manager. You like creative freedom and are action-minded.
+                                You can get restless so you need a work environment that offers variety. You also prefer to engage internally and are
+                                very thoughtful. A work environment where you can work quietly and gather information before making 
+                                a decision is best for you.
+                            </label><br><br>
+
+                            <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
+                        </div>
+                        @endif
+
+                        @if($personalityresult->result == 'harmonizer')
+                        <div class="col-md-12">
+                            <center><h5> The Harmonizer </h5></center>
+
+                            <label style="text-align:justify;">
+                                <span class="dropcaps">Y</span>our career pesonality type is The Harmonizer. You like harmony and enjoy helping others. You are also
+                                nergized by what is happening outside of yourself and find that you get restless when you go too long
+                                without external stimulation.
+                            </label><br><br>
+
+                            <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
+                        </div>
                         @endif
                     </div>
+                    <div class="space-sep50"></div>
 
-                    <div class="tab-pane" id="tab_results">
-                        @if(!empty($personalityresult) && !empty($iqresult)) <!-- NAAY SULOD ANG DUHA -->
+                    <div class="title-block clearfix">
+                        <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> IQ Test </h3>
+                        <div class="title-seperator"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label style="text-align:justify;">
+                                <span class="dropcaps">Y</span>our IQ score is 
+                                <strong style="font-size:20px;"> {{ $iqresult->result }} </strong>. 
+                                A person whose IQ score is {{ $iqresult->result }} is considered to have 
+                                <b> {{ $iqdescription }} </b><br><br>
+                            </label>
+                        </div>
+                    </div>
+
+                    @elseif(!empty($personalityresult)) <!-- NAAY SULOD ANG PERSONALITY -->
+                    <div class="title-block clearfix">
+                        <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> Personality Test </h3>
+                        <div class="title-seperator"></div>
+                    </div>
+                    <div class="row">
+                        @if($personalityresult->result == 'bigPicture')
+                        <div class="col-md-12">
+                            <center><h5> The Big Picture Peson </h5></center>
+
+                            <label style="text-align:justify;">
+                                <span class="dropcaps">Y</span>our career personality type is The Big Picture Person. You like conceptualizing a project and
+                                enjoy debating with others. You get your best ideas when you have someone to bounce them off of and you feel most
+                                comfortable when you feel you have a handle on the future of your work.
+                            </label><br><br>
+
+                            <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
+                        </div>
+                        @endif
+
+                        @if($personalityresult->result == 'stabili')
+                        <div class="col-md-12">
+                            <center><h5> The Stabilizer </h5></center>
+
+                            <label style="text-align:justify;">
+                                <span class="dropcaps">Y</span>our career personality type is The Stabilizer. You like order and are purpose-minded.
+                                You also prefer to engage internally and are very thoughtful. A work environment where you
+                                can work quietly and gather information before making a decision is best for you.
+                            </label><br><br>
+
+                            <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
+                        </div>
+                        @endif
+
+                        @if($personalityresult->result == 'crisisMgr')
+                        <div class="col-md-12">
+                            <center><h5> The Crisis Manager </h5></center>
+
+                            <label style="text-align:justify;">
+                                <span class="dropcaps">Y</span>our career personality type is The Crisis Manager. You like creative freedom and are action-minded.
+                                You can get restless so you need a work environment that offers variety. You also prefer to engage internally and are
+                                very thoughtful. A work environment where you can work quietly and gather information before making 
+                                a decision is best for you.
+                            </label><br><br>
+
+                            <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
+                        </div>
+                        @endif
+
+                        @if($personalityresult->result == 'harmonizer')
+                        <div class="col-md-12">
+                            <center><h5> The Harmonizer </h5></center>
+
+                            <label style="text-align:justify;">
+                                <span class="dropcaps">Y</span>our career pesonality type is The Harmonizer. You like harmony and enjoy helping others. You are also
+                                nergized by what is happening outside of yourself and find that you get restless when you go too long
+                                without external stimulation.
+                            </label><br><br>
+
+                            <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
+                        </div>
+                        @endif
+                    </div><br><br>
+                    <div class="row">
                         <div class="title-block clearfix">
-                            <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> Personality Test </h3>
+                            <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> IQ Test </h3>
                             <div class="title-seperator"></div>
                         </div>
                         <div class="row">
-                            @if($personalityresult->result == 'bigPicture')
                             <div class="col-md-12">
-                                <center><h5> The Big Picture Peson </h5></center>
-
-                                <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Big Picture Person. You like conceptualizing a project and
-                                    enjoy debating with others. You get your best ideas when you have someone to bounce them off of and you feel most
-                                    comfortable when you feel you have a handle on the future of your work.
-                                </label><br><br>
-
-                                <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
+                                You haven't taken the IQ Test. To take this test, KANI SA IKA TULO
+                                <a href="{{ URL::to('pleasetakeiqtest') }}" style="color:blue;">Click here</a>
                             </div>
-                            @endif
-
-                            @if($personalityresult->result == 'stabili')
-                            <div class="col-md-12">
-                                <center><h5> The Stabilizer </h5></center>
-
-                                <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Stabilizer. You like order and are purpose-minded.
-                                    You also prefer to engage internally and are very thoughtful. A work environment where you
-                                    can work quietly and gather information before making a decision is best for you.
-                                </label><br><br>
-
-                                <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
-                            </div>
-                            @endif
-
-                            @if($personalityresult->result == 'crisisMgr')
-                            <div class="col-md-12">
-                                <center><h5> The Crisis Manager </h5></center>
-
-                                <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Crisis Manager. You like creative freedom and are action-minded.
-                                    You can get restless so you need a work environment that offers variety. You also prefer to engage internally and are
-                                    very thoughtful. A work environment where you can work quietly and gather information before making 
-                                    a decision is best for you.
-                                </label><br><br>
-
-                                <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
-                            </div>
-                            @endif
-
-                            @if($personalityresult->result == 'harmonizer')
-                            <div class="col-md-12">
-                                <center><h5> The Harmonizer </h5></center>
-
-                                <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career pesonality type is The Harmonizer. You like harmony and enjoy helping others. You are also
-                                    nergized by what is happening outside of yourself and find that you get restless when you go too long
-                                    without external stimulation.
-                                </label><br><br>
-
-                                <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
-                            </div>
-                            @endif
                         </div>
-                        <div class="space-sep50"></div>
+                    </div>
 
+                    @elseif(!empty($iqresult)) <!-- NAAY SULOD ANG IQ RESULT -->
+                    <div class="row">
                         <div class="title-block clearfix">
                             <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> IQ Test </h3>
                             <div class="title-seperator"></div>
@@ -286,122 +385,14 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our IQ score is 
-                                    <strong style="font-size:30px;"> {{ $iqresult->result }} </strong>. 
+                                    <span class="dropcaps">Y</span>our IQ score is 
+                                    <strong style="font-size:20px;"> {{ $iqresult->result }} </strong>. 
                                     A person whose IQ score is {{ $iqresult->result }} is considered to have 
                                     <b> {{ $iqdescription }} </b><br><br>
                                 </label>
                             </div>
-                        </div>
-
-                        @elseif(!empty($personalityresult)) <!-- NAAY SULOD ANG PERSONALITY -->
-                        <div class="title-block clearfix">
-                            <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> Personality Test </h3>
-                            <div class="title-seperator"></div>
-                        </div>
-                        <div class="row">
-                            @if($personalityresult->result == 'bigPicture')
-                            <div class="col-md-12">
-                                <center><h5> The Big Picture Peson </h5></center>
-
-                                <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Big Picture Person. You like conceptualizing a project and
-                                    enjoy debating with others. You get your best ideas when you have someone to bounce them off of and you feel most
-                                    comfortable when you feel you have a handle on the future of your work.
-                                </label><br><br>
-
-                                <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
-                            </div>
-                            @endif
-
-                            @if($personalityresult->result == 'stabili')
-                            <div class="col-md-12">
-                                <center><h5> The Stabilizer </h5></center>
-
-                                <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Stabilizer. You like order and are purpose-minded.
-                                    You also prefer to engage internally and are very thoughtful. A work environment where you
-                                    can work quietly and gather information before making a decision is best for you.
-                                </label><br><br>
-
-                                <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
-                            </div>
-                            @endif
-
-                            @if($personalityresult->result == 'crisisMgr')
-                            <div class="col-md-12">
-                                <center><h5> The Crisis Manager </h5></center>
-
-                                <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career personality type is The Crisis Manager. You like creative freedom and are action-minded.
-                                    You can get restless so you need a work environment that offers variety. You also prefer to engage internally and are
-                                    very thoughtful. A work environment where you can work quietly and gather information before making 
-                                    a decision is best for you.
-                                </label><br><br>
-
-                                <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
-                            </div>
-                            @endif
-
-                            @if($personalityresult->result == 'harmonizer')
-                            <div class="col-md-12">
-                                <center><h5> The Harmonizer </h5></center>
-
-                                <label style="text-align:justify;">
-                                    <span class="dropcaps dropcaps-color-style">Y</span>our career pesonality type is The Harmonizer. You like harmony and enjoy helping others. You are also
-                                    nergized by what is happening outside of yourself and find that you get restless when you go too long
-                                    without external stimulation.
-                                </label><br><br>
-
-                                <span><i class="fa fa-calendar"></i> {{ $personalityresult->created_at }}</span>
-                            </div>
-                            @endif
                         </div><br><br>
-                        <div class="row">
-                            <div class="title-block clearfix">
-                                <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> IQ Test </h3>
-                                <div class="title-seperator"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    You haven't taken the IQ Test. To take this test, KANI SA IKA TULO
-                                    <a href="{{ URL::to('pleasetakeiqtest') }}" style="color:blue;">Click here</a>
-                                </div>
-                            </div>
-                        </div>
 
-                        @elseif(!empty($iqresult)) <!-- NAAY SULOD ANG IQ RESULT -->
-                        <div class="row">
-                            <div class="title-block clearfix">
-                                <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> IQ Test </h3>
-                                <div class="title-seperator"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label style="text-align:justify;">
-                                        <span class="dropcaps dropcaps-color-style">Y</span>our IQ score is 
-                                        <strong style="font-size:30px;"> {{ $iqresult->result }} </strong>. 
-                                        A person whose IQ score is {{ $iqresult->result }} is considered to have 
-                                        <b> {{ $iqdescription }} </b><br><br>
-                                    </label>
-                                </div>
-                            </div><br><br>
-                            
-                            <div class="row">
-                                <div class="title-block clearfix">
-                                    <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> Personality Test </h3>
-                                    <div class="title-seperator"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        You haven't taken the Personality Test. To take this test, 
-                                        <a href="{{ URL::to('personalitytest') }}" style="color:blue;">Click here</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        @elseif(empty($personalityresult) && empty($iqresult)) <!-- WALAY SULOD ANG DUHA -->
                         <div class="row">
                             <div class="title-block clearfix">
                                 <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> Personality Test </h3>
@@ -410,26 +401,41 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     You haven't taken the Personality Test. To take this test, 
-                                    <a href="{{ URL::to('pleasetakepersonalitytest') }}" style="color:blue;">Click here</a>
-                                </div>
-                            </div><br><br>
-                            <div class="title-block clearfix">
-                                <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> IQ Test </h3>
-                                <div class="title-seperator"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    You haven't taken the IQ Test. To take this test, KANI SA LAST
-                                    <a href="{{ URL::to('pleasetakeiqtest') }}" style="color:blue;">Click here</a>
+                                    <a href="{{ URL::to('personalitytest') }}" style="color:blue;">Click here</a>
                                 </div>
                             </div>
-                        </div>  
-                        @endif
+                        </div>
                     </div>
+
+                    @elseif(empty($personalityresult) && empty($iqresult)) <!-- WALAY SULOD ANG DUHA -->
+                    <div class="row">
+                        <div class="title-block clearfix">
+                            <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> Personality Test </h3>
+                            <div class="title-seperator"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                You haven't taken the Personality Test. To take this test, 
+                                <a href="{{ URL::to('pleasetakepersonalitytest') }}" style="color:blue;">Click here</a>
+                            </div>
+                        </div><br><br>
+                        <div class="title-block clearfix">
+                            <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> IQ Test </h3>
+                            <div class="title-seperator"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                You haven't taken the IQ Test. To take this test, KANI SA LAST
+                                <a href="{{ URL::to('pleasetakeiqtest') }}" style="color:blue;">Click here</a>
+                            </div>
+                        </div>
+                    </div>  
+                    @endif
                 </div>
             </div>
         </div>
-    </div>           
+    </div>
+</div>           
 </div>  
 </div>
 @stop
