@@ -43,7 +43,6 @@ class ResumeController extends \BaseController {
 		$personalityresult = "";
 
 		$resume = Auth::user()->resume()->first();
-		$attachments = Userattachment::all();
 		$educations = $resume->education()->get();
 		$jobs = $resume->jobhistory()->get();
 		$resumepdf = $resume->resumepdf()->first();
