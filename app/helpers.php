@@ -410,3 +410,10 @@ function isHired()
 
     return false;
 }
+
+function daydatetimestring($timestamp)
+{
+    $datetime = new Carbon($timestamp);
+
+    return $datetime->toDayDateTimeString();
+}

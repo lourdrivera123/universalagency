@@ -7,7 +7,7 @@ return [
 		'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'universal_agency',
+			'database'  => 'universalagency',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

@@ -17,6 +17,10 @@ foreach (File::allFiles(__DIR__.'/routes') as $partial )
 // $excel->writer->saveFile('example');
 // });
 
+Route::get('datetime', function(){
+	return Carbon\Carbon::now()->toDayDateTimeString();
+});
+
 Route::get('trialdisplay', function(){
 	return View::make('trialdisplay');
 });

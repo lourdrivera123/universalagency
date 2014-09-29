@@ -37,7 +37,7 @@ class InterviewEvent extends ScheduledCommand {
 			$this->interview->notifyInterviewerandIntervieweeToday($interviewtoday->id);
 		}
 
-		return $this->info('Pending Applicant Invitations Are Now Removed');
+		return $this->info('Interviews Today Are Triggered');
 	}
 
 }
