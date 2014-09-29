@@ -17,6 +17,21 @@ foreach (File::allFiles(__DIR__.'/routes') as $partial )
 // $excel->writer->saveFile('example');
 // });
 
+Route::get('excelent', function(){
+
+
+	$table = Excel::selectSheets('Sheet2')->load('C:\Users\Zem\Desktop\dtr_form.xls', function($reader) {
+
+	    $reader->noHeading()->skip(11)->take(32)->formatDates(false);
+	
+	})->get();
+
+	
+	return View::make('excel')->withTable($table);
+
+	
+});
+
 Route::get('yuwa', function(){
 	return View::make('admin.applicantevaluation');
 });

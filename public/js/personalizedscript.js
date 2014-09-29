@@ -1917,3 +1917,4 @@ $('#addeventform').validate({
 
 // });
 //End of Code
+

@@ -50,14 +50,6 @@
 					<a href="{{ URL::to('adminscheduledinterviews') }}" title="Schedule of Interviews"><i class="fa fa-users"></i> <span class="menu-item-parent">Schedule of Interviews</span></a>
 				</li>
 
-				<li {{ Request::is('adminjobrequests') ? 'class="active"' : '' }}>
-					<a href="{{ URL::to('adminjobrequests') }}" title="Job Requests"><i class="fa fa-bell-o"></i> <span class="menu-item-parent">Job Requests</span>
-					<span class="badge bg-color-red pull-right inbox-badge">3</span></a>
-				</li>
-				<li {{ Request::is('adminviewtests') ? 'class="active"' : '' }}>
-					<a href="{{ URL::to('adminviewtests') }}" title="Job Requests"><i class="fa fa-bell-o"></i> <span class="menu-item-parent">For Review</span>
-					<span class="badge bg-color-red pull-right inbox-badge">3</span></a>
-				</li>
 				<li {{ Request::is('adminviewreports') ? 'class="active"' : '' }}>
 					<a href="{{ URL::to('adminviewreports') }}" title="Reports">
 						<i class="fa fa-book"></i> <span class="menu-item-parent">Reports</span>

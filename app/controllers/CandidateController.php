@@ -45,6 +45,14 @@ class CandidateController extends \BaseController {
 
 		return $candidate;
 	}
+
+	function adminjobhires($id)
+	{
+		$recruitcontracts = Recruitcontract::whereJobId($id)->get();
+
+		return View::make('admin.adminjobhires')
+		->withRecruitcontracts($recruitcontracts);
+	}
 }
 
 

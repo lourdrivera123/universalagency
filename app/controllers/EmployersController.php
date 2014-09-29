@@ -2,6 +2,7 @@
 
 use UniversalAgency\Repositories\EmployersRepository;
 use UniversalAgency\Repositories\UsersRepository;
+use Illuminate\Support\Collection as Collection;
 
 class EmployersController extends \BaseController {
 
@@ -80,5 +81,24 @@ class EmployersController extends \BaseController {
 		$status = $this->employer->checkEmployerPhoneNumber(Input::all());
 
 		return $status;
+	}
+
+	function employerdtrupload()
+	{
+		$recruitcontracts = Recruitcontract::whereEmployerId(Auth::user()->id)->get();
+
+		$collection = new Collection;
+
+		foreach( $recruitcontracts as $recruitcontract )
+		{
+			$user = User::findOrFail($recruitcontract->employee_id);
+			$resume = $user->resume()->first();
+
+			$collection->push($resume);
+		}
+
+		// dd($collection);
+
+		return View::make('employer.employerdtrupload')->withEmployees($collection->lists('last_name', 'user_id'));
 	}
 }

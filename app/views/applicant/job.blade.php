@@ -48,9 +48,10 @@
           <h2 style="color:#279fbb;">
             {{ Form::open(['id' => 'applyjobform']) }}
             {{ $job->job_title }}
-            <?php $userid = Auth::user()->id; $jobid= $job->id ?>
 
             @if( isApplicant() )
+            <?php $userid = Auth::user()->id; $jobid= $job->id ?>
+
 
             @if( isHired() )
             
@@ -112,6 +113,14 @@
               <div class="alert alert-info">
                 <div class="msg">
                   <h4> You already applied on this job.</h4>
+                </div>
+              </div>
+            </div>
+            @elseif(isTaken($jobid))
+             <div class="row">
+              <div class="alert alert-info">
+                <div class="msg">
+                  <h4> This Job has already been taken.</h4>
                 </div>
               </div>
             </div>

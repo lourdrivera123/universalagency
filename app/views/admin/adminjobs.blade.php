@@ -92,6 +92,7 @@
 												<tbody id="jobstable">
 													@if(count($jobs) > 0)
 													@foreach($jobs as $job)
+													@if(!$job->trashed())
 													<tr id="{{ $job->id }}">
 														<td>{{ $job->id }}</td>
 														<td><a href="{{ URL::to('job/'.$job->id) }}" target="_blank">{{ $job->job_title }}</a></td>
@@ -116,6 +117,7 @@
 														<td><a href="javascript:void(0)" class="btn btn-danger btn-circle" onclick="disablejob($(this))"><i class="fa fa-times"></i></a></td>
 														@endif
 													</tr>
+													@endif
 													@endforeach
 													@endif
 												</tbody>
@@ -129,17 +131,22 @@
 														<th> ID</th>
 														<th> Job Title </th>
 														<th> Company </th>
-														<th> Employee/s</th>
+														<th> Hired Employee/s</th>
 													</tr>
 												</thead>
 												<tbody id="closedjobstable">
-													<tr id="enteridhere">
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-
+													@if(count($jobs) > 0)
+													@foreach($jobs as $job)
+													@if($job->trashed())
+													<tr>
+														<td>{{ $job->id }}</td>
+														<td><a href="{{ URL::to('job/'.$job->id) }}">{{ $job->job_title }}</a></td>
+														<td>{{ $job->employer()->first()->businessname }}</td>
+														<td><a href="{{ URL::to('adminjobhires/'.$job->id) }}" target="_blank"><button class="btn btn-circle btn-primary"><i class="fa fa-user"></i></button></a></td>
 													</tr>
+													@endif
+													@endforeach
+													@endif
 												</tbody>
 											</table>
 										</div>

@@ -56,15 +56,9 @@ class JobsController extends \BaseController {
 	function getjob($id)
 	{
 		try{
-			$job = Job::findOrFail($id);
+			$job = Job::withTrashed()->findOrFail($id);
 			$employerid = $job->employer()->first()->id;
-			
-			if (Session::has('employerid'))
-			{
-				Session::forget('employerid');
-			} else {
-				Session::put('employerid', $employerid);				
-			}
+	
 
 			return View::make('applicant.job')
 			->withJob($job);	

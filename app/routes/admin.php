@@ -48,6 +48,8 @@ Route::get('adminlogout', 'UsersController@adminlogout');
 
 Route::get('adminjobcandidates/{id}', 'CandidateController@adminjobcandidates');
 
+Route::get('adminjobhires/{id}', 'CandidateController@adminjobhires');
+
 Route::post('admin', 'SessionsController@adminstore');
 
 //ajax actions
@@ -61,6 +63,8 @@ Route::post('/adminaddevent', 'InterviewController@adminaddevent');
 Route::get('/admingetcompanyname', 'JobsController@getcompanyname');
 
 Route::post('/adminsaveemployercontract', 'ContractsController@generateEmployerContract');
+
+Route::post('/adminsaveemployeecontract', 'ContractsController@generateEmployeeContract');
 
 Route::post('/sendMessageFromAdmin', 'MessagesController@sendMessageFromAdmin');
 

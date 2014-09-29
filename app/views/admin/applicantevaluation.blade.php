@@ -79,7 +79,7 @@
                         </div>
                         @else
                         <div id="decisionarea">
-                            <button type="button" name="btn_hire" class="btn btn-green"><i class="fa fa-check"></i> Hire</button>
+                            <button type="button" data-toggle="modal" data-target="#recruitmentformmodal" name="btn_hire" class="btn btn-green"><i class="fa fa-check"></i> Hire</button>
                             <button type="button" id="smart-mod-eg1" name="btn_decline" class="btn btn-red"><i class="fa fa-times"></i> Decline</button>
                         </div>
                         @endif  
@@ -98,6 +98,91 @@
 </div>
 </div>
 @stop
+
+@section('modals')
+<!-- Add Modal -->
+<div class="modal fade" id="recruitmentformmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Set Employee Contract</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    {{ Form::open(['id' => 'recruitmentform']) }}
+
+                    <input type="hidden" name="jobidrecruitmentform" value="{{ $evaluation->job_id }}"/>
+                    <input type="hidden" name="applicantidrecruitmentform" value="{{ $evaluation->applicant_id }}" />
+                    <input type="hidden" name="employeridrecruitmentform" value="{{ getEmployerIdUsingJobName($evaluation->job()->first()->job_title) }}" />
+
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="job">Job Title</label>
+                            {{ Form::text('job', $evaluation->job()->first()->job_title, ['class' => 'form-control', 'readonly' => '']) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="employer">Employer</label>
+                            {{ Form::text('employer', $evaluation->job()->first()->employer()->first()->businessname, ['class' => 'form-control', 'readonly' => '']) }}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="employee">Employee</label>
+                            {{ Form::text('employee', $evaluation->user()->first()->resume()->first()->first_name.' '.$evaluation->user()->first()->resume()->first()->last_name, ['class' => 'form-control', 'readonly' => '']) }}
+                        </div>
+
+                        <div class="form-inline">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-lg-6">
+                                    <label for="percentage">Processing Fee (%)</label>
+                                    {{ Form::number('percentage', null, ['class' => 'form-control']) }}
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-lg-6">
+                                    <label for="basic_pay">Basic Pay (PHP)</label>
+                                    {{ Form::number('basic_pay', getSalary($evaluation->job()->first()->job_title), ['class' => 'form-control', 'readonly' => '']) }}
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="form-inline">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-lg-6">
+                                    <label for="starting_date">Starting Date</label>
+                                    {{ Form::text('starting_date', null, ['class' => 'form-control', 'id' => 'starting_date', 'placeholder' => 'yyyy-mm-dd']) }}
+                                </div>
+                                <div class="col-md-6 col-sm-12 col-lg-6">
+                                    <label for="closing_date">Closing Date</label>
+                                    {{ Form::text('closing_date', null, ['class' => 'form-control', 'id' => 'closing_date', 'placeholder' => 'yyyy-mm-dd']) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                    </div>
+                    
+                </div>
+
+                <div class="modal-footer" id="recruitmentfromfooter">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button id="recruitmentformsubmit" type="submit" class="btn btn-primary">
+                        Save
+                    </button>
+                </div>
+                {{ Form::close() }}
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+@stop
+
 
 @section('scripts')
 {{ HTML::script('js/_jq.js') }}
@@ -120,7 +205,6 @@
 {{ HTML::script('js/jquery.themepunch.plugins.min.js')}}
 {{ HTML::script('js/jquery.themepunch.revolution.js')}}
 {{ HTML::script('js/jquery.tipsy.js')}}
-{{ HTML::script('js/jquery.validate.js')}}
 {{ HTML::script('js/jQuery.XDomainRequest.js')}}
 {{ HTML::script('js/kanzi.js') }}
 {{ HTML::script('js/retina.js') }}
@@ -131,80 +215,10 @@
 {{ HTML::script('js/app.min.js') }}
 {{ HTML::script('js/plugin/msie-fix/jquery.mb.browser.min.js') }}
 {{ HTML::script('js/plugin/fastclick/fastclick.min.js') }}
-{{ HTML::script('js/demo.min.js')}}
+{{ HTML::script('js/demo.min.js') }}
+{{ HTML::script('js/app.min.js') }}
+{{ HTML::script('js/plugin/masked-input/jquery.maskedinput.min.js') }}
 {{ HTML::script('js/plugin/sparkline/jquery.sparkline.min.js') }}
-
-
-<script type="text/javascript">
-
-            // DO NOT REMOVE : GLOBAL FUNCTIONS!
-            
-            $(document).ready(function() {
-
-
-                /*
-                 * MARKDOWN EDITOR
-                 */
-
-                 $("#evaluation").markdown({
-                    autofocus:false,
-                    savable: false,
-                })
-
-                 /*
-            * SmartAlerts
-            */
-            // With Callback
-            $("#smart-mod-eg1").click(function(e) {
-
-                var _token = $('#applicantevaluationform > input[name="_token"]').val();
-                var applicantid = $('[name="applicantid"]').val();
-                var jobid = $('[name="jobid"]').val();
-
-                $('html, body').animate({
-                    scrollTop: $(this).offset().top }, 200);    
-
-                $.SmartMessageBox({
-                    title : "Are you sure you dont want to hire this applicant for the job?",
-                    content : "",
-                    buttons : '[No][Yes]'
-                }, function(ButtonPressed) {
-                    if (ButtonPressed === "Yes") {
-
-                        $.post('/admindeclineApplicantUnderReview', { _token: _token, applicantid: applicantid, jobid: jobid }, function(data){
-
-                            $('#decisionarea').html('<div class="alert alert-danger"><div class="msg">This Applicant has been declined for this Job.</div></div>');
-
-                            $.smallBox({
-                                title : "Applicant has been declined",
-                                content : "<i class='fa fa-clock-o'></i> <i>just now...</i>",
-                                color : "#C46A69",
-                                iconSmall : "fa fa-check fa-2x fadeInRight animated",
-                                timeout : 4000
-                            });
-
-                            $('html, body').animate({ scrollTop: $('#scrollpointtitle').offset().top }, 200);
-
-                        });
-
-
-
-                    }
-                    if (ButtonPressed === "No") {
-
-                      $('html, body').animate({ scrollTop: $('#scrollpointtitle').offset().top }, 200);
-
-                      return 0;
-                  }
-
-              });
-
-e.preventDefault();
-
-})
-
-
-})
-
-</script>
+{{ HTML::script('js/plugin/jquery-validate/jquery.validate.min.js') }}
+{{ HTML::script('js/applicantevaluation.js')}}
 @stop

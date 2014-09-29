@@ -12,4 +12,9 @@ class Employer extends \Eloquent {
 	{
 		return $this->belongsTo('User', 'user_id');
 	}
+
+	function contract()
+	{
+		return $this->hasMany('Contract');
+	}
 }

@@ -392,3 +392,27 @@ function getCandidateUsingEvaluationId($evaluation)
 
     return $candidate;
 }
+
+function getEmployerIdUsingJobName($jobname)
+{
+    $contract = Contract::whereJob($jobname)->first();
+    $employer = $contract->employer()->first()->user()->first();
+
+    return $employer->id;
+}
+
+
+function getEmployeeByRecruitContract($id)
+{
+    return Resume::findOrFail($id);
+}
+
+function isTaken($jobid)
+{
+    $job =  Recruitcontract::whereJobId($jobid)->first();
+    
+    if(count($job) > 0)
+        return true;
+
+    return false;
+}
