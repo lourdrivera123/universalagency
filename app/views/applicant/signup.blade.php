@@ -98,7 +98,7 @@
 	                                <div class="col-sm-offset-3 col-sm-9">
 	                                    <div class="checkbox">
 	                                        <label>
-	                                           {{ Form::checkbox('terms_and_conditions') }} I Accept All The <a href="#" class="skin-text">Terms And Conditions</a>.
+	                                           {{ Form::checkbox('terms_and_conditions') }} I Accept All The <a href="{{ URL::to('termsofuse') }}" class="skin-text">Terms And Conditions</a>.
                                             </label>
                                             {{ $errors->first('terms_and_conditions','<div class="alert alert-danger">You forgot to Agree on our Terms and Conditions</div>') }}
 	                                    </div>
