@@ -148,9 +148,9 @@
 												@foreach($invitations as $invitation)
 												<tr id="{{ $invitation->id }}">
 													<td><a href="{{ URL::to('applicant/'.$invitation->user->resume()->first()->id) }}" target="_blank">{{ $invitation->user->resume()->first()->first_name.' '.$invitation->user->resume()->first()->last_name }}</a></td>
-													<td><a href="javascript:void(0);" class="invitationstatus" rel="popover-hover" data-jobid="{{ $invitation->job_id }}" data-applicantid="{{ $invitation->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $invitation->request_status }}</strong></a></td>
-													<td>{{ $invitation->status }}</td> <!-- Status like pending, initial screening, interviewed -->
-													<td>{{ formatdatestring($invitation->created_at) }}</td>
+													<td>{{ $invitation->user->resume()->first()->status }}</td>
+													<td>{{ $invitation->request_status }}</td> <!-- Status like pending, initial screening, interviewed -->
+													<td>{{ datedifference($invitation->created_at) }}</td>
 												</tr>
 												@endforeach
 												@endif
@@ -195,7 +195,7 @@
 												@foreach($candidates as $candidate)
 												<tr id="{{ $candidate->id }}">
 													<td><a href="{{ URL::to('applicant/'.$candidate->user->resume()->first()->id) }}" target="_blank">{{ $candidate->user->resume()->first()->first_name.' '.$candidate->user->resume()->first()->last_name }}</a></td>
-													<td><a href="javascript:void(0);" class="invitationstatus" rel="popover-hover" data-jobid="{{ $candidate->job_id }}" data-applicantid="{{ $candidate->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $candidate->request_status }}</strong></a></td>
+													<td><a href="javascript:void(0);" class="invitationstatus" rel="popover-hover" data-jobid="{{ $candidate->job_id }}" data-applicantid="{{ $candidate->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $candidate->user()->first()->resume()->first()->status }}</strong></a></td>
 													<td>{{ $candidate->status }}</td> <!-- Status like pending, initial screening, interviewed -->
 													<td>{{ formatdatestring($candidate->created_at) }}</td>
 												</tr>
@@ -243,7 +243,7 @@
 												@foreach($underinterviews as $underinterview)
 												<tr id="{{ $underinterview->id }}">
 													<td><a href="{{ URL::to('applicant/'.$underinterview->user->resume()->first()->id) }}" target="_blank">{{ $underinterview->user->resume()->first()->first_name.' '.$underinterview->user->resume()->first()->last_name }}</a></td>
-													<td><a href="javascript:void(0);" class="interviewstatus" rel="popover-hover" data-jobid="{{ $underinterview->job_id }}" data-applicantid="{{ $underinterview->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $underinterview->request_status }}</strong></a></td>
+													<td><a href="javascript:void(0);" class="interviewstatus" rel="popover-hover" data-jobid="{{ $underinterview->job_id }}" data-applicantid="{{ $underinterview->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $underinterview->user()->first()->resume()->first()->status }}</strong></a></td>
 													<td>{{ $underinterview->status }}</td> <!-- Status like pending, initial screening, interviewed -->
 													<td>{{ formatdatestring($underinterview->created_at) }}</td>
 												</tr>
@@ -280,7 +280,7 @@
 												<tr>
 													<th>Name</th>
 													<th>Applicant Status</th>
-													<th>Request Status</th>
+													<th>Review Evaluation</th>
 													<th>Date</th>
 												</tr>
 											</thead>
@@ -289,8 +289,8 @@
 												@foreach($underreviews as $underreview)
 												<tr id="{{ $underreview->id }}">
 													<td><a href="{{ URL::to('applicant/'.$underreview->user->resume()->first()->id) }}" target="_blank">{{ $underreview->user->resume()->first()->first_name.' '.$underreview->user->resume()->first()->last_name }}</a></td>
-													<td><a href="javascript:void(0);" class="reviewstatus" rel="popover-hover" data-jobid="{{ $underreview->job_id }}" data-applicantid="{{ $underreview->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $underreview->request_status }}</strong></a></td>
-													<td>{{ $underreview->status }}</td> <!-- Status like pending, initial screening, interviewed -->
+													<td><a href="javascript:void(0);" class="reviewstatus" rel="popover-hover" data-jobid="{{ $underreview->job_id }}" data-applicantid="{{ $underreview->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $underreview->user()->first()->resume()->first()->status }}</strong></a></td>
+													<td><a href="{{ URL::to('adminapplicantevaluation/'.$underreview->id) }}" target="_blank"><button class="btn btn-primary btn-circle"><i class="fa fa-file-text-o"></i></button></a></td> <!-- Status like pending, initial screening, interviewed -->
 													<td>{{ formatdatestring($underreview->created_at) }}</td>
 												</tr>
 												@endforeach

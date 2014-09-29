@@ -17,6 +17,10 @@ foreach (File::allFiles(__DIR__.'/routes') as $partial )
 // $excel->writer->saveFile('example');
 // });
 
+Route::get('yuwa', function(){
+	return View::make('admin.applicantevaluation');
+});
+
 Route::get('thankyoufor', function(){
 	return View::make('applicant.thankyoufortheinterview');
 });

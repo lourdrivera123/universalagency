@@ -48,109 +48,80 @@
           <h2 style="color:#279fbb;">
             {{ Form::open(['id' => 'applyjobform']) }}
             {{ $job->job_title }}
+            <?php $userid = Auth::user()->id; $jobid= $job->id ?>
 
-            @if(!Auth::guest() && isApplicant())
-            @if(isInvited( Auth::user()->id, $job->id ))
+            @if( isApplicant() )
+
+            @if( isHired() )
             
-            @if(checkIfUserHasTakenTests(Auth::user()->id) == 'all tests taken!')
-            <div class="form-inline" style="margin-left:5px;">
-              <a href="javascript:void(0)" id="" onclick="acceptinvitation($(this))" class="btn btn-green" data-jobid="{{ $job->id }}" data-applicantid="{{ Auth::user()->id }}">Accept</a>
-              <a href="javascript:void(0)" id="" onclick="confirm('Are you sure you want to decline?') ? declineinvitation($(this)) : ''" class="btn btn-red" data-jobid="{{ $job->id }}" data-applicantid="{{ Auth::user()->id }}">Decline</a>
-            </div>
-            @elseif( isHired() )
-              <div class="alert alert-info">
-                <div class="msg">
-                  <h4>You cannot accept jobs while you are working for someone.</h4>
-                </div>
-              </div>
-            @else
             <div class="alert alert-info">
               <div class="msg">
-                <h4> Before you proceed, we would like to inform you that we require everyone to take <a href="{{ URL::to('pleasetakepersonalitytest') }}" style="color:blue; font-size:13px; font-weight:bold">Personality test</a> and <a href="{{ URL::to('pleasetakeiqtest') }}" style="color:blue; font-size:13px; font-weight:bold">IQ test</a>. This will help us identify your personality and your intellectual capacity.</h4>
+                <h4>You cannot accept jobs while you are working for someone.</h4>
               </div>
             </div>
-            @endif
-
-            @else
-
-            @if( checkIfApplicantRequested(Auth::user()->id, $job->id ))
-
-            @if(checkIfUserHasTakenTests(Auth::user()->id) == 'all tests taken!')
+            @elseif( checkIfUserHasTakenTests($userid, $jobid) != 'all tests taken!' )
+            
+            <div class="alert alert-info">
+              <div class="msg">
+                <h4> Before you proceed, we would like to inform you that we require everyone to take <a href="{{ URL::to("pleasetakepersonalitytest") }}" style="color:blue; font-size:13px; font-weight:bold">Personality test</a> and <a href="{{ URL::to("pleasetakeiqtest") }}" style="color:blue; font-size:13px; font-weight:bold">IQ test</a>. This will help us identify your personality and your intellectual capacity.</h4>
+              </div>
+            </div>
+            @elseif( checkIfApplicantRequested($userid, $jobid) )
+            
             <div class="form-inline" style="margin-left:5px;">
               <a href="javascript:void(0)" id="{{ Auth::user()->pendingjobrequest()->first()->id }}" class="btn btn-red disabled" data-jobid="{{ $job->id }}" data-applicantid="{{ Auth::user()->id }}" data-jobrequestid="{{ Auth::user()->pendingjobrequest()->first()->id }}">You already requested to this job</a>
             </div>
-            @else
-            <div class="alert alert-info">
-              <div class="msg">
-                <h4> Before you proceed, we would like to inform you that we require everyone to take <a href="{{ URL::to('pleasetakepersonalitytest') }}" style="color:blue; font-size:13px; font-weight:bold">Personality test</a> and <a href="{{ URL::to('pleasetakeiqtest') }}" style="color:blue; font-size:13px; font-weight:bold">IQ test</a>. This will help us identify your personality and your intellectual capacity.</h4>
-              </div>
-            </div>
-            @endif
-
-            @elseif( checkIfApplicantRequestedButApproved(Auth::user()->id, $job->id ))
+            @elseif( checkIfApplicantRequestedAndApproved($userid, $jobid) )
+            
             <div class="row">
               <div class="alert alert-info col-md-12" style="margin-left:5px;">
-                <div class="col-md-12"W>
+                <div class="col-md-12">
                   Your request to this job has been approved.
                 </div>                
               </div>
             </div>
-
-            @elseif( checkIfApplicantRequestedButDisapproved(Auth::user()->id, $job->id ))
-            <div class="alert alert-info col-md-12" style="margin-left:5px;">
-              <div class="msg">
-                Your request to this job has been disapproved.
-              </div>                
-            </div>
-
-            @elseif( hasBeenInvitedButDeclined(Auth::user()->id, $job->id ))
-            <div class="alert alert-info" style="margin-left:5px;">
-              <div class="msg">
-                <i class="fa fa-warning"></i> You were invited on this job before, but you neglected
-              </div>
-            </div>
-            @elseif( hasBeenInvitedAndAccepted(Auth::user()->id, $job->id ))
-
-            @if( checkIfUserHasTakenTests(Auth::user()->id) != 'all tests taken!')
-            <div class="alert alert-info">
-              <div class="msg">
-                <h4> Before you proceed, we would like to inform you that we require everyone to take <a href="{{ URL::to('pleasetakepersonalitytest') }}" style="color:blue; font-size:13px; font-weight:bold">Personality test</a> and <a href="{{ URL::to('pleasetakeiqtest') }}" style="color:blue; font-size:13px; font-weight:bold">IQ test</a>. This will help us identify your personality and your intellectual capacity.</h4>
-              </div>
-            </div>
-            @else
+            @elseif( checkIfApplicantRequestedButDisapproved($userid, $jobid) )
             
-            <div class="alert alert-info">
-              <div class="msg">
-                <h4> You already applied on this job.</h4>
-              </div>
-            </div>
-            @endif
-
-            @else
-
-            @if( checkIfUserHasTakenTests(Auth::user()->id) != 'all tests taken!')
-
-            <div class="alert alert-info">
-              <div class="msg">
-                <h4> Before you proceed, we would like to inform you that we require everyone to take <a href="{{ URL::to('pleasetakepersonalitytest') }}" style="color:blue; font-size:13px; font-weight:bold">Personality test</a> and <a href="{{ URL::to('pleasetakeiqtest') }}" style="color:blue; font-size:13px; font-weight:bold">IQ test</a>. This will help us identify your personality and your intellectual capacity.</h4>
-              </div>
-            </div>
-            @elseif( isHired() )
-              <div class="alert alert-info">
+            <div class="row">
+              <div class="alert alert-info col-md-12" style="margin-left:5px;">
                 <div class="msg">
-                  <h4>You cannot apply for jobs while you are working for someone.</h4>
+                  Your request to this job has been disapproved.
+                </div>                
+              </div>
+            </div>
+            @elseif(isInvited($userid, $jobid) )
+            
+            <div class="row">
+              <div class="form-inline" style="margin-left:5px;">
+                <a href="javascript:void(0)" id="" onclick="acceptinvitation($(this))" class="btn btn-green" data-jobid="{{ $job->id }}" data-applicantid="{{ Auth::user()->id }}">Accept</a>
+                <a href="javascript:void(0)" id="" onclick="confirm('Are you sure you want to decline?') ? declineinvitation($(this)) : ''" class="btn btn-red" data-jobid="{{ $job->id }}" data-applicantid="{{ Auth::user()->id }}">Decline</a>
+              </div>
+            </div>
+            @elseif( hasBeenInvitedButDeclined($userid, $jobid) )
+            
+            <div class="row">
+              <div class="alert alert-info" style="margin-left:5px;">
+                <div class="msg">
+                  <i class="fa fa-warning"></i> You were invited on this job before, but you neglected
                 </div>
               </div>
+            </div>
+            @elseif( hasBeenInvitedAndAccepted($userid, $jobid) )
+            
+            <div class="row">
+              <div class="alert alert-info">
+                <div class="msg">
+                  <h4> You already applied on this job.</h4>
+                </div>
+              </div>
+            </div>
             @else
             <div class="form-inline" style="margin-left:5px;">
               <a href="javascript:void(0)" id="" class="btn btn-primary" data-jobid="{{ $job->id }}" data-applicantid="{{ Auth::user()->id }}" onclick="apply($(this))">I am interested on this job</a>
             </div>
             @endif
             @endif
-            @endif
-            @else
 
-            @endif
             {{ Form::close() }}
           </h2>
         </div>

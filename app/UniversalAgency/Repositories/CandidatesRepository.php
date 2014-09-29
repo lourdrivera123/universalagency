@@ -16,6 +16,16 @@ class CandidatesRepository {
 		return $candidate;
 	}
 
+	function updateCandidateToUnderReview($applicant_id, $job_id)
+	{
+		$candidate = Candidate::whereJobId($job_id)->whereApplicantId($applicant_id)->first();
+		$candidate->status = 'under review';
+		$candidate->save();
+
+		return $candidate;
+
+	}
+
 
 	// function acceptinvitation($input)
 	// {

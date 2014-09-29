@@ -17,7 +17,14 @@ class EvaluationController extends \BaseController {
 
 	function evaluateApplicant()
 	{
-		return View::make('staff.staffevaluateapplicant');
+		$user = User::find(Input::get('applicantid'));
+		$name = $user->resume()->first()->first_name.' '.$user->resume()->first()->last_name;
+
+		
+		return View::make('staff.staffevaluateapplicant')
+		->withApplicantid($user->id)
+		->withJobid(Input::get('jobid'))
+		->withName($name);
 	}
 
 	function store()
@@ -35,5 +42,13 @@ class EvaluationController extends \BaseController {
 		{
 			return Redirect::back()->withInput()->withErrors($e->getErrors());
 		}
+	}
+
+	function adminapplicantevaluation($id)
+	{
+		$evaluation = Evaluation::with('user', 'job')->findOrFail($id);
+		
+		return View::make('admin.applicantevaluation')
+		->withEvaluation($evaluation);
 	}
 }

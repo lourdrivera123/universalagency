@@ -2,13 +2,15 @@
 
 /* Admin Routes */
 
-Route::get('adminemployercontracts', 'ContractsController@adminemployercontracts');
+Route::get('adminapplicantevaluation/{id}', 'EvaluationController@adminapplicantevaluation')->before('role:admin');
+
+Route::get('adminemployercontracts', 'ContractsController@adminemployercontracts')->before('role:admin');
 
 Route::get('adminscheduledinterviews', 'InterviewController@adminscheduledinterviews')->before('role:admin');
 
-Route::get('adminjobinvitations', 'CandidateController@adminjobinvitations');
+Route::get('adminjobinvitations', 'CandidateController@adminjobinvitations')->before('role:admin');
 
-Route::get('adminsetemployercontract', 'ContractsController@adminsetemployercontract');
+// Route::get('adminsetemployercontract', 'ContractsController@adminsetemployercontract');
 
 Route::get('adminviewreports', 'ReportsController@viewrevenue')->before('role:admin');
 
@@ -49,6 +51,8 @@ Route::get('adminjobcandidates/{id}', 'CandidateController@adminjobcandidates');
 Route::post('admin', 'SessionsController@adminstore');
 
 //ajax actions
+
+Route::post('/admindeclineApplicantUnderReview', 'CandidateController@admindeclineApplicantUnderReview');
 
 Route::get('/adminFetchInterviewEvents', 'InterviewController@adminFetchInterviewEvents');
 

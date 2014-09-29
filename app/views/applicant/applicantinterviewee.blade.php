@@ -13,7 +13,7 @@
     // PeerJS object
     var peer = new Peer({ key: 'mw7jmlcwb4akbj4i', debug: 3, config: {'iceServers': [
       { url: 'stun:stun.l.google.com:19302' } // Pass in optional STUN and TURN server for maximum network compatibility
-    ]}});
+      ]}});
 
     peer.on('open', function(){
       $('#my-id').text(peer.id);
@@ -99,39 +99,40 @@
 
   <div class="pure-g">
 
-      <!-- Video area -->
-      <div class="pure-u-2-3" id="video-container">
-        <video id="their-video" autoplay></video>
-        <video id="my-video" muted="true" autoplay></video>
-      </div>
+    <!-- Video area -->
+    <div class="pure-u-2-3" id="video-container">
+      <video id="their-video" autoplay></video>
+      <video id="my-video" muted="true" autoplay></video>
+    </div>
 
-      <!-- Steps -->
-      <div class="pure-u-1-3">
-        <h2>Interviewee Page</h2>
+    <!-- Steps -->
+    <div class="pure-u-1-3">
+      <h2>Interviewee Page</h2>
 
-        <!-- Get local audio/video stream -->
-        <div id="step1">
-          <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
-          <div id="step1-error">
-            <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
-            <a href="" class="pure-button pure-button-error" id="step1-retry">Try again</a>
-          </div>
-        </div>
-
-        <!-- Make calls to others -->
-        <div id="step2">
-          <p>Your id: <span id="my-id">...</span></p>
-          <p>Share this id with staff so they can call you.</p>
-        </div>
-
-        <!-- Call in progress -->
-        <div id="step3">
-          <p>Currently in call with <span id="their-id">...</span></p>
-          <p><a href="{{ URL::to('thankyoufortheinterview') }}" class="pure-button pure-button-error" id="end-call">End call</a></p>
+      <!-- Get local audio/video stream -->
+      <div id="step1">
+        <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
+        <div id="step1-error">
+          <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
+          <a href="" class="pure-button pure-button-error" id="step1-retry">Try again</a>
         </div>
       </div>
+
+      <!-- Make calls to others -->
+      <div id="step2">
+        <p>Your id: <span id="my-id">...</span></p>
+        <p>Share this id with staff so they can call you.</p>
+          <p><a href="{{ URL::to('thankyoufortheinterview') }}" class="pure-button pure-button-error">End call</a></p>
+      </div>
+
+      <!-- Call in progress -->
+      <div id="step3">
+        <p>Currently in call with <span id="their-id">...</span></p>
+        <p><a href="{{ URL::to('thankyoufortheinterview') }}" class="pure-button pure-button-error" id="end-call">End call</a></p>
+      </div>
+    </div>
+
   </div>
-
 
 </body>
 </html>

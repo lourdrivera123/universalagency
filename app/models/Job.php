@@ -28,5 +28,10 @@ class Job extends \Eloquent {
 	{
 		return $this->hasMany('Pendingjobrequest');
 	}	
+
+	function evaluation()
+	{
+		return $this->hasMany('Evaluation');
+	}
 	
 }

@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="page-info">
-                    <h1 class="h1-page-title">Evaluate Applicant </h1>
+                    <h1 class="h1-page-title">Evaluate Applicant - {{ $name }} </h1>
                 </div>
             </div>
         </div>
@@ -38,7 +38,8 @@
             
             {{ Form::open(['action' => 'EvaluationController@store', 'id' => 'evaluate_applicant_form', 'name' => 'evaluate_applicant_form']) }}
             
-            <input type="hidden" name="applicant_id" value="1" />
+            <input type="hidden" name="applicantid" value="{{ $applicantid }}" />
+            <input type="hidden" name="jobid" value="{{ $jobid }}"/>
 
             <div class="smart-form ">
             <div class="rating">

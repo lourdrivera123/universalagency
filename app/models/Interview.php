@@ -17,7 +17,7 @@ class Interview extends \Eloquent {
 
 	function user()
 	{
-		return $this->belongTo('User', 'applicant_id');
+		return $this->belongsTo('User', 'applicant_id');
 	}
 	
 }

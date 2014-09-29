@@ -28,6 +28,7 @@ class InterviewController extends \BaseController {
 
 		return View::make('admin.adminscheduledinterviews')
 		->withStaffs($staffs)
+		->withJobs($jobs)
 		->withApplicants($applicants);
 	}
 

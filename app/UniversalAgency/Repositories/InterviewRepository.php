@@ -25,7 +25,7 @@ class InterviewRepository {
 	{
 		$interview = Interview::find($id);
 
-		$staff_notification = $this->notification->notify_staff_for_interview_today($interview->event_date_time, $interview->staff_id);
+		$staff_notification = $this->notification->notify_staff_for_interview_today($interview->event_date_time, $interview->staff_id, $interview->applicant_id, $interview->job_id );
 		$applicant_notification = $this->notification->notify_applicant_for_interview_today($interview->event_date_time, $interview->applicant_id);
 
 		return $interview;

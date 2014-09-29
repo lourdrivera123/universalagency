@@ -132,13 +132,21 @@
     <!-- Call in progress -->
     <div id="step3">
       <p>Currently in call with <span id="their-id">...</span></p>
-      <p><a href="{{ URL::to('evaluateApplicant') }}" class="pure-button pure-button-error" id="end-call">End call</a></p>
+      <p><a href="{{ URL::to('evaluateApplicant?applicantid='.Input::get('applicantid').'&jobid='.Input::get('jobid')) }}" class="pure-button pure-button-error" id="end-call">End call</a></p>
     </div>
 
     <div>
       <p>
         <h4>What to input ?</h4>
         <h4>Applicant is given a unique id on the upper right of their interview page. Ask them to give the ID so that you can make a call.</h4>
+      </p>
+    </div>
+
+    <br/>
+
+    <div>
+      <p>
+        <h4>If in any circumstances, the applicant needs to evaluated immediately( e.g. the applicant didn't attend the interview). <br/><p><a href="{{ URL::to('evaluateApplicant?applicantid='.Input::get('applicantid').'&jobid='.Input::get('jobid')) }}" class="pure-button pure-button-error" id="end-call">click here</a></p></h4>
       </p>
     </div>
 

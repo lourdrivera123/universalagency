@@ -1840,6 +1840,9 @@ $('#addeventform').validate({
 		var applicantid = $('[name="applicant"]').val();
 		var event_title = $('[name="event_title"]').val();
 		var additional_notes = $('[name="additional_notes"]').val();
+		var job = $('[name="job"]').val();
+
+		
 
 		$.post('/adminaddevent', { 
 
@@ -1852,7 +1855,8 @@ $('#addeventform').validate({
 			staffid: staffid,
 			applicantid: applicantid,
 			event_title: event_title,
-			additional_notes: additional_notes
+			additional_notes: additional_notes,
+			job: job
 			
 		}, function(data){
 			$('#calendar').fullCalendar( 'refetchEvents' );
@@ -1875,6 +1879,9 @@ $('#addeventform').validate({
 			required : true
 		}, 
 		applicant : {
+			required : true
+		},
+		job : {
 			required : true
 		}
 	},

@@ -34,6 +34,17 @@ class CandidateController extends \BaseController {
 		->withUnderreviews($underreviews)
 		->withCandidates($candidates);
 	}
+
+	function admindeclineApplicantUnderReview()
+	{
+		$candidate = Candidate::whereJobId(Input::get('jobid'))->whereApplicantId(Input::get('applicantid'))->first();
+		$candidate->status = 'declined';
+		$candidate->save();
+
+		$notification = $this->notification->sendSorryNoteForBeingDeclined(Input::get('applicantid'), Input::get('jobid'));
+
+		return $candidate;
+	}
 }
 
 

@@ -18,6 +18,8 @@ function isApplicant()
 
         return false;
     }
+
+    return false;
 }
 
 function isEmployer()
@@ -196,7 +198,7 @@ function checkIfApplicantRequested($userid, $jobid)
     if(count($candidate) > 0 ) 
     {
         // return true;
-        if ( $candidate->request_status == 'pending' )
+        if ( $candidate->request_status == 'requesting for application approval' )
         {
             return true;
         }
@@ -214,7 +216,7 @@ function checkIfApplicantRequestedButDisapproved($userid, $jobid)
     if(count($candidate) > 0 ) 
     {
         // return true;
-        if ( $candidate->request_status == 'disapproved' )
+        if ( $candidate->request_status == 'declined' )
         {
             return true;
         }
@@ -225,7 +227,7 @@ function checkIfApplicantRequestedButDisapproved($userid, $jobid)
     return false;
 }
 
-function checkIfApplicantRequestedButApproved($userid, $jobid)
+function checkIfApplicantRequestedAndApproved($userid, $jobid)
 {
     $candidate = Pendingjobrequest::whereUserId($userid)->whereJobId($jobid)->first();
     
@@ -251,40 +253,6 @@ function requeststatus($userid, $jobid)
     {
         return $candidate->request_status;
     }
-}
-
-function hasTakenPersonalityTestOnSpecificEmployer($employerid, $userid)
-{
-    if ( Auth::user()->hasRole('applicant') )
-    {
-        $personalityresult = Personalityresult::whereUserId($userid)->whereEmployerid($employerid)->first();
-
-        if ( count($personalityresult) > 0 )
-        {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return false;
-    }
-}
-
-function hasTakenIqTestOnSpecificEmployer($employerid, $userid)
-{
-    if ( Auth::user()->hasRole('applicant') )
-    {
-        $iqresult = Iqresult::whereUserId($userid)->whereEmployerid($employerid)->first();
-
-        if (count($iqresult) > 0 )
-        {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    return false;
 }
 
 function getAdminId()
@@ -416,4 +384,11 @@ function daydatetimestring($timestamp)
     $datetime = new Carbon($timestamp);
 
     return $datetime->toDayDateTimeString();
+}
+
+function getCandidateUsingEvaluationId($evaluation)
+{
+    $candidate = Candidate::whereJobId($evaluation->job_id)->whereApplicantId($evaluation->applicant_id)->first();
+
+    return $candidate;
 }
