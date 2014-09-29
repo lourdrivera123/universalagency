@@ -137,6 +137,14 @@
 					</section>
 
 					<section>
+						<label class="label" style="font-weight:bold">Job Title</label>
+						<label class="select">
+							{{ Form::select('job', $jobs, null, ['class' => 'form-control']) }}
+							<i></i>
+						</label>
+					</section>
+
+					<section>
 						<label class="label" style="font-weight:bold">Staff</label>
 						<label class="select">
 							{{ Form::select('staff', $staffs, null, ['class' => 'form-control']) }}
@@ -152,37 +160,31 @@
 						</label>
 					</section>
 
-					<!-- 	<section class="col-4">
-							<label class="input"> <i class="icon-append fa fa-edit"></i>
-								<input type="text" name="event_time_to" id="event_time_to" placeholder="To">
-							</label>
-						</section> -->
+					<section>
+						<label class="label" style="font-weight:bold">Additional Notes</label>
+						<label class="textarea"> <i class="icon-append fa fa-info"></i> 										
+							<textarea rows="3" name="additional_notes" id="additional_notes" placeholder="Notes"></textarea> 
+						</label>
+					</section>
 
-						<section>
-							<label class="label" style="font-weight:bold">Additional Notes</label>
-							<label class="textarea"> <i class="icon-append fa fa-info"></i> 										
-								<textarea rows="3" name="additional_notes" id="additional_notes" placeholder="Notes"></textarea> 
-							</label>
-						</section>
-
-						<!-- </div> -->
-					</div>
-
-				</section>
-
-				<div class="modal-footer" id="addemployerfooter">
-					<button type="button" class="btn btn-default" data-dismiss="modal">
-						Cancel
-					</button>
-					<button id="addemployersubmit" type="submit" class="btn btn-primary">
-						Save
-					</button>
+					<!-- </div> -->
 				</div>
-				{{ Form::close() }}
 
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+			</section>
+
+			<div class="modal-footer" id="addemployerfooter">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Cancel
+				</button>
+				<button id="addemployersubmit" type="submit" class="btn btn-primary">
+					Save
+				</button>
+			</div>
+			{{ Form::close() }}
+
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </div>
 @stop
 
@@ -235,8 +237,8 @@
 			//         });
 			//     };
 
-			    console.log(new Date(y, m, d, 10, 30));
-			    
+			console.log(new Date(y, m, d, 10, 30));
+			
 
 			    /* initialize the calendar
 			    -----------------------------------------------------------------*/
@@ -316,12 +318,12 @@
 			    //     	className: ["event", "bg-color-darken"]
 			    //     }],
 
-			        events : '/adminFetchInterviewEvents',
+			    events : '/adminFetchInterviewEvents',
 
 			         // Convert the allDay from string to boolean
 			         eventRender: function(event, element, view) {
 			         	
-			         		event.allDay = false;
+			         	event.allDay = false;
 			         },
 
 			        // events: function(start, end, timezone, callback) {

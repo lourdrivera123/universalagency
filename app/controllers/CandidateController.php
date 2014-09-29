@@ -20,12 +20,18 @@ class CandidateController extends \BaseController {
 	function adminjobcandidates($id)
 	{
 		$jobrequests = Pendingjobrequest::whereJobId($id)->with('user')->get();
+		$invitations = Invitation::whereJobId($id)->with('user')->get();
 		$candidates = Candidate::whereJobId($id)->with('user')->get();
+		$underinterviews = Interview::whereJobId($id)->with('user')->get();
+		$underreviews = Evaluation::whereJobId($id)->with('user')->get();
 		
 		// $candidates = Candidate::all();
 
 		return View::make('admin.adminjobcandidates')
 		->withJobrequests($jobrequests)
+		->withInvitations($invitations)
+		->withUnderinterviews($underinterviews)
+		->withUnderreviews($underreviews)
 		->withCandidates($candidates);
 	}
 }

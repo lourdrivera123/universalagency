@@ -3,23 +3,28 @@
 use Carbon\Carbon;
 use UniversalAgency\Repositories\UsersRepository;
 use UniversalAgency\Repositories\NotificationRepository;
+use UniversalAgency\Repositories\JobsRepository;
 use Illuminate\Support\Collection as Collection;
 
 class InterviewController extends \BaseController {
 
 	protected $user;
 	protected $notification;
+	protected $job;
 
-	function __construct(UsersRepository $user, NotificationRepository $notification)
+	function __construct(UsersRepository $user, NotificationRepository $notification
+		, JobsRepository $job )
 	{
 		$this->user = $user;
 		$this->notification = $notification;
+		$this->job = $job;
 	}
 
 	function adminscheduledinterviews()
 	{
 		$staffs = $this->user->getAllStaff();
 		$applicants = $this->user->getAllApplicant();
+		$jobs = $this->job->listjobs();
 
 		return View::make('admin.adminscheduledinterviews')
 		->withStaffs($staffs)
@@ -34,6 +39,7 @@ class InterviewController extends \BaseController {
 		$interview = new Interview;
 		$interview->staff_id = Input::get('staffid');
 		$interview->applicant_id = Input::get('applicantid');
+		$interview->job_id = Input::get('job');
 		$interview->event_title = Input::get('event_title');
 		$interview->event_date_year = Input::get('event_date_year');
 		$interview->event_date_month = Input::get('event_date_month');

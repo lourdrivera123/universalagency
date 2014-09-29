@@ -15,8 +15,16 @@ class CreateInterviewsTable extends Migration {
 		Schema::create('interviews', function(Blueprint $table)
 		{
 			$table->increments('id');
+			
 			$table->integer('staff_id')->unsigned()->index();
+			$table->foreign('staff_id')->references('id')->on('users')->onDelete('cascade');
+			
 			$table->integer('applicant_id')->unsigned()->index();
+			$table->foreign('applicant_id')->references('id')->on('users')->onDelete('cascade');
+			
+			$table->integer('job_id')->unsigned()->index();
+			$table->foreign('job_id')->references('id')->on('users')->onDelete('cascade');
+			
 			$table->string('event_title');
 			$table->integer('event_date_year');
 			$table->integer('event_date_month');
