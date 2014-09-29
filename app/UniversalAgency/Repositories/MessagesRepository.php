@@ -74,7 +74,7 @@ class MessagesRepository {
 
 	function getUsersMessage()
 	{
-		$messages = Message::whereToUserid(Auth::user()->id)->get();
+		$messages = Message::whereToUserid(Auth::user()->id)->orderby('id', 'DESC')->get();
 
 		return $messages;
 	}

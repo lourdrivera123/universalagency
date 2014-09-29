@@ -72,7 +72,7 @@
 				<td>{{ $education->school_name }}</td>
 				<td style="text-align:center">{{ $education->degreelevel()->first()->levelname }}</td>
 				<td colspan="2" style="text-align:center">
-					({{ $education->year_from_education }} - {{ $education->year_to_education }})
+					{{ $education->year_from_education }} - {{ $education->year_to_education }}
 				</td>
 			</tr>
 			@endforeach
@@ -96,7 +96,8 @@
 				<td>{{ $jobhistory->company_name }}</td>
 				<td style="text-align:center">{{ $jobhistory->title }}</td>
 				<td colspan="2" style="text-align:center">
-					({{ $jobhistory->month_from.' '.$jobhistory->year_from }} - {{ $jobhistory->month_to.' '.$jobhistory->year_to }} )
+					{{ date('F', strtotime($jobhistory->month_from)).' '.$jobhistory->year_from }} - 
+					{{ date('F', strtotime($jobhistory->month_to)).' '.$jobhistory->year_to }}
 				</td>
 			</tr>
 			@endforeach
