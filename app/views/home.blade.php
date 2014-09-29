@@ -55,115 +55,16 @@
 
 <div class="content-wrapper hide-until-loading">
     <div class="section-content top-body">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-xs-12"> 
-                    <div class="content-box content-style4 medium animated"
-                    data-animtype="fadeIn"
-                    data-animrepeat="0"
-                    data-animspeed="1s"
-                    data-animdelay="0.2s"
-                    >
-                    <h4 class="h4-body-title">
-                        <i class="icon-checkbox-checked"></i>
-                        Why choose us?
-                    </h4>
-                    <div class="content-box-text">
-                        Find out the reasons why our top employers trust us.
-                        <br>See our Features
-                        <div>
-                            <a href="{{ URL::to('features') }}" class=" btn btn-sm">
-                                <span>read more</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-xs-12"> 
-                <div class="content-box content-style4 medium animated"
-                data-animtype="fadeIn"
-                data-animrepeat="0"
-                data-animspeed="1s"
-                data-animdelay="0.2s"
-                >
-                <h4 class="h4-body-title">
-                    <i class="icon-camera-streamline-video"></i>
-                    SOMETHING
-                </h4>
-                <div class="content-box-text">
-                    SAMPLE TEXT .. MUST BE LONG
-                    SAMPLE TEXT .. MUST BE LONG
-                    SAMPLE TEXT .. MUST BE LONG
-                    <div>
-                        <a href="#" class=" btn btn-sm">
-                            <span>read more</span>
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-        <div class="col-md-3 col-xs-12"> 
-            <div class="content-box content-style4 medium animated"
-            data-animtype="fadeIn"
-            data-animrepeat="0"
-            data-animspeed="1s"
-            data-animdelay="0.2s"
-            >
-            <h4 class="h4-body-title">
-                <i class="icon-computer-imac"></i>
-                SOMETHING
-            </h4>
-            <div class="content-box-text">
-                SAMPLE TEXT .. MUST BE LONG
-                SAMPLE TEXT .. MUST BE LONG
-                SAMPLE TEXT .. LIMIT TO THREE LINES
-                <div>
-                    <a href="#" class=" btn btn-sm">
-                        <span>read more</span>
-                    </a>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-    <div class="col-md-3 col-xs-12"> 
-        <div class="content-box content-style4 medium animated"
-        data-animtype="fadeIn"
-        data-animrepeat="0"
-        data-animspeed="1s"
-        data-animdelay="0.2s"
-        >
-        <h4 class="h4-body-title">
-            <i class="icon-paint-bucket-streamline"></i>
-            SOMETHING
-        </h4>
-        <div class="content-box-text">
-            SAMPLE TEXT .. MUST BE LONG
-            SAMPLE TEXT .. MUST BE LONG
-            SAMPLE TEXT .. LIMIT TO THREE LINES
-            <div>
-                <a href="#" class=" btn btn-sm">
-                    <span>read more</span>
-                </a>
-            </div>
-        </div>
-        </div>
-    </div>
-    </div>
-</div>
-    <div class="space-sep100"></div>
+        <div class="space-sep100"></div>
         <div class="container">
             <div class="row">
                 <div class="section-content section-color-dark-blue white-text">
                     <div class="container">
                         <div class="row">
                             <h2 class="h2-section-title"> Search Jobs </h2>
-                                
+
                             <center>
-                            {{ Form::open(['url' => 'search', 'class' => 'form-inline', 'method' => 'get']) }}
+                                {{ Form::open(['url' => 'search', 'class' => 'form-inline', 'method' => 'get']) }}
                                 <div class="input-group col-md-6">
 
                                     <div class="input-group-btn" style="width:65px;">
@@ -177,13 +78,13 @@
                                         </ul>
 
                                     </div>
-                                        
+
                                     <input type="hidden" name="searchby" id="searchby" value="job_title"/>
 
                                     <input type="text" name="keyword" class="typeahead form-control input-sm" 
                                     placeholder="Keyword..." style="background-color:#2c3e50;">
                                 </div>
-                            {{ Form::close() }}
+                                {{ Form::close() }}
                             </center>
                         </div>
                     </div>
@@ -197,54 +98,54 @@
                         <div class="title-seperator"></div>
                     </div>
                     <ul class="icons-list check-2 colored-list">
-                    @if(count($categories) > 0)
+                        @if(count($categories) > 0)
                         @foreach($categories as $category)
-                            <li class="col-md-3 col-sm-3">
-                                <a href="{{ URL::to('joblist/'.$category->id) }}">
-                                    {{ $category->category }}
-                                </a>
-                            </li>
+                        <li class="col-md-3 col-sm-3">
+                            <a href="{{ URL::to('joblist/'.$category->id) }}">
+                                {{ $category->category }}
+                            </a>
+                        </li>
                         @endforeach
-                    @endif
+                        @endif
                     </ul>            
                 </div>
             </div>
         </div>
-    <div class="space-sep100"></div>
-</div>
+        <div class="space-sep100"></div>
+    </div>
     <div class="space-sep40"></div>
     <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                                <h2 class="h2-section-title">Featured Employers</h2>
+        <div class="col-md-12 col-sm-12">
+            <h2 class="h2-section-title">Featured Employers</h2>
 
-                                <div class="i-section-title">
-                                    <i class="icon-users-outline">
+            <div class="i-section-title">
+                <i class="icon-users-outline">
 
-                                    </i>
-                                </div>
-
-                                <p class="p-section-info animated" data-animtype="fadeInUp" data-animrepeat="0"
-                                   data-animdelay="0.4s">
-                                    Universal Agency is proud to be affiliated with the following organizations:
-                                </p>
-                                <div class="space-sep20"></div>
-                            </div>
-                        </div>
-    <div class="section-content bottom-body clients-section">
-        <div class="container">
-            <div class="row">
-                <ul class="bottom-body-clients">
-                    @if( count($employers) > 0 )
-                        @foreach( $employers as $employer )
-                            <li class="animated" data-animtype="bounceIn" data-animrepeat="0" data-animdelay="0.2s">
-                                <img src="{{ URL::asset($employer->photo) }}" alt="Logo" class="img-circle client-image" style="width:100px; height:100px; " />
-                            </li>
-                        @endforeach
-                    @endif
-                </ul>            
+                </i>
             </div>
+
+            <p class="p-section-info animated" data-animtype="fadeInUp" data-animrepeat="0"
+            data-animdelay="0.4s">
+            Universal Agency is proud to be affiliated with the following organizations:
+        </p>
+        <div class="space-sep20"></div>
+    </div>
+</div>
+<div class="section-content bottom-body clients-section">
+    <div class="container">
+        <div class="row">
+            <ul class="bottom-body-clients">
+                @if( count($employers) > 0 )
+                @foreach( $employers as $employer )
+                <li class="animated" data-animtype="bounceIn" data-animrepeat="0" data-animdelay="0.2s">
+                    <img src="{{ URL::asset($employer->photo) }}" alt="Logo" class="img-circle client-image" style="width:100px; height:100px; " />
+                </li>
+                @endforeach
+                @endif
+            </ul>            
         </div>
     </div>
+</div>
 
 </div>
 @stop
@@ -277,22 +178,22 @@
 
 <script type="text/javascript">
 
-$(".dropdown-menu li a").click(function(){
-  var selText =  $(this).html();
-  $(this).parents('.input-group').find('.dropdown-toggle').html(selText+'<span class="caret"></span>');
-});
+    $(".dropdown-menu li a").click(function(){
+      var selText =  $(this).html();
+      $(this).parents('.input-group').find('.dropdown-toggle').html(selText+'<span class="caret"></span>');
+  });
 
-$('#job_title').click(function(){
-    $('#searchby').val('job_title');
-});
+    $('#job_title').click(function(){
+        $('#searchby').val('job_title');
+    });
 
-$('#company').click(function(){
-    $('#searchby').val('company');
-});
+    $('#company').click(function(){
+        $('#searchby').val('company');
+    });
 
-$('#location').click(function(){
-    $('#searchby').val('location');
-});
+    $('#location').click(function(){
+        $('#searchby').val('location');
+    });
 
 </script>
 @stop
