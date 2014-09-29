@@ -53,12 +53,19 @@
 									<a href="#tabs-b">Invited</a>
 								</li>
 								<li>
-									<a href="#tabs-c">Under Interview</a>
+									<a href="#tabs-c">Under Initial Screening</a>
 								</li>
 								<li>
-									<a href="#tabs-d">Under Review</a>
+									<a href="#tabs-d">Under Interview</a>
+								</li>
+								<li>
+									<a href="#tabs-e">Under Review</a>
 								</li>
 							</ul>
+
+
+
+
 							<div id="tabs-a">
 
 								<!-- widget div-->
@@ -77,122 +84,243 @@
 											<thead>
 												<tr>
 													<th>Name</th>
-													<th>Status</th>
+													<th>Applicant Status</th>
+													<th>Request Status</th>
 													<th>Date</th>
-													<!-- <th></th> -->
 												</tr>
 											</thead>
-											<tbody id="candidatestable">
+											<tbody id="requestedtable">
 												@if(count($jobrequests) > 0)
 												@foreach($jobrequests as $jobrequest)
 												<tr id="{{ $jobrequest->id }}">
 													<td><a href="{{ URL::to('applicant/'.$jobrequest->user->resume()->first()->id) }}" target="_blank">{{ $jobrequest->user->resume()->first()->first_name.' '.$jobrequest->user->resume()->first()->last_name }}</a></td>
+													<td>{{ $jobrequest->user->resume()->first()->status }}</td>
+													
 													@if( $jobrequest->request_status == 'requesting for application approval' )
 													<td><a href="javascript:void(0);" class="statusapproval" rel="popover-hover" data-jobid="{{ $jobrequest->job_id }}" data-applicantid="{{ $jobrequest->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $jobrequest->request_status }}</strong></a></td>
 													@elseif($jobrequest->request_status == 'initial screening')
 													<td><a href="javascript:void(0);" class="initialscreeningapproval" rel="popover-hover" data-jobid="{{ $jobrequest->job_id }}" data-applicantid="{{ $jobrequest->user_id }}" data-placement="top" data-original-title="Applicant is under initial screening" data-content="Please review the applicant's test results and requirements by clicking his/her name."><strong>{{ $jobrequest->request_status }}</strong></a></td>
 													@endif
 
-													<td>{{ formatdatestring($jobrequest->created_at) }}</td>
-												<!-- <td>
-													<select >
-														<option>Under Interview</option>
-														<option>Under Review</option>
-														<option>Hired</option>
-													</select>
-												</td> -->
-											</tr>
-											@endforeach
-											@endif
+													<td>{{ datedifference($jobrequest->created_at) }}</td>
+												</tr>
+												@endforeach
+												@endif
 
 
-										</tbody>
-									</table>
+											</tbody>
+										</table>
+
+									</div>
+									<!-- end widget content -->
 
 								</div>
-								<!-- end widget content -->
-
+								<!-- end widget div -->
 							</div>
-							<!-- end widget div -->
-						</div>
-						<div id="tabs-b">
-							<!-- widget div-->
-							<div>
-
-								<!-- widget edit box -->
-								<div class="jarviswidget-editbox"></div>
-								<!-- end widget edit box -->
-
-								<!-- widget content -->
-								<div class="widget-body no-padding">
-
-									<div class="dt-toolbar"></div>
-
-									<table id="dt_basic1" class="table table-striped table-bordered table-hover" width="100%">
-										<thead>
-											<tr>
-												<th>Name</th>
-												<th>Status</th>
-												<th>Date</th>
-												<!-- <th></th> -->
-											</tr>
-										</thead>
-										<tbody id="candidatestable">
-											@if(count($candidates) > 0)
-											@foreach($candidates as $candidate)
-											<tr id="{{ $candidate->id }}">
-												<td><a href="{{ URL::to('applicant/'.$candidate->user->resume()->first()->id) }}" target="_blank">{{ $candidate->user->resume()->first()->first_name.' '.$candidate->user->resume()->first()->last_name }}</a></td>
-												<td>{{ $candidate->status }}</td> <!-- Status like pending, initial screening, interviewed -->
-												
-												<!-- @if($candidate->request_status == 'request')
-												<td><a href="javascript:void(0);" class="initialscreeningapproval" rel="popover-hover" data-jobid="{{ $jobrequest->job_id }}" data-applicantid="{{ $jobrequest->user_id }}" data-placement="top" data-original-title="Applicant is under initial screening" data-content="Please review the applicant's test results and requirements by clicking his/her name."><strong>{{ $jobrequest->request_status }}</strong></a></td>
-												@endif -->
-
-												<td>{{ formatdatestring($candidate->created_at) }}</td>
-												<!-- <td>
-													<select >
-														<option>Under Interview</option>
-														<option>Under Review</option>
-														<option>Hired</option>
-													</select>
-												</td> -->
-											</tr>
-											@endforeach
-											@endif
 
 
-										</tbody>
-									</table>
+
+
+							<div id="tabs-b">
+								<!-- widget div-->
+								<div>
+
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox"></div>
+									<!-- end widget edit box -->
+
+									<!-- widget content -->
+									<div class="widget-body no-padding">
+
+										<div class="dt-toolbar"></div>
+
+										<table id="dt_basic1" class="table table-striped table-bordered table-hover" width="100%">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Applicant Status</th>
+													<th>Request Status</th>
+													<th>Date</th>
+												</tr>
+											</thead>
+											<tbody id="invitationstable">
+												@if(count($invitations) > 0)
+												@foreach($invitations as $invitation)
+												<tr id="{{ $invitation->id }}">
+													<td><a href="{{ URL::to('applicant/'.$invitation->user->resume()->first()->id) }}" target="_blank">{{ $invitation->user->resume()->first()->first_name.' '.$invitation->user->resume()->first()->last_name }}</a></td>
+													<td><a href="javascript:void(0);" class="invitationstatus" rel="popover-hover" data-jobid="{{ $invitation->job_id }}" data-applicantid="{{ $invitation->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $invitation->request_status }}</strong></a></td>
+													<td>{{ $invitation->status }}</td> <!-- Status like pending, initial screening, interviewed -->
+													<td>{{ formatdatestring($invitation->created_at) }}</td>
+												</tr>
+												@endforeach
+												@endif
+
+
+											</tbody>
+										</table>
+
+									</div>
+									<!-- end widget content -->
 
 								</div>
-								<!-- end widget content -->
-
+								<!-- end widget div -->
 							</div>
-							<!-- end widget div -->
+
+
+
+							<div id="tabs-c">
+								<!-- widget div-->
+								<div>
+
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox"></div>
+									<!-- end widget edit box -->
+
+									<!-- widget content -->
+									<div class="widget-body no-padding">
+
+										<div class="dt-toolbar"></div>
+
+										<table id="dt_basic2" class="table table-striped table-bordered table-hover" width="100%">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Applicant Status</th>
+													<th>Request Status</th>
+													<th>Date</th>
+												</tr>
+											</thead>
+											<tbody id="candidatetable">
+												@if(count($candidates) > 0)
+												@foreach($candidates as $candidate)
+												<tr id="{{ $candidate->id }}">
+													<td><a href="{{ URL::to('applicant/'.$candidate->user->resume()->first()->id) }}" target="_blank">{{ $candidate->user->resume()->first()->first_name.' '.$candidate->user->resume()->first()->last_name }}</a></td>
+													<td><a href="javascript:void(0);" class="invitationstatus" rel="popover-hover" data-jobid="{{ $candidate->job_id }}" data-applicantid="{{ $candidate->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $candidate->request_status }}</strong></a></td>
+													<td>{{ $candidate->status }}</td> <!-- Status like pending, initial screening, interviewed -->
+													<td>{{ formatdatestring($candidate->created_at) }}</td>
+												</tr>
+												@endforeach
+												@endif
+
+
+											</tbody>
+										</table>
+
+									</div>
+									<!-- end widget content -->
+
+								</div>
+								<!-- end widget div -->
+							</div>
+
+
+
+
+							<div id="tabs-d">
+									<!-- widget div-->
+								<div>
+
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox"></div>
+									<!-- end widget edit box -->
+
+									<!-- widget content -->
+									<div class="widget-body no-padding">
+
+										<div class="dt-toolbar"></div>
+
+										<table id="dt_basic3" class="table table-striped table-bordered table-hover" width="100%">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Applicant Status</th>
+													<th>Request Status</th>
+													<th>Date</th>
+												</tr>
+											</thead>
+											<tbody id="underreviewtable">
+												@if(count($underinterviews) > 0)
+												@foreach($underinterviews as $underinterview)
+												<tr id="{{ $underinterview->id }}">
+													<td><a href="{{ URL::to('applicant/'.$underinterview->user->resume()->first()->id) }}" target="_blank">{{ $underinterview->user->resume()->first()->first_name.' '.$underinterview->user->resume()->first()->last_name }}</a></td>
+													<td><a href="javascript:void(0);" class="interviewstatus" rel="popover-hover" data-jobid="{{ $underinterview->job_id }}" data-applicantid="{{ $underinterview->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $underinterview->request_status }}</strong></a></td>
+													<td>{{ $underinterview->status }}</td> <!-- Status like pending, initial screening, interviewed -->
+													<td>{{ formatdatestring($underinterview->created_at) }}</td>
+												</tr>
+												@endforeach
+												@endif
+
+
+											</tbody>
+										</table>
+
+									</div>
+									<!-- end widget content -->
+
+								</div>
+								<!-- end widget div -->
+							</div>
+
+
+							<div id="tabs-e">
+									<!-- widget div-->
+								<div>
+
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox"></div>
+									<!-- end widget edit box -->
+
+									<!-- widget content -->
+									<div class="widget-body no-padding">
+
+										<div class="dt-toolbar"></div>
+
+										<table id="dt_basic4" class="table table-striped table-bordered table-hover" width="100%">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Applicant Status</th>
+													<th>Request Status</th>
+													<th>Date</th>
+												</tr>
+											</thead>
+											<tbody id="underreviewtable">
+												@if(count($underreviews) > 0)
+												@foreach($underreviews as $underreview)
+												<tr id="{{ $underreview->id }}">
+													<td><a href="{{ URL::to('applicant/'.$underreview->user->resume()->first()->id) }}" target="_blank">{{ $underreview->user->resume()->first()->first_name.' '.$underreview->user->resume()->first()->last_name }}</a></td>
+													<td><a href="javascript:void(0);" class="reviewstatus" rel="popover-hover" data-jobid="{{ $underreview->job_id }}" data-applicantid="{{ $underreview->user_id }}" data-placement="top" data-original-title="Applicant Requested for the job" data-content="Please review the applicant profile and check if he/she matches the qualifications required for this job."><strong>{{ $underreview->request_status }}</strong></a></td>
+													<td>{{ $underreview->status }}</td> <!-- Status like pending, initial screening, interviewed -->
+													<td>{{ formatdatestring($underreview->created_at) }}</td>
+												</tr>
+												@endforeach
+												@endif
+
+
+											</tbody>
+										</table>
+
+									</div>
+									<!-- end widget content -->
+
+								</div>
+								<!-- end widget div -->
+							</div>
+
+
 						</div>
-						<div id="tabs-c">
-							<p>
-								Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.
-							</p>
-						</div>
-						<div id="tabs-d">
-							<p>
-								Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.
-							</p>
-						</div>
+
 					</div>
 
 				</div>
-
-			</div>
-			<!-- end widget -->
-		</article>
-		<!-- WIDGET END -->
-	</div>
-	<!-- end row -->
-	<!-- end row -->
-</section>
-<!-- end widget grid -->
+				<!-- end widget -->
+			</article>
+			<!-- WIDGET END -->
+		</div>
+		<!-- end row -->
+		<!-- end row -->
+	</section>
+	<!-- end widget grid -->
 
 </div>
 <!-- END MAIN CONTENT -->
@@ -226,6 +354,24 @@
 		});
 
 		var otable1 = $('#dt_basic1').DataTable({
+
+			"sDom": "<'dt-toolbar'<'col-xs-6'<'toolbar'>l><'col-xs-6'f>>"
+
+		});
+
+		var otable2 = $('#dt_basic2').DataTable({
+
+			"sDom": "<'dt-toolbar'<'col-xs-6'<'toolbar'>l><'col-xs-6'f>>"
+
+		});
+
+		var otable3 = $('#dt_basic3').DataTable({
+
+			"sDom": "<'dt-toolbar'<'col-xs-6'<'toolbar'>l><'col-xs-6'f>>"
+
+		});
+
+		var otable4 = $('#dt_basic4').DataTable({
 
 			"sDom": "<'dt-toolbar'<'col-xs-6'<'toolbar'>l><'col-xs-6'f>>"
 
