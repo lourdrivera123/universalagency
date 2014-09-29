@@ -134,12 +134,12 @@
 
                         <div class="space-sep40"></div>
 
+                        @if(count($educations) > 0)
                         <div class="title-block clearfix">
                             <h3 class="h3-body-title"><i class="fa fa-book"></i> Educational Background</h3>
                             <div class="title-seperator"></div>
                         </div>
 
-                        @if(count($educations) > 0)
                         @foreach($educations as $education)
                         <div class="row">
                             <div class="col-md-3 col-xs-4">
@@ -170,14 +170,12 @@
 
                         <div class="space-sep10"></div>
 
-                        <div class="row">
-                            <div class="title-block clearfix">
-                                <h3 class="h3-body-title"><i class="fa fa-briefcase"></i> Employment History</h3>
-                                <div class="title-seperator"></div>
-                            </div>
-                        </div>
-
                         @if(count($jobs) > 0)
+                        <div class="title-block clearfix">
+                            <h3 class="h3-body-title"><i class="fa fa-briefcase"></i> Employment History</h3>
+                            <div class="title-seperator"></div>
+                        </div>
+                        
                         @foreach($jobs as $job)
                         <div class="row">
                             <div class="col-md-3 col-xs-4">
@@ -206,20 +204,39 @@
                         <div class="space-sep10"></div>
                     </div>
                     <div class="tab-pane" id="tab_attachment">
-                      <div class="row">
-                            <!-- Resume pdf here, each user must have a pdf, cause it generates every time they create their resume -->
-                            <a href="{{ URL::to($resumepdf->path) }}" target="_blank">Resume</a>
+                        <div class="row">
+                            <div class="price-table ">
+                                <div class="price-table-header">
+                                    <div class="price-label">
+                                        <div class="price-label-name">
+                                            <h3 class="h3-body-title"><i class="fa fa-download"> </i> Attachments </h3>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <!-- Attachments here, it is not mandatory -->
-                            @if( !is_null($attachments) )
+                                <div class="price-table-rows">
+                                    <div class="price-table-row">
+                                     <!-- Resume pdf here, each user must have a pdf, cause it generates every time they create their resume -->
+                                     <a href="{{ URL::to($resumepdf->path) }}" target="_blank">
+                                        <strong style="font-size:15px;"> Resume </strong> <p>({{ basename($resumepdf->path) }}) </p>
+                                    </a>
+                                </div>
+                                <!-- Attachments here, it is not mandatory -->
+                                @if(!is_null($attachments) )
                                 @foreach($attachments as $attachment)
-                                    <a href="{{ URL::to($attachment->path) }}" target="_blank">{{ $attachment->name }}</a>
+                                <div class="price-table-row">
+                                    <a href="{{ URL::to($attachment->path) }}" target="_blank">
+                                        <p style="font-size:15px;"> {{ basename($attachment->path) }} </p>
+                                    </a>
+                                </div>
                                 @endforeach
-                            @endif
-                      </div>
-                  </div>
+                                @endif
+                            </div>   
+                        </div> 
+                    </div>
+                </div>
 
-                  <div class="tab-pane" id="tab_results">
+                <div class="tab-pane" id="tab_results">
                     @if(!empty($personalityresult) && !empty($iqresult)) <!-- NAAY SULOD ANG DUHA -->
                     <div class="title-block clearfix">
                         <h3 class="h3-body-title"><i class="fa fa-pencil"> </i> Personality Test </h3>
