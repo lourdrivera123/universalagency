@@ -2,8 +2,6 @@
 
 @section('ribbon')
 
-<?php system('php artisan universalagency:invitationexpiration'); ?>
-
 <!-- RIBBON -->
 <div id="ribbon">
 	<a href="">

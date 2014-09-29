@@ -66,7 +66,7 @@
             @else
             <div class="alert alert-info">
               <div class="msg">
-                <h4> Before you proceed, we would like to inform you that we require everyone to take <a href="{{ URL::to('personalitytest') }}" style="color:blue; font-size:13px; font-weight:bold">Personality test</a> and <a href="{{ URL::to('iqtest') }}" style="color:blue; font-size:13px; font-weight:bold">IQ test</a>. This will help us identify your personality and your intellectual capacity.</h4>
+                <h4> Before you proceed, we would like to inform you that we require everyone to take <a href="{{ URL::to('pleasetakepersonalitytest') }}" style="color:blue; font-size:13px; font-weight:bold">Personality test</a> and <a href="{{ URL::to('pleasetakeiqtest') }}" style="color:blue; font-size:13px; font-weight:bold">IQ test</a>. This will help us identify your personality and your intellectual capacity.</h4>
               </div>
             </div>
             @endif
