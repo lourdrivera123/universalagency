@@ -180,7 +180,8 @@
                         <div class="row">
                             <div class="col-md-3 col-xs-4">
                                 <p style="font-weight:bold; font-size:15px;">
-                                    {{ $job->month_from }}/{{ $job->year_from }} - {{  $job->month_to }}/{{ $job->year_to }} 
+                                    {{ $job->month_from.'/'.$job->year_from }} - 
+                                    {{ $job->month_to.'/'.$job->year_to }} 
                                 </p>
                             </div>
                             <div class="col-md-9 col-xs-8">

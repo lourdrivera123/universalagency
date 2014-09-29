@@ -21,6 +21,8 @@ class CreateMessagesTable extends Migration {
             $table->foreign('to_userid')->references('id')->on('users')->onDelete('cascade');
 			$table->integer('jobid')->index()->unsigned();
 			$table->string('subject');
+			$table->string('status')->default('unread');
+			$table->softDeletes();
 			$table->longtext('message');
 			$table->timestamps();
 		});

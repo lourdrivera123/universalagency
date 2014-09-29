@@ -40,4 +40,13 @@ class MessagesController extends \BaseController {
 		return $message;
 	}
 
+	function changemessagestatus()
+	{
+		$message = Message::findOrFail(Input::get('messageid'));	
+		$message->status = 'read';
+		$message->save();
+
+		return $message;
+	}
+
 }

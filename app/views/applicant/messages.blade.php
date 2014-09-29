@@ -70,47 +70,83 @@
 							<div class="space-sep50"></div>
 							<div id="attachmentshere">
 								
-							<span style="color:#0093f0;"> <a href="javascript:void(0)" id="replyattachmenttrigger">+ Attach a file</a></span>
+								<span style="color:#0093f0;"> <a href="javascript:void(0)" id="replyattachmenttrigger">+ Attach a file</a></span>
+							</div>
+							<center>
+								<button type="submit" class="btn btn-default btn-sm" id="btn_send">Send</button>
+							</center>	
+							{{ Form::close() }}
 						</div>
-						<center>
-							<button type="submit" class="btn btn-default btn-sm" id="btn_send">Send</button>
-						</center>	
-						{{ Form::close() }}
 					</div>
-				</div>
-				<div class="space-sep20"></div>
-				@else
-				<div class="col-md-12">
-					<div class="divider divider-shadow"></div>
-				</div>
-				@if(count($messages) > 0)
-				@foreach($messages as $message)
-				<div class="row">
-					<div class="col-md-1">
-						<img src="{{ URL::asset('images/admin.png')  }}" class="img-circle" style="width:50px; height:50px; ">
+					<div class="space-sep20"></div>
+					@else
+					<div class="col-md-12">
+						<div class="divider divider-shadow"></div>
 					</div>
-					<div class="col-md-2">
-						<label>Universal Agency</label><br>
-						<p style="font-size:10px;">{{ datedifference($message->created_at) }}</p>
+					@if(count($messages) > 0)
+					@foreach($messages as $message)
+					@if($message->status == 'unread')
+					<div class="row">
+						<div class="col-md-1">
+							<img src="{{ URL::asset('images/admin.png')  }}" class="img-circle" style="width:50px; height:50px; ">
+						</div>
+						<div class="col-md-2">
+							<label>Universal Agency</label><br>
+							<p style="font-size:10px;">{{ datedifference($message->created_at) }}</p>
+						</div>
+						<div class="col-md-6 readmessage" data-messageid="{{ $message->id }}">
+							<label style="color:#0093f0;">
+								<a class="readmessage" data-messageid="{{ $message->id }}" href="{{ 'messages/'.$message->id }}">
+									{{ $message->subject }} <b> (New) </b>
+								</a>
+							</label><br>
+							{{ Str::limit($message->message, 30) }}
+						</div>
+						<div class="col-md-1">
+							<button href="#" class="btn btn-sm btn-red">
+								<span class="glyphicon glyphicon-trash"></span> Delete
+							</button>
+						</div>
+						<div class="col-md-1"></div>
 					</div>
-					<div class="col-md-9">
-						<label style="color:#0093f0;"><a href="{{ 'messages/'.$message->id }}">{{ $message->subject }}</a></label><br>
-						{{ Str::limit($message->message, 30) }}
+					<div class="col-md-12">
+						<div class="divider divider-shadow"></div>
 					</div>
+					<div class="space-sep20"></div>
+					@else
+					<div class="row">
+						<div class="col-md-1">
+							<img src="{{ URL::asset('images/admin.png')  }}" class="img-circle" style="width:50px; height:50px; ">
+						</div>
+						<div class="col-md-2">
+							<label>Universal Agency</label><br>
+							<p style="font-size:10px;">{{ datedifference($message->created_at) }}</p>
+						</div>
+						<div class="col-md-6 readmessage" data-messageid="{{ $message->id }}">
+							<label style="color:#0093f0;"><a class="readmessage" data-messageid="{{ $message->id }}" href="{{ 'messages/'.$message->id }}">{{ $message->subject }}</a></label><br>
+							{{ Str::limit($message->message, 30) }}
+						</div>
+						<div class="col-md-1">
+							<button href="#" class="btn btn-sm btn-red">
+								<span class="glyphicon glyphicon-trash"></span> Delete
+							</button>
+						</div>
+						<div class="col-md-1"></div>
+					</div>
+					<div class="col-md-12">
+						<div class="divider divider-shadow"></div>
+					</div>
+					<div class="space-sep20"></div>
+					@endif
+					@endforeach
+					@else
+					<h1 class="error-text-2">Nothing Here <span class="particle particle--c"></span><span class="particle particle--a"></span><span class="particle particle--b"></span> </h1>
+					@endif
+					@endif
 				</div>
-				<div class="col-md-12">
-					<div class="divider divider-shadow"></div>
-				</div>
-				<div class="space-sep20"></div>
-				@endforeach
-				@else
-				<h1 class="error-text-2">Nothing Here <span class="particle particle--c"></span><span class="particle particle--a"></span><span class="particle particle--b"></span> </h1>
-				@endif
-				@endif
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 @stop
 
@@ -142,4 +178,15 @@
 {{ HTML::script('js/personalizedscript.js') }}
 {{ HTML::script('js/bootstrap-datepicker.js') }}
 {{ HTML::script('js/validateresumeform.js') }}
+
+<script type="text/javascript">
+	$('.readmessage').click(function(){
+		var messageid = $(this).attr('data-messageid');
+		// alert(messageid);
+
+		$.get('/changemessagestatus', { messageid: messageid }, function(data){
+			console.log(data);
+		});
+	});
+</script>
 @stop

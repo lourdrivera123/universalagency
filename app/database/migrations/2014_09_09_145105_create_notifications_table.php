@@ -28,7 +28,7 @@ class CreateNotificationsTable extends Migration {
 			$table->string('notification_category');
 			$table->string('subject');
 			$table->longtext('message');
-			
+			$table->string('status')->default('unread');			
 			$table->timestamps();
 		});
 	}
