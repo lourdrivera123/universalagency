@@ -91,24 +91,28 @@
 							<img src="{{ URL::asset('images/admin.png')  }}" class="img-circle" style="width:50px; height:50px; ">
 						</div>
 						<div class="col-md-2">
-							<label class="readmessage" data-messageid="{{ $message->id }}"><a href="{{ 'messages/'.$message->id }}" class="readmessage" data-messageid="{{ $message->id }}">Universal Agency</a></label><br>
+							<label>Universal Agency</label><br>
 							<p style="font-size:10px;">{{ datedifference($message->created_at) }}</p>
 						</div>
-						<!-- <div class="col-md-6 readmessage" data-messageid="{{ $message->id }}">
+						<div class="col-md-6 readmessage" data-messageid="{{ $message->id }}">
 							<label style="color:#0093f0;">
 								<a class="readmessage" data-messageid="{{ $message->id }}" href="{{ 'messages/'.$message->id }}">
-									{{ $message->subject }} (NEW)
+									{{ $message->subject }} <b> (New) </b>
 								</a>
 							</label><br>
 							{{ Str::limit($message->message, 30) }}
-						</div> -->
-						<!-- <div class="col-md-1">
+						</div>
+						<div class="col-md-1">
 							<button href="#" class="btn btn-sm btn-red">
 								<span class="glyphicon glyphicon-trash"></span> Delete
 							</button>
-						</div> -->
+						</div>
 						<div class="col-md-1"></div>
 					</div>
+					<div class="col-md-12">
+						<div class="divider divider-shadow"></div>
+					</div>
+					<div class="space-sep20"></div>
 					@else
 					<div class="row">
 						<div class="col-md-1">
@@ -129,11 +133,11 @@
 						</div>
 						<div class="col-md-1"></div>
 					</div>
-					@endif
 					<div class="col-md-12">
 						<div class="divider divider-shadow"></div>
 					</div>
 					<div class="space-sep20"></div>
+					@endif
 					@endforeach
 					@else
 					<h1 class="error-text-2">Nothing Here <span class="particle particle--c"></span><span class="particle particle--a"></span><span class="particle particle--b"></span> </h1>

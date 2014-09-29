@@ -1,9 +1,7 @@
 <!-- Header -->
 <header id="header">
     <div class="container">
-
         <div class="row header">
-
             <!-- Logo -->
             <div class="col-xs-2 logo" style="padding-bottom:15px;">
                 <a href="home">
@@ -12,16 +10,13 @@
             </div>
             <!-- //Logo// -->
 
-
             <!-- Navigation File -->
             <div class="col-md-10">
-
                 <!-- Mobile Button Menu -->
                 <div class="mobile-menu-button">
                     <i class="fa fa-list-ul"></i>
                 </div>
                 <!-- //Mobile Button Menu// -->
-
                 <nav>
                     <ul class="navigation">
                         <li>
@@ -76,10 +71,32 @@
 
                         @if(isApplicant())
                         <li>
-                            <a href="{{ URL::to('messages') }}"><span class="label-nav"><i class="fa fa-envelope-o fa-2x"><i class="notificationalerticon">3</i></i> </span></a>
+                            <a href="{{ URL::to('messages') }}">
+                                <span class="label-nav">
+
+                                    <i class="fa fa-envelope-o fa-2x">
+                                        @if( count(getUnreadMessages()) > 0 )
+                                        <i class="notificationalerticon">
+                                            {{  count(getUnreadMessages()) }}
+                                        </i>
+                                        @endif
+
+                                    </i> 
+                                </span>
+                            </a>
                         </li>
                         <li>
-                            <a href="{{ URL::to('notifications') }}"><span class="label-nav"><i class="fa fa-globe fa-2x"><i class="notificationalerticon">3</i></i> </span></a>
+                            <a href="{{ URL::to('notifications') }}">
+                                <span class="label-nav">
+                                    <i class="fa fa-globe fa-2x">
+                                    @if( count(getUnreadNotifications()) > 0 )
+                                    <i class="notificationalerticon">
+                                    {{ count(getUnreadNotifications()) }}
+                                    </i>
+                                    @endif
+                                    </i>
+                                </span>
+                            </a>
                         </li>
                         <li>
                             <a ><span class="label-nav"><i class="fa fa-user"></i> {{ Auth::user()->resume()->first()->first_name }} </span></a>
@@ -106,7 +123,7 @@
                         </li>
                         @elseif(isStaff())
                         <li>
-                        <a href="javascript:void(0)"><span class="label-nav"><i class="fa fa-user"></i> {{ Auth::user()->staff()->first()->first_name }} </span></a>
+                            <a href="javascript:void(0)"><span class="label-nav"><i class="fa fa-user"></i> {{ Auth::user()->staff()->first()->first_name }} </span></a>
                             <ul>
                                 <li><a href="{{ URL::to('staffchangepassword') }}"> <i class="fa fa-edit"> </i>Change Password </a></li>
                                 <li><a href="{{ URL::to('signout') }}"> <i class="fa fa-sign-out"> </i>Logout </a></li>

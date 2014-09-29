@@ -417,3 +417,18 @@ function daydatetimestring($timestamp)
 
     return $datetime->toDayDateTimeString();
 }
+
+
+function getUnreadMessages()
+{
+    $messages = Message::whereToUserid(Auth::user()->id)->whereStatus('unread')->orderby('id', 'DESC')->get();
+
+    return $messages;
+}
+
+function getUnreadNotifications()
+{
+    $notifications = Notification::whereToUserid(Auth::user()->id)->whereStatus('unread')->orderBy('created_at', 'DESC')->get();
+
+    return $notifications;
+}

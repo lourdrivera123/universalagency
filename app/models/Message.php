@@ -13,4 +13,8 @@ class Message extends \Eloquent {
 	protected $fillable = [];
 
 	protected $table = 'messages';
+
+	function user() {
+		return $this->belongsTo('User', 'to_userid');
+	}
 }
