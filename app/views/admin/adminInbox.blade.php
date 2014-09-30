@@ -66,7 +66,7 @@
 					
 			<ul class="inbox-menu-lg">
 				<li class="active">
-					<a class="inbox-load" href="javascript:void(0);"> Inbox (14) </a>
+					<a class="inbox-load" href="javascript:void(0);"> Inbox </a>
 				</li>
 				<li>
 					<a href="javascript:void(0);">Sent</a>
