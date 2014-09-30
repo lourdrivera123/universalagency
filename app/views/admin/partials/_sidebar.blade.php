@@ -23,7 +23,6 @@
 			</li>
 			<li {{ Request::is('admininbox') ? 'class="active"' : '' }}>
 				<a href="{{ URL::to('admininbox') }}"><i class="fa fa-lg fa-fw fa-inbox"></i> <span class="menu-item-parent">Inbox</span>
-					
 				</li>
 
 				<li {{ Request::is('adminemployers') ? 'class="active"' : '' }}>
