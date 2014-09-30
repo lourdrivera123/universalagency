@@ -51,7 +51,6 @@
 								<thead>
 									<tr>
 										<th><i class="fa fa-fw fa-key text-muted hidden-md hidden-sm hidden-xs"></i> ID</th>
-										<th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Contract Title</th>
 										<th><i class="fa fa-fw fa-info-circle text-muted hidden-md hidden-sm hidden-xs"></i> Salary </th>
 										<th><i class="fa fa-fw fa-info-circle text-muted hidden-md hidden-sm hidden-xs"></i> Cut-off Period </th>
 										<th><i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"></i> Job Title </th>
@@ -66,7 +65,6 @@
 										@foreach($contracts as $contract)
 										<tr id="{{ $contract->id }}">
 											<td>{{ $contract->id }}</td>
-											<td>{{ $contract->contract_title }}</td>
 											<td>{{ $contract->salary }}</td>
 											<td>{{ $contract->cut_off_period }}</td>
 											<td>{{ $contract->job }}</td>

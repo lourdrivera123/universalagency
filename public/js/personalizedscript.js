@@ -1748,7 +1748,7 @@ $('#contract_form').validate({
 		function completeHandler(data)
 		{
 			// console.log(data);
-			$('#employercontracttable').append('<tr id="'+data.id+'""><td>'+data.id+'</td><td>'+data.contract_title+'</td><td>'+data.salary+'</td><td>'+data.cut_off_period+'</td><td>'+data.job_title+'</td><td>'+data.num_of_employees+'</td><td>'+data.businessname+'</td><td><a href="#" class="btn btn-danger btn-circle" onclick="disablecontract($(this))"><i class="fa fa-times"></i></a></td></tr>');
+			$('#employercontracttable').append('<tr id="'+data.id+'""><td>'+data.id+'</td><td>'+data.salary+'</td><td>'+data.cut_off_period+'</td><td>'+data.job_title+'</td><td>'+data.num_of_employees+'</td><td>'+data.businessname+'</td><td><a href="#" class="btn btn-danger btn-circle" onclick="disablecontract($(this))"><i class="fa fa-times"></i></a></td></tr>');
 			
 			$("#contract_form")[0].reset();
 
