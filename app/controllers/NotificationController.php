@@ -29,8 +29,27 @@ class NotificationController extends \BaseController {
 		
 		$notification = Notification::whereId($id)->whereToUserid(Auth::user()->id)->first();
 
+
 		return View::make('applicant.notifications')
 		->withNotification($notification);
+	}
+
+	function notifystaffaboutid()
+	{
+		$interview = Interview::whereApplicantId(Auth::user()->id)->first();	
+		
+		$notification = new Notification;
+		$notification->from_userid = Auth::user()->id;
+		$notification->to_userid = $interview->staff_id;
+		$notification->employerid = 1;
+		$notification->jobid = 1;
+		$notification->subject = 'Applicant ID';
+		
+		$notification->message = 'Hello'.'!<br/>
+		Applicant\'s ID : '.Input::get('interviewid').'.
+		<br/><br/>';
+
+		$notification->save();
 	}
 
 }

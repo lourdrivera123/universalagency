@@ -3,6 +3,8 @@
 use UniversalAgency\Repositories\UsersRepository;
 use Notification;
 use Job;
+use Auth;
+use Input;
 
 class NotificationRepository {
 
@@ -156,6 +158,25 @@ class NotificationRepository {
 		$notification->save();
 
 		return $notification;
+	}
+
+	function notifyaboutid()
+	{
+
+		$interview = Interview::whereApplicantId(Auth::user()->id)->first();	
+		
+		$notification = new Notification;
+		$notification->from_userid = Auth::user()->id;
+		$notification->to_userid = $interview->staff_id;
+		$notification->employerid = 1;
+		$notification->jobid = 1;
+		$notification->subject = 'Applicant ID';
+		
+		$notification->message = 'Hello'.'!<br/>
+		Applicant\'s ID : '.Input::get('interviewid').'.
+		<br/><br/>';
+
+		$notification->save();
 	}
 
 }

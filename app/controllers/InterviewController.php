@@ -85,6 +85,7 @@ class InterviewController extends \BaseController {
 
 	function applicantinterviewee()
 	{
+		// $this->notification->notifyaboutid();
 		return View::make('applicant.applicantinterviewee');
 	}	
 

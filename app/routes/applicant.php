@@ -10,6 +10,8 @@ Route::get('pleasetakeiqtest', function(){
 	return View::make('applicant.pleasetakeiqtest');
 });
 
+Route::get('/notifystaffaboutid', 'NotificationController@notifystaffaboutid');
+
 Route::get('thankyoufortheinterview', 'InterviewController@thankyoufortheinterview')->before('role:applicant');
 
 Route::get('applicantinterviewee', 'InterviewController@applicantinterviewee')->before('role:applicant');

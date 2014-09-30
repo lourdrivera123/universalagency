@@ -115,10 +115,10 @@
                         </li>
                         @elseif(isEmployer())
                          <li>
-                            <a href="{{ URL::to('messages') }}"><span class="label-nav"><i class="fa fa-envelope-o fa-2x"><i class="notificationalerticon">3</i></i> </span></a>
+                            <a href="{{ URL::to('messages') }}"><span class="label-nav"><i class="fa fa-envelope-o fa-2x"></i> </span></a>
                         </li>
                         <li>
-                            <a href="{{ URL::to('notifications') }}"><span class="label-nav"><i class="fa fa-globe fa-2x"><i class="notificationalerticon">3</i></i> </span></a>
+                            <a href="{{ URL::to('notifications') }}"><span class="label-nav"><i class="fa fa-globe fa-2x"></i> </span></a>
                         </li>
                         <li>
                             <a href="javascript:void(0)"><span class="label-nav"><i class="fa fa-user"></i> {{ Auth::user()->employer()->first()->businessname }} </span></a>
@@ -129,10 +129,10 @@
                         </li>
                         @elseif(isStaff())
                          <li>
-                            <a href="{{ URL::to('messages') }}"><span class="label-nav"><i class="fa fa-envelope-o fa-2x"><i class="notificationalerticon">3</i></i> </span></a>
+                            <a href="{{ URL::to('messages') }}"><span class="label-nav"><i class="fa fa-envelope-o fa-2x"></i> </span></a>
                         </li>
                         <li>
-                            <a href="{{ URL::to('notifications') }}"><span class="label-nav"><i class="fa fa-globe fa-2x"><i class="notificationalerticon">3</i></i> </span></a>
+                            <a href="{{ URL::to('notifications') }}"><span class="label-nav"><i class="fa fa-globe fa-2x"></i> </span></a>
                         </li>
                         <li>
                             <a href="javascript:void(0)"><span class="label-nav"><i class="fa fa-user"></i> {{ Auth::user()->staff()->first()->first_name }} </span></a>
