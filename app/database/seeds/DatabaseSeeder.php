@@ -16,13 +16,11 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UsersTableSeeder');
 		$this->call('EmployersTableSeeder');
 		$this->call('AssignRolesTableSeeder');
-		$this->call('JobsTableSeeder');
 		$this->call('DegreelevelsTableSeeder');
 		$this->call('TestTableSeeder');
 		$this->call('PersonalityquestionsTableSeeder');
 		$this->call('PersonalityanswersTableSeeder');
 		$this->call('IqquestionsTableSeeder');
-		$this->call('ContractsTableSeeder');
 	}
 
 }

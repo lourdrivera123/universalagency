@@ -5,7 +5,7 @@ class DtrController extends \BaseController {
 	function store()
 	{
 		$dtr = new Dtr;
-		$dtr->name = Input::get('employeeid');
+		$dtr->employeeid = Input::get('employeeid');
 		$dtr->month = Input::get('month');
 		
 		if(Input::hasFile('file'))
@@ -15,7 +15,7 @@ class DtrController extends \BaseController {
 			if ($file->getMimeType() == 'application/vnd.ms-excel' )
 			{
 				$filename = md5(date('YmdHis')).'.xls';
-                $path = public_path('dtruploads/' . $filename);
+                $path = public_path().'/dtruploads/';
 
 				$file->move($path, $filename);
 		
@@ -26,6 +26,6 @@ class DtrController extends \BaseController {
 		$dtr->employerid = Auth::user()->id;
 		$dtr->save();
 
-		return $dtr;
+		return Redirect::to('excelent');
 	}
 }

@@ -32,6 +32,22 @@ Route::get('excelent', function(){
 	
 });
 
+
+Route::get('excelent1', function(){
+
+
+	$table = Excel::selectSheets('Sheet1')->load('C:\Users\Zem\Desktop\payrollsalary.xls', function($reader) {
+
+	    $reader->noHeading()->skip(6)->take(1)->formatDates(false);
+	
+	})->get();
+
+	
+	return View::make('excel1')->withTable($table);
+
+	
+});
+
 Route::get('yuwa', function(){
 	return View::make('admin.applicantevaluation');
 });

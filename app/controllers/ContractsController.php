@@ -14,10 +14,10 @@ class ContractsController extends \BaseController {
 	protected $employer;
 	protected $resume;
 	protected $pdfgenerator;
-	protected $notification
+	protected $notification;
 
 	function __construct(ContractsRepository $contract, JobsRepository $job,
-	 EmployersRepository $employer, ResumeRepository $resume, PdfgeneratorRepository $pdfgenerator,
+	 EmployersRepository $employer, ResumeRepository $resume, PdfgeneratorRepository $pdfgenerator, 
 	 NotificationRepository $notification )
 	{
 		$this->contract = $contract;
