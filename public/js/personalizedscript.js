@@ -1769,9 +1769,6 @@ $('#contract_form').validate({
 	
 	// Rules for form validation
 	rules : {
-		contract_title : {
-			required : true
-		},
 		salary : {
 			required : true,
 			number: true
@@ -1793,9 +1790,6 @@ $('#contract_form').validate({
 
 				// Messages for form validation
 				messages : {
-					contract_title : {
-						required : 'Please Include Contract Title'
-					},
 					salary : {
 						required : 'Please Include Salary',
 						number : 'Salary must be a number'

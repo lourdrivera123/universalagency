@@ -8,7 +8,7 @@
 		<table style="width:100%">
 			<tr>
 				<td style="text-align:center;">
-					<b>Recruitment Agreement</b>
+					<b>Memorandum Of Agreement between Universal Agency and {{ $clientname }}</b>
 				</td>
 			</tr>
 			<tr>

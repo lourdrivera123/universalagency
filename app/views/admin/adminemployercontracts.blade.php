@@ -109,12 +109,6 @@
 
 					<fieldset>
 						<div class="row">
-							<section class="col col-6">
-								<label for="contract_title" class="label">Contract Title</label>
-								<label class="input"> <i class="icon-append fa fa-user"></i>
-									<input type="text" name="contract_title" placeholder="Contract Title">
-								</label>
-							</section>
 
 							<section class="col col-6">
 								<label for="salary" class="label">Salary</label>

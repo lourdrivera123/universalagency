@@ -7,7 +7,6 @@ class ContractsRepository {
 	function adminsaveemployercontract($input, $generatedpdf)
 	{
 		$contract = new Contract;
-		$contract->contract_title = $input['contract_title'];
 		$contract->salary = $input['salary'];
 		$contract->job = $input['job'];
 		$contract->num_of_employees = $input['num_of_employees'];
