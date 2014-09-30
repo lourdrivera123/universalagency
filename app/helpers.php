@@ -430,3 +430,43 @@ function getUnreadNotifications()
 
     return $notifications;
 }
+
+function getEmployeePhoto($id)
+{
+    $employee = User::findOrFail($id);
+    $resume = $employee->resume()->first();
+    
+    return $resume->photo;
+}
+
+function getJobTitle($id)
+{
+    $job = Job::findOrFail($id);
+
+    return $job;
+}
+
+
+function getCompleteName($id)
+
+{
+    $employee = User::findOrFail($id);
+    $resume = $employee->resume()->first();
+    
+    return $resume->first_name.' '.$resume->last_name;   
+}
+
+function getAddress($id)
+{
+    $employee = User::findOrFail($id);
+    $resume = $employee->resume()->first();
+
+    return $resume->address;
+}
+
+function getEmail($id) 
+{
+    $employee = User::findOrFail($id);
+
+    return $employee->email;
+}

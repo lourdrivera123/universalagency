@@ -14,9 +14,6 @@
     <div class="row">
       <div class="col-md-12 col-sm-12">
         <div class="page-info">
-          <h1 class="h1-page-title">
-           Applicant List
-         </h1>
          <!-- BreadCrumb -->
          <div class="breadcrumb-container">
           <ol class="breadcrumb">
@@ -34,13 +31,54 @@
 <div class="content-wrapper hide-until-loading">
   <div class="body-wrapper">
     <div class="container">
-      <div class="row animated" data-animtype="fadeInUp" data-animrepeat="0"
-      data-animdelay="0.4s">
-      
+      <div class="row">
+        <div class="col-md-2">
+          <img class="img img-circle" style="width:150px; height:150px;" 
+          src="{{ URL::asset(Auth::user()->employer()->first()->photo) }}"> <br><br>
 
+          <ul class="nav nav-pills nav-stacked">
+            <li class="active">
+              <a href="#tab_employees" role="tab" data-toggle="tab">Employees</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-10">
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_profile">
+              @foreach($recruitcontracts as $recruitcontract)
+              <h5> 
+                {{ getJobTitle($recruitcontract->job_id)->job_title }} 
+                (Basic pay: {{ $recruitcontract->basic_pay }})
+              </h5>
+              <br>
+
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="col-md-2">
+                    <img src="{{ URL::asset(getEmployeePhoto($recruitcontract->employee_id)) }}" style="width:100px; height:100px; ">
+                  </div>
+
+                  <div class="col-md-8">
+                    <h5 class="panel-title">
+                      <a href="{{ URL::to('applicant/'.$recruitcontract->employee_id) }}">
+                        {{ getCompleteName($recruitcontract->employee_id) }}
+                      </a><br>
+                        <p>
+                          {{ getEmail($recruitcontract->employee_id) }}<br>
+                          {{ getAddress($recruitcontract->employee_id) }}<br/>
+                          Contract: {{ formatdatestring($recruitcontract->starting_date).' - '.formatdatestring($recruitcontract->closing_date) }}
+                        </p>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              @endforeach
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 </div>
 @stop
 

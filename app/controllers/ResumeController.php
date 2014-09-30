@@ -4,6 +4,7 @@ use UniversalAgency\Repositories\JobCategoriesRepository;
 use UniversalAgency\Forms\FormValidationException;
 use UniversalAgency\Forms\ResumeForm;
 use UniversalAgency\Repositories\IqTestRepository;
+use Illuminate\Support\Collection as Collection;
 
 class ResumeController extends \BaseController {
 
@@ -23,10 +24,22 @@ class ResumeController extends \BaseController {
 
 	function employerside()
 	{
-		$resumes = Resume::all();
+
+		$recruitcontracts = Recruitcontract::whereEmployerId(Auth::user()->id)->get();
+
+		$collection = new Collection;
+
+		foreach( $recruitcontracts as $recruitcontract )
+		{
+			$user = User::findOrFail($recruitcontract->employee_id);
+			$resume = $user->resume()->first();
+
+			$collection->push($resume);
+		}
 
 		return View::make('employer.employerhome')
-		->withResumes($resumes);
+		->withRecruitcontracts($recruitcontracts)
+		->withEmployees($collection);		
 	}
 
 	function adminviewapplicants()

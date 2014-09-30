@@ -143,11 +143,16 @@ class HomeController extends BaseController {
 		$resume = Resume::findOrFail($id);
 		$educations = $resume->education()->get();
 		$jobs = $resume->jobhistory()->get();
+		$resumepdf = $resume->resumepdf()->first();
+		$attachments = $resume->user()->first()->userattachment()->get();
+
 
 		return View::make('applicant.profile')
 		->withResume($resume)
 		->withEducations($educations)
-		->withJobs($jobs);
+		->withJobs($jobs)
+		->withAttachments($attachments)
+		->withResumepdf($resumepdf);
 	}
 
 	function checkiftakentests()
