@@ -125,47 +125,6 @@
 			</tr>
 			<tr>
 				<td>
-					<b><h4><u>Fees</u></h4></b>
-				</td>
-			</tr>
-			<tr>
-				<td style="text-align:justify; padding-bottom:10px;">
-					7.  The Fee payable to the Universal Agency upon engagement of an Applicant is calculated in accordance with the following scale:
-				</td>
-			</tr>
-			<tr>
-				<td style="padding-left:100px;">
-
-				 	<table style="text-align:justify;padding-bottom:10px;">
-				 		<tr>
-				 			<td>
-				 				<b><u>Remuneration (monthly)</u></b>
-				 			</td>
-				 			<td>
-				 				<b><u>Fee (% of Remuneration)</u></b>
-				 			</td>
-				 		</tr>
-				 		<tr>
-				 			<td>
-				 				Php 20999 and below
-				 			</td>
-				 			<td>
-				 				20%
-				 			</td>
-				 		</tr>
-				 		<tr>
-				 			<td>
-				 				Php 21000 and above
-				 			</td>
-				 			<td>
-				 				30%
-				 			</td>
-				 		</tr>
-				 	</table>
-				</td>
-			</tr>
-			<tr>
-				<td>
 					<b><h4><u>Liabilities</u></h4></b>
 				</td>
 			</tr>
