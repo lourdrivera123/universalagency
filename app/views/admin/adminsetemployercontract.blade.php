@@ -62,6 +62,9 @@
 								<select name="cut_off_period">
 									<option value="semi_monthly">Semi-monthly</option>
 									<option value="monthly">Monthly</option>
+									<option value="weekly">Weekly</option>
+									<option value="daily">Daily</option>
+									<option value="consultation">Consultation</option>
 								</select> <i></i> </label>
 							</section>
 

@@ -214,13 +214,13 @@
 											</label>
 										</section>
 
-										<section>
+									<!-- 	<section>
 											<label class="label"><i>Employment Type</i></label>
 											<label class="select">
 												{{ Form::select('employmenttype', ['Full-time' => 'Full-time', 'Part-time' => 'Part-time'], null, ['class' => 'form-control']) }}
 												<i></i>
 											</label>
-										</section>
+										</section> -->
 
 										<section>
 											<label class="label"><i> Employer </i></label>

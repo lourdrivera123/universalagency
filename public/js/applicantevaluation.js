@@ -75,8 +75,8 @@ e.preventDefault();
 //Birth Date Datepicker
     // $('#starting_date').maskedinput
     // $('#starting_date').mask('0000-00-00');
-    $("#starting_date").mask("9999-99-99");
-    $("#closing_date").mask("9999-99-99");
+    // $("#starting_date").mask("9999-99-99");
+    // $("#closing_date").mask("9999-99-99");
 
 //End of Code
 
@@ -165,12 +165,6 @@ $('#recruitmentform').validate({
             required : true
         },
         basic_pay : {
-            required : true
-        },
-        starting_date : {
-            required : true
-        }, 
-        closing_date : {
             required : true
         }
     },

@@ -27,8 +27,8 @@ class CreateRecruitContractsTable extends Migration {
 			
 			$table->integer('percentage');
 			$table->double('basic_pay');
-			$table->date('starting_date');
-			$table->date('closing_date');
+			// $table->date('starting_date');
+			// $table->date('closing_date');
 			$table->timestamps();
 		});
 	}

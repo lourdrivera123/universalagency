@@ -179,4 +179,27 @@ class NotificationRepository {
 		$notification->save();
 	}
 
+	function notify_employee_about_contract($employee_id, $job_title)
+	{
+		$notification = new Notification;
+		$notification->from_userid = getAdminId();
+		$notification->to_userid = $employee_id;
+		$notification->subject = 'You\'re Hired !';
+		$notification->message = 'We would like to inform you that you are now hired for the job "'.$job_title.'". Happy Working ! :)';
+		$notification->save();
+
+		return $notification;
+	}
+
+	function notify_employer_about_contract($employer_id, $job_title)
+	{
+		$notification = new Notification;
+		$notification->from_userid = getAdminId();
+		$notification->to_userid = $employer_id;
+		$notification->subject = 'You now have a trusted worker';
+		$notification->message = 'We would like to inform you that we have selected the qualifying worker for your job "'.$job_title.'". Happy Working ! :)';
+		$notification->save();
+
+		return $notification;
+	}
 }

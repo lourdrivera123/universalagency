@@ -26,7 +26,6 @@ class CreateJobsTable extends Migration {
 			$table->integer('agefrom');
 			$table->integer('ageto');
 			$table->string('education');
-			$table->string('employmenttype');
 			$table->integer('minimumyearsofexperience');
 			$table->string('others');
 			$table->date('invitationexpiration');

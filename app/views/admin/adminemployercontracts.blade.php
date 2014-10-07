@@ -61,7 +61,7 @@
 										</tr>
 									</thead>
 									<tbody id="employercontracttable">
-									@if(count($contracts) > 0)
+										@if(count($contracts) > 0)
 										@foreach($contracts as $contract)
 										<tr id="{{ $contract->id }}">
 											<td>{{ $contract->id }}</td>
@@ -73,7 +73,7 @@
 											<td><a href="#" class="btn btn-danger btn-circle" onclick="disablecontract($(this))"><i class="fa fa-times"></i></a></td>
 										</tr>
 										@endforeach
-									@endif
+										@endif
 									</tbody>
 								</table>
 							</div> <!-- end widget content -->
@@ -114,6 +114,31 @@
 									<input type="text" name="salary" placeholder="Salary">
 								</label>
 							</section>
+
+							<section class="col col-6">
+								<label class="label"><i>Employment Type</i></label>
+								<label class="select">
+									{{ Form::select('employmenttype', ['Full-time' => 'Full-time', 'Part-time' => 'Part-time'], null, ['class' => 'form-control']) }}
+									<i></i>
+								</label>
+							</section>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<div class="row">
+							<section class="col col-6">
+								<label for="starting_date">Starting Date</label>
+								<label class="input"> <i class="icon-append fa fa-briefcase"></i>
+									{{ Form::text('starting_date', null, ['id' => 'starting_date', 'placeholder' => 'yyyy-mm-dd']) }}
+								</label>
+							</section>
+							<section class="col col-6">
+								<label for="closing_date">Closing Date</label>
+								<label class="input"> <i class="icon-append fa fa-briefcase"></i>
+									{{ Form::text('closing_date', null, ['id' => 'closing_date', 'placeholder' => 'yyyy-mm-dd']) }}
+								</label>
+							</section>
 						</div>
 					</fieldset>
 
@@ -123,8 +148,11 @@
 								<label class="label" for="cut_off_period">Cut Off Period</label>
 								<label class="select">
 									<select name="cut_off_period">
+										<option value="daily">Daily</option>
+										<option value="weekly">Weekly</option>
 										<option value="semi_monthly">Semi-monthly</option>
 										<option value="monthly">Monthly</option>
+										<option value="consultation">Consultation</option>
 									</select> <i></i> </label>
 								</section>
 
@@ -178,12 +206,12 @@
 	</div>
 	@stop
 
-@section('additional_scripts')
+	@section('additional_scripts')
 
-{{ HTML::script('js/plugin/datatables/jquery.dataTables.min.js') }}
-{{ HTML::script('js/plugin/datatables/dataTables.colVis.min.js') }}
-{{ HTML::script('js/plugin/datatables/dataTables.tableTools.min.js') }}
-{{ HTML::script('js/plugin/datatables/dataTables.bootstrap.min.js') }}
+	{{ HTML::script('js/plugin/datatables/jquery.dataTables.min.js') }}
+	{{ HTML::script('js/plugin/datatables/dataTables.colVis.min.js') }}
+	{{ HTML::script('js/plugin/datatables/dataTables.tableTools.min.js') }}
+	{{ HTML::script('js/plugin/datatables/dataTables.bootstrap.min.js') }}
 
 	<script type="text/javascript">		
 		$(document).ready(function() {
@@ -198,5 +226,7 @@
 			$("div.toolbar").html('<div class="ColVis"><button data-toggle="modal" data-target="#addemployercontractmodal" class="ColVis_Button ColVis_MasterButton"><i class="fa fa-plus"></i>&nbsp;Add Employer Contract</button></div>');
 		})
 
+		$("#starting_date").mask("9999-99-99");
+		$("#closing_date").mask("9999-99-99");
 	</script>
-@stop
+	@stop

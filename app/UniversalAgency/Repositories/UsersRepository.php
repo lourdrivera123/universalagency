@@ -186,4 +186,14 @@ class UsersRepository {
 
 		return $applicants->lists('email', 'id');
 	}
+
+	function updateResumeStatusToHired($userid)
+	{
+		$user = User::findOrFail($userid);
+		$resume = $user->resume()->first();
+		$resume->status = 'hired';
+		$resume->save();
+
+		return $user;
+	}
 }

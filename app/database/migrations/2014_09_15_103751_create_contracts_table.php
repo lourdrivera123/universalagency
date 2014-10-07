@@ -22,7 +22,9 @@ class CreateContractsTable extends Migration {
 			$table->integer('employer')->index()->unsigned();
             $table->foreign('employer')->references('id')->on('users')->onDelete('cascade');
             $table->string('cut_off_period');
-			// $table->foreign('employer')
+            $table->date('starting_date');
+			$table->date('closing_date');
+			$table->string('employmenttype');
 			$table->string('other');
 			$table->string('path');
 			$table->timestamps();

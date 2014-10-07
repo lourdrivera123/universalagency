@@ -149,20 +149,6 @@
                             </div>
                         </div>
                         <br/>
-                        <div class="form-inline">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12 col-lg-6">
-                                    <label for="starting_date">Starting Date</label>
-                                    {{ Form::text('starting_date', null, ['class' => 'form-control', 'id' => 'starting_date', 'placeholder' => 'yyyy-mm-dd']) }}
-                                </div>
-                                <div class="col-md-6 col-sm-12 col-lg-6">
-                                    <label for="closing_date">Closing Date</label>
-                                    {{ Form::text('closing_date', null, ['class' => 'form-control', 'id' => 'closing_date', 'placeholder' => 'yyyy-mm-dd']) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <br/>
 
                     </div>
                     

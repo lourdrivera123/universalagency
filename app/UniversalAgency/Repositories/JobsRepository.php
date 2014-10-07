@@ -44,7 +44,7 @@ class JobsRepository {
 		$job->description = $input['description'];
 		$job->job_title = $input['job_title'];
 		$job->location = $input['job_location'];
-		$job->employmenttype = $input['employmenttype'];
+		// $job->employmenttype = $input['employmenttype'];
 
 		if ( $input['gender']  === 'male' )
 			$job->gender = 'male';
@@ -182,5 +182,12 @@ class JobsRepository {
 		$jobs = Job::lists('job_title', 'id');
 
 		return $jobs;
+	}
+
+	function getJobById($id)
+	{
+		$job = Job::findOrFail($id);
+
+		return $job;
 	}
 }

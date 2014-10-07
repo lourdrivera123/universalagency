@@ -1785,7 +1785,13 @@ $('#contract_form').validate({
 		},
 		employer : {
 			required: true
-		}
+		},
+		starting_date : {
+            required : true
+        }, 
+        closing_date : {
+            required : true
+        }
 	},
 
 				// Messages for form validation
