@@ -1,20 +1,31 @@
 <?php
 
 use UniversalAgency\Repositories\JobsRepository;
+use UniversalAgency\Repositories\JobCategoriesRepository;
+use UniversalAgency\Repositories\EmployersRepository;
+use UniversalAgency\Repositories\ContractsRepository;
 
 class JobsController extends \BaseController {
 	
 	protected $job;
+	protected $jobcategory;
+	protected $employer;
+	protected $contract;
 	
-	function __construct(JobsRepository $job)
+	function __construct(JobsRepository $job, JobCategoriesRepository $jobcategory, 
+		EmployersRepository $employer, ContractsRepository $contract )
 	{
 		$this->job = $job;
+		$this->jobcategory = $jobcategory;
+		$this->employer = $employer;
+		$this->contract = $contract;
 	}
 
 	function adminaddjob()
-	{
-		$jobcategories = Jobcategory::lists('category', 'id');
-		$businesses = Employer::lists('businessname', 'id');
+	{		
+		$jobcategories = $this->jobcategory->listcategories();
+
+		$businesses = $this->employer->listemployers();
 
 		return View::make('admin.adminaddjob')
 		->withJobcategories($jobcategories)
@@ -23,15 +34,18 @@ class JobsController extends \BaseController {
 
 	function adminjobs()
 	{
-		$jobs = Job::withTrashed()->get();
-		$businesses = Employer::lists('businessname', 'id');
-		$jobcategories = Jobcategory::lists('category', 'id');
-		$contracts = Contract::lists('job', 'id');
+		$jobs = $this->job->get_all_jobs_with_trashed();
 
-		$allcontract = Contract::all();
-		// dd($allcontract)
-		$alljobs = Job::all();
-		// dd($alljob);
+		$businesses = $this->employer->listemployers();
+
+		$jobcategories = $this->jobcategory->listcategories();
+
+		$contracts = $this->contract->list_employer_contracts();
+
+		$allcontract = $this->contract->getAllContracts();
+
+		$alljobs = $this->job->get_all_jobs();
+
 		foreach( $allcontract as $allcon )
 		{
 			foreach ( $alljobs as $alljob)
@@ -56,12 +70,14 @@ class JobsController extends \BaseController {
 	function getjob($id)
 	{
 		try{
-			$job = Job::withTrashed()->findOrFail($id);
+
+			$job = $this->job->get_job_with_trashed_by_id($id);
+
 			$employerid = $job->employer()->first()->id;
 	
-
 			return View::make('applicant.job')
 			->withJob($job);	
+
 		} catch(Exception $e)
 		{
 			return View::make('404');
@@ -132,9 +148,10 @@ class JobsController extends \BaseController {
 
 	function getcompanyname()
 	{
-		$employerid = Contract::whereJob(Input::get('jobtitle'))->first()->employer;
+
+		$employerid = $this->contract->get_contract_employer_id_by_job_title(Input::get('jobtitle'));
 		
-		$employername = User::find($employerid)->employer()->first()->businessname;
+		$employername = $this->user->get_employer_name($employerid);	
 
 		return $employername;
 	}

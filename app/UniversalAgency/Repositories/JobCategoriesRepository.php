@@ -1,4 +1,4 @@
-<?php namespace UniversalAgency\Repositories;
+`<?php namespace UniversalAgency\Repositories;
 
 use Jobcategory;
 
@@ -64,5 +64,26 @@ class JobCategoriesRepository {
 
 		}
 		return 'true';
+	}
+
+	function get_all_categories()
+	{
+		$categories = Jobcategory::all();
+
+		return $categories;
+	}
+
+	function get_category_name_by_id($id)
+	{
+		$categoryname = Jobcategory::findOrFail($id)->category; 
+
+		return $categoryname;
+	}
+
+	function get_categories_with_trashed()
+	{
+		$jobcategories = Jobcategory::withTrashed()->get();
+
+		return $jobcategories;
 	}
 }

@@ -42,4 +42,39 @@ class ContractsRepository {
 
 		return $contracts;
 	}
+
+	function get_employee_contract_by_id($id)
+	{
+		$recruitcontracts = Recruitcontract::whereJobId($id)->get();
+
+		return $recruitcontracts;
+	}
+
+	function get_contracts_by_employer_id($id)
+	{
+		$recruitcontracts = Recruitcontract::whereEmployerId($id)->get();
+
+		return $recruitcontracts;
+	}
+
+	function list_employer_contracts()
+	{
+		$contracts = Contract::lists('job', 'id');
+
+		return $contracts;
+	}
+
+	function get_contract_employer_id_by_job_title($title)
+	{
+		$employerid = Contract::whereJob($title)->first()->employer;
+
+		return $employerid;
+	}
+
+	function get_employee_contracts_by_employee_id($id)
+	{
+		$recruitcontracts = Recruitcontract::whereEmployerId($id)->get();
+
+		return $recruitcontracts;
+	}
 }

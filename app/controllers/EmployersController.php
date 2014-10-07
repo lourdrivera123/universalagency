@@ -2,23 +2,31 @@
 
 use UniversalAgency\Repositories\EmployersRepository;
 use UniversalAgency\Repositories\UsersRepository;
+use UniversalAgency\Repositories\JobsRepository;
+use UniversalAgency\Repositories\ContractsRepository;
 use Illuminate\Support\Collection as Collection;
 
 class EmployersController extends \BaseController {
 
 	protected $employer;
 	protected $user;
+	protected $job;
+	protected $contract;
 
-	function __construct(EmployersRepository $employer, UsersRepository $user)
+	function __construct(EmployersRepository $employer, UsersRepository $user, 
+		JobsRepository $job, ContractsRepository $contract)
 	{
 		$this->employer = $employer;
 		$this->user = $user;
+		$this->job = $job;
+		$this->contract = $contract;
 	}
 
 	function getemployer($id)
 	{
-		$employer = Employer::findOrFail($id);
-		$job = Job::whereCompany($id)->get();
+		$employer = $this->employer->get_employer_by_id($id);
+		
+		$job = $this->job->get_jobs_by_employer_id($id);
 
 		return View::make('employer.employer')
 		->withEmployer($employer)
@@ -32,8 +40,8 @@ class EmployersController extends \BaseController {
 
 	function adminemployers()
 	{
-		$employers = Employer::all();
-		
+		$employers = $this->employer->get_all_employers();
+
 		return View::make('admin.adminemployers')
 		->withEmployers($employers);
 	}
@@ -85,19 +93,18 @@ class EmployersController extends \BaseController {
 
 	function employerdtrupload()
 	{
-		$recruitcontracts = Recruitcontract::whereEmployerId(Auth::user()->id)->get();
+		$recruitcontracts = $this->contract->get_contracts_by_employer_id(Auth::user()->id);
 
 		$collection = new Collection;
 
 		foreach( $recruitcontracts as $recruitcontract )
 		{
-			$user = User::findOrFail($recruitcontract->employee_id);
+			$user = $this->user->getUserById($recruitcontract->employee_id);
+
 			$resume = $user->resume()->first();
 
 			$collection->push($resume);
 		}
-
-		// dd($collection);
 
 		return View::make('employer.employerdtrupload')->withEmployees($collection->lists('last_name', 'user_id'));
 	}

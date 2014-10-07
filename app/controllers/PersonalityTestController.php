@@ -20,11 +20,6 @@ class PersonalityTestController extends \BaseController {
 
 	function personalitytest()
 	{
-		// if ( !Session::has('employerid') )
-		// 	return View::make('404');
-
-		// $employerid = Session::get('employerid');
-
 		if(!is_null(getPersonalityResult()))
 		{
 			return Redirect::to('personalityresult/'.getPersonalityResult()->hash);
@@ -34,13 +29,10 @@ class PersonalityTestController extends \BaseController {
 
 		return View::make('applicant.personalitytest')
 		->withPersonalityquestions($personalityquestions);
-		// ->withEmployerid($employerid);
 	}
 
 	function personalityresult($hash)
 	{
-		// $result = Usertestresult::whereUserId(Auth::user()->id)->first();
-
 		$result = $this->personalitytest->getResult($hash);
 
 		return View::make('applicant.personalityresult')

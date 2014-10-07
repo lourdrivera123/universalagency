@@ -139,4 +139,18 @@ class ResumeRepository {
 
 		return $resumes;
 	}
+
+	function get_resume_by_id($id)
+	{
+		$resume = Resume::findOrFail($id);
+
+		return $resume;
+	}
+
+	function get_all_resumes()
+	{
+		$resumes = Resume::all();
+
+		return $resumes;
+	}
 }

@@ -1,11 +1,34 @@
 <?php
 
+use UniversalAgency\Repositories\PendingjobrequestRepository;
+use UniversalAgency\Repositories\PersonalityTestRepository;
+use UniversalAgency\Repositories\IqTestRepository;
+use UniversalAgency\Repositories\FaqRepository;
+use UniversalAgency\Repositories\UsersRepository;
+
 class InboxController extends \BaseController {
+
+	protected $pendingjobrequest;
+	protected $personality;
+	protected $iqtest;
+	protected $faq;
+	protected $user;
+
+	function __construct(PendingjobrequestRepository $pendingjobrequest, PersonalityTestRepository $personality, 
+		IqTestRepository $iqtest, FaqRepository $faq, UsersRepository $user )
+	{
+		$this->pendingjobrequest = $pendingjobrequest;
+		$this->personality = $personality;
+		$this->iqtest = $iqtest;
+		$this->faq = $faq;
+		$this->user = $user;
+	}
 
 	function admininbox()
 	{
-		$faq = Faq::all();
-		$pendingjobrequests = Pendingjobrequest::where('status', 0)->get();
+		$faq = $this->faq->get_all_faq();
+
+		$pendingjobrequests = $this->pendingjobrequest->get_requests_where_status_is(0);
 
 		return View::make('admin.adminInbox')
 		->withFaq($faq)
@@ -14,11 +37,13 @@ class InboxController extends \BaseController {
 
 	function admininboxlist()
 	{
-		$faq = Faq::all();
-		$iq = Iqresult::all();
-		$personality = Personalityresult::all();
+		$faq = $this->faq->get_all_faq();
+		
+		$iq = $this->iqtest->get_all_iq_results();
 
-		$pendingjobrequests = Pendingjobrequest::where('status', 0)->get();
+		$personality = $this->personality->get_all_personality_results();
+
+		$pendingjobrequests = $this->pendingjobrequest->get_requests_where_status_is(0);
 
 		return View::make('admin.inbox.adminInboxList')
 		->withFaq($faq)
@@ -27,8 +52,9 @@ class InboxController extends \BaseController {
 	}
 
 	function admincompose()
-	{
-		$role = Role::whereName('applicant')->first();
+	{		
+		$role = $this->user->get_role_by_name('applicant');
+
 		$emails = $role->user()->get();
 
 		return View::make('admin.inbox.admincompose')
@@ -37,9 +63,12 @@ class InboxController extends \BaseController {
 
 	function adminopened()
 	{
-		$iqresult = Iqresult::find(Input::get('iqid'));
-		$personalityresult = Personalityresult::find(Input::get('personalityid'));
-		$user = User::find(Input::get('userid'));
+		$iqresult = $this->iqtest->get_iqresult_by_id(Input::get('iqid'));
+
+		$personalityresult = $this->personality->get_personality_result_by_id(Input::get('personalityid'));
+
+		$user = $this->user->getUserById(Input::get('userid'));
+
 		$resume = $user->resume()->first();
 
 		return View::make('admin.inbox.adminopened')

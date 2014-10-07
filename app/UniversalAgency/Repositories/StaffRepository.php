@@ -55,4 +55,17 @@ class StaffRepository {
 		return $staff;
 	}
 
+	function get_all_staffs()
+	{
+		$staff = Staff::all();
+
+		return $staff;
+	}
+
+	function get_staff_by_phone_number($phone_number)
+	{
+		$staff = Staff::wherePhoneNumber($phone_number)->first();
+
+		return $staff;
+	}
 }

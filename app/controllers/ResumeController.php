@@ -4,6 +4,8 @@ use UniversalAgency\Repositories\JobCategoriesRepository;
 use UniversalAgency\Forms\FormValidationException;
 use UniversalAgency\Forms\ResumeForm;
 use UniversalAgency\Repositories\IqTestRepository;
+use UniversalAgency\Repositories\UsersRepository;
+use UniversalAgency\Repositories\ContractsRespository;
 use Illuminate\Support\Collection as Collection;
 
 class ResumeController extends \BaseController {
@@ -12,26 +14,31 @@ class ResumeController extends \BaseController {
 	protected $resumeForm;
 	protected $jobcategory;
 	protected $iqtest;
+	protected $user;
+	protected $contract;
 
 	function __construct(ResumeRepository $resume, ResumeForm $resumeForm, 
-		JobCategoriesRepository $jobcategory, IqTestRepository $iqtest)	
+		JobCategoriesRepository $jobcategory, IqTestRepository $iqtest, UsersRepository $user, 
+		ContractsRespository $contract)	
 	{
 		$this->resume = $resume;
 		$this->resumeForm = $resumeForm;
 		$this->jobcategory = $jobcategory;
 		$this->iqtest = $iqtest;
+		$this->user = $user;
+		$this->contract = $contract;
 	}
 
 	function employerside()
 	{
-
-		$recruitcontracts = Recruitcontract::whereEmployerId(Auth::user()->id)->get();
+		$recruitcontracts = $this->contract->get_employee_contracts_by_employee_id(Auth::user()->id);
 
 		$collection = new Collection;
 
 		foreach( $recruitcontracts as $recruitcontract )
 		{
-			$user = User::findOrFail($recruitcontract->employee_id);
+			$user = $this->user->getUserById($recruitcontract->employee_id);
+			
 			$resume = $user->resume()->first();
 
 			$collection->push($resume);
@@ -44,7 +51,8 @@ class ResumeController extends \BaseController {
 
 	function adminviewapplicants()
 	{
-		$resumes = Resume::all();
+		$resumes = $this->resume->get_all_resumes();
+		
 		return View::make('admin.adminviewapplicants')
 		->withResumes($resumes);
 	}

@@ -3,23 +3,27 @@
 use UniversalAgency\Forms\FormValidationException;
 use UniversalAgency\Forms\EvaluationForm;
 use UniversalAgency\Repositories\EvaluationRepository;
+use UniversalAgency\Repositories\UsersRepository;
 
 class EvaluationController extends \BaseController {
 
 	protected $evaluationForm;
 	protected $evaluation;
+	protected $user;
 
-	function __construct(EvaluationForm $evaluationForm, EvaluationRepository $evaluation)
+	function __construct(EvaluationForm $evaluationForm, EvaluationRepository $evaluation 
+		UsersRepository $user)
 	{
 		$this->evaluationForm = $evaluationForm;
 		$this->evaluation = $evaluation;
+		$this->user = $user;
 	}
 
 	function evaluateApplicant()
 	{
-		$user = User::find(Input::get('applicantid'));
-		$name = $user->resume()->first()->first_name.' '.$user->resume()->first()->last_name;
+		$user = $this->user->getUserById(Input::get('applicantid'));
 
+		$name = $user->resume()->first()->first_name.' '.$user->resume()->first()->last_name;
 		
 		return View::make('staff.staffevaluateapplicant')
 		->withApplicantid($user->id)
@@ -46,7 +50,7 @@ class EvaluationController extends \BaseController {
 
 	function adminapplicantevaluation($id)
 	{
-		$evaluation = Evaluation::with('user', 'job')->findOrFail($id);
+		$evaluation = $this->evaluation->get_evaluation_with_job_and_user_by_id($id);
 		
 		return View::make('admin.applicantevaluation')
 		->withEvaluation($evaluation);

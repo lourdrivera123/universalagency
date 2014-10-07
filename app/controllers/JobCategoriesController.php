@@ -18,7 +18,8 @@ class JobCategoriesController extends \BaseController {
 
 	function adminjobcategories()
 	{
-		$jobcategories = Jobcategory::withTrashed()->get();
+		$jobcategories = $this->jobcategory->get_categories_with_trashed();
+
 		return View::make('admin.adminjobcategories')
 		->withJobcategories($jobcategories);
 	}

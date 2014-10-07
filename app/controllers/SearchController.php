@@ -1,6 +1,19 @@
 <?php
 use Illuminate\Support\Collection as Collection;
+use UniversalAgency\Repositories\JobsRepository;
+use UniversalAgency\Repositories\EmployersRepository;
+
 class SearchController extends \BaseController {
+
+	protected $job;	
+	protected $employer;
+
+	function __construct(JobsRepository $job, EmployersRepository $employer)
+	{
+		$this->job = $job;
+		$this->employer = $employer;
+	}
+
 
 	public function addItem($obj, $key = null) {
 		if ($key == null) {
@@ -23,20 +36,20 @@ class SearchController extends \BaseController {
 
 		if($searchby == 'job_title')
 		{
-			$searchjobs = Job::where('job_title', 'LIKE', '%'.$keyword.'%')->get();
+			$searchjobs = $this->job->get_job_by_job_title($keyword);
 
 			return View::make('applicant.joblist')
 			->withSearchjobs($searchjobs);
-
 		} 
 		else if( $searchby == 'company' )
 		{
 			$searchcompany = new Collection();
-			$employers = Employer::where('businessname', 'LIKE', '%'.$keyword.'%')->get();
+
+			$employers = $this->employer->get_employers_by_businessname($keyword);
 
 			foreach ($employers as $employer)
 			{
-				$jobsonemployer = Job::whereCompany($employer->id)->get();
+				$jobsonemployer = $this->job->get_jobs_by_employer_id($employer->id);
 
 				foreach ( $jobsonemployer as $jobonemployer )
 				{
@@ -50,11 +63,10 @@ class SearchController extends \BaseController {
 
 		} else if ( $searchby == 'location' )
 		{
-			$searchlocation = Job::where('location', 'LIKE', '%'.$keyword.'%')->get();
+			$searchlocation = $this->job->get_job_by_location($keyword);	
 
 			return View::make('applicant.joblist')
 			->withSearchlocation($searchlocation);
-			// dd($jobs);
 		}
 	}
 	

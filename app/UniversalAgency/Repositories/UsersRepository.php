@@ -12,7 +12,7 @@ class UsersRepository {
 
 	function getUserById($id)
 	{
-		return User::find($id);
+		return User::findOrFail($id);
 	}
 
 	function updateEmail($input ,$employer)
@@ -196,4 +196,19 @@ class UsersRepository {
 
 		return $user;
 	}
+
+	function get_role_by_name($name)
+	{
+		$role = Role::whereName($name)->first();
+
+		return $role;
+	}
+
+	function get_employer_name($employerid)
+	{
+		$employername = User::find($employerid)->employer()->first()->businessname;
+
+		return $employername;
+	}
+
 }

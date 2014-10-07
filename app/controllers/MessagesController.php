@@ -42,9 +42,7 @@ class MessagesController extends \BaseController {
 
 	function changemessagestatus()
 	{
-		$message = Message::findOrFail(Input::get('messageid'));	
-		$message->status = 'read';
-		$message->save();
+		$message = $this->message->get_message_by_id(Input::get('messageid'));
 
 		return $message;
 	}

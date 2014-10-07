@@ -13,21 +13,6 @@ class MessagesRepository {
 		$this->user = $user;
 	}
 
-	// function messages()
-	// {
-	// 	$messages = Message::all();
-	// 	return View::make('applicant.messages')
-	// 	->withMessages($messages);
-	// }
-
-	// function viewmessage($id)
-	// {
-	// 	$specificmsg = Message::findOrFail($id);
-
-	// 	return View::make('applicant.messages')
-	// 	->withSpecificmsg($specificmsg);
-	// }
-
 	function createInvitationMessage($job, $from_userid, $to_userid, $subject)
 	{
 		$firstname = $this->user->getUserById($to_userid)->resume()->first()->first_name;
@@ -53,24 +38,6 @@ class MessagesRepository {
 		return $message;
 	}
 
-	function sendtestrequirements($candidate)
-	{
-		// $firstname = $this->user->getUserById($to_userid)->resume()->first()->first_name;
-		// // $firstname = $to_userid;
-		// $message = new Message;
-		// $message->from_userid = 2;
-		// $message->to_userid = $candidate->applicant_id;
-		// $message->subject = $subject;
-		// $message->jobid = $candidate->job_id;
-
-		// $message->message = 'Thank you for accepting the invitation. You can now proceed to the next process.
-  //       <br/><a href="../../../personalitytest">Take Personality Test</a>
-  //       <br/><a href="../../../iqtest">Take IQ Test</a>';
-
-		// $message->save();
-
-		// return $message;
-	}
 
 	function getUsersMessage()
 	{
@@ -101,7 +68,6 @@ class MessagesRepository {
 			$message->save();
 		}		
 
-		// return $message;
 		return 'All done!';
 	}
 
@@ -115,6 +81,15 @@ class MessagesRepository {
 		$message->save();
 
 		return $message->message;
+	}
+
+	function get_message_by_id($id)
+	{
+		$message = Message::findOrFail($id);	
+		$message->status = 'read';
+		$message->save();
+
+		return $message;
 	}
 
 }

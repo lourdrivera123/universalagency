@@ -28,8 +28,37 @@ class PendingjobrequestRepository {
 		return $requestingapplicants;
 	}
 
-	// function approverequest()
-	// {
+	function get_jobs_with_user_by_id($id)
+	{
+		$jobrequests = Pendingjobrequest::whereJobId($id)->with('user')->get();
 		
-	// }
+		return $jobrequests;
+	}
+
+	function get_requests_where_status_is($status)
+	{
+		$pendingjobrequests = Pendingjobrequest::where('status', $status)->get();
+
+		return $pendingjobrequests;
+	}
+
+	function change_request_status_to_initial_screening($jobid, $userid)
+	{
+		$pendingjobrequest = Pendingjobrequest::whereJobId($jobid)->whereUserId($userid)->first();
+		$pendingjobrequest->request_status = 'initial screening';
+		$pendingjobrequest->save();
+
+		return $pendingjobrequest;
+	}
+
+	function delete_and_change_status_to_decline($jobid, $userid)
+	{
+		$pendingjobrequest = Pendingjobrequest::whereJobId($jobid)->whereUserId($userid)->first();
+		$pendingjobrequest->request_status = 'disapproved';
+		$pendingjobrequest->save();
+
+		$pendingjobrequest->delete();
+
+		return $pendingjobrequest;
+	}
 }

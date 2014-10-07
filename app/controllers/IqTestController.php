@@ -16,11 +16,6 @@ class IqTestController extends \BaseController {
 
 	function iqtest()
 	{
-		// if ( !Session::has('employerid') )
-		// 	return View::make('404');
-
-		// $employerid = Session::get('employerid');
-
 		if(!is_null(getIQResult()))
 		{
 			return Redirect::to('iqtestresult/'.getIQResult()->hash);
@@ -30,8 +25,6 @@ class IqTestController extends \BaseController {
 
 		return View::make('applicant.iqtest')
 		->withIqquestions($iqquestions);
-		
-		// ->withEmployerid($employerid);
 	}
 
 	function iqtestresult($hash)
@@ -63,16 +56,7 @@ class IqTestController extends \BaseController {
 				->withReminder('Thank you for taking the test, you may now take the Personality test ');
 			}
 		}
-
-		// $employerid = $iqtestresult->employerid;
-
-		// $userid = Auth::user()->id;
-
-		// if ( hasTakenPersonalityTestOnSpecificEmployer($employerid, $userid ) )
-		// {
-		// 	$this->notification->allUpForTakingTests($employerid, $userid);
-		// }
-
+		
 		return Redirect::to('iqtestresult/'.$iqtestresult->hash)
 		->withReminder('Thank you for taking the test, you may now continue applying for jobs');
 

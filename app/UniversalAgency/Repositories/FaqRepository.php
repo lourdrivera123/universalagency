@@ -14,4 +14,11 @@ class FaqRepository {
 
 		return $faq;
 	}
+
+	function get_all_faq()
+	{
+		$faq = Faq::all();
+		
+		return $faq;
+	}
 }

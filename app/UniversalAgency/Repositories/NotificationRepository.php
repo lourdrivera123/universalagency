@@ -1,6 +1,7 @@
 <?php namespace UniversalAgency\Repositories;
 
 use UniversalAgency\Repositories\UsersRepository;
+use UniversalAgency\Repositories\JobsRepository;
 use Notification;
 use Job;
 use Auth;
@@ -9,10 +10,12 @@ use Input;
 class NotificationRepository {
 
 	protected $user;
+	protected $job;
 
-	function __construct(UsersRepository $user)
+	function __construct(UsersRepository $user, JobsRepository $job)
 	{
 		$this->user = $user;
+		$this->job = $job;
 	}
 
 	function createInvitationNotification($job, $from_userid, $to_userid, $subject, $employerid)
@@ -146,13 +149,13 @@ class NotificationRepository {
 		return $notification;
 	}
 
-	function sendSorryNoteForBeingDeclined($to_userid, $jobid)
+	function sendSorryNoteForBeingDeclined($input)
 	{
-		$job = Job::findOrFail($jobid);
+		$job = $this->job->get_job_by_id($input['jobid']);
 
 		$notification = new Notification;
 		$notification->from_userid = getAdminId();
-		$notification->to_userid = $to_userid;
+		$notification->to_userid = $input['applicantid'];
 		$notification->subject = 'Notification about the past application and interview for "'.$job->job_title.'"';
 		$notification->message = 'We already reviewed your evaluation and resume, unfortunately you didn\'t match the qualifications for the job. Anyhow, you can still browse for available jobs and apply.';
 		$notification->save();
@@ -199,6 +202,20 @@ class NotificationRepository {
 		$notification->subject = 'You now have a trusted worker';
 		$notification->message = 'We would like to inform you that we have selected the qualifying worker for your job "'.$job_title.'". Happy Working ! :)';
 		$notification->save();
+
+		return $notification;
+	}
+
+	function get_notifications_for_loggedin_user($id)
+	{
+		$notifications = Notification::whereToUserid($id)->orderBy('created_at', 'DESC')->get();
+
+		return $notifications;
+	}
+
+	function get_notification_by_id($id)
+	{
+		$notification = Notification::findOrFail($id);
 
 		return $notification;
 	}

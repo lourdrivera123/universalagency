@@ -1,14 +1,17 @@
 <?php
 
 use UniversalAgency\Repositories\NotificationRepository;
+use UniversalAgency\Repositories\InterviewRepository;
 
 class NotificationController extends \BaseController {
 
 	protected $notification;
+	protected $interview;
 
-	function __construct(NotificationRepository $notification)
+	function __construct(NotificationRepository $notification, InterviewRepository $interview)
 	{
 		$this->notification = $notification;
+		$this->interview = $interview;
 	}
 
 	function notifications()
@@ -16,7 +19,7 @@ class NotificationController extends \BaseController {
 		if( isAdmin() )
 			return View::make('YouAreAdmin');
 
-		$notifications = Notification::whereToUserid(Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+		$notifications = $this->notification->get_notifications_for_loggedin_user(Auth::user()->id);
 
 		return View::make('applicant.notifications')
 		->withNotifications($notifications);
@@ -27,8 +30,7 @@ class NotificationController extends \BaseController {
 		if( isAdmin() )
 			return View::make('YouAreAdmin');
 		
-		$notification = Notification::whereId($id)->whereToUserid(Auth::user()->id)->first();
-
+		$notification = $this->notification->get_notification_by_id($id);
 
 		return View::make('applicant.notifications')
 		->withNotification($notification);
@@ -36,20 +38,20 @@ class NotificationController extends \BaseController {
 
 	function notifystaffaboutid()
 	{
-		$interview = Interview::whereApplicantId(Auth::user()->id)->first();	
-		
-		$notification = new Notification;
-		$notification->from_userid = Auth::user()->id;
-		$notification->to_userid = $interview->staff_id;
-		$notification->employerid = 1;
-		$notification->jobid = 1;
-		$notification->subject = 'Applicant ID';
-		
-		$notification->message = 'Hello'.'!<br/>
-		Applicant\'s ID : '.Input::get('interviewid').'.
-		<br/><br/>';
+		// $interview = $this->interview->get_interview_by_applicantid(Auth::user()->id);
 
-		$notification->save();
+		// $notification = new Notification;
+		// $notification->from_userid = Auth::user()->id;
+		// $notification->to_userid = $interview->staff_id;
+		// $notification->employerid = 1;
+		// $notification->jobid = 1;
+		// $notification->subject = 'Applicant ID';
+		
+		// $notification->message = 'Hello'.'!<br/>
+		// Applicant\'s ID : '.Input::get('interviewid').'.
+		// <br/><br/>';
+
+		// $notification->save();
 	}
 
 }

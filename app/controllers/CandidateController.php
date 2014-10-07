@@ -2,31 +2,48 @@
 
 use UniversalAgency\Repositories\CandidatesRepository;
 use UniversalAgency\Repositories\NotificationRepository;
-// use UniversalAgency\Repositories\MessagesRepository;
+use UniversalAgency\Repositories\PendingjobrequestRepository;
+use UniversalAgency\Repositories\InvitationRepository;
+use UniversalAgency\Repositories\InterviewRepository;
+use UniversalAgency\Repositories\EvaluationRepository;
+use UniversalAgency\Repositories\ContractsRepository;
 
 class CandidateController extends \BaseController {
 
 	protected $candidate;
 	protected $notification;
-	// protected $message;
+	protected $pendingjobrequest;
+	protected $invitation;
+	protected $interview;
+	protected $evaluation;
+	protected $contract;
 
-	function __construct(CandidatesRepository $candidate, NotificationRepository $notification)
+	function __construct(CandidatesRepository $candidate, NotificationRepository $notification
+		PendingjobrequestRepository $pendingjobrequest, InvitationRepository $invitation, 
+		InterviewRepository $interview, EvaluationRepository $evaluation, 
+		ContractsRepository $contract)
 	{
 		$this->candidate = $candidate;
 		$this->notification = $notification;
-		// $this->message = $message;
+		$this->pendingjobrequest = $pendingjobrequest;
+		$this->invitation = $invitation;
+		$this->interview = $interview;
+		$this->evaluation = $evaluation;
+		$this->contract = $contract;
 	}
 
 	function adminjobcandidates($id)
 	{
-		$jobrequests = Pendingjobrequest::whereJobId($id)->with('user')->get();
-		$invitations = Invitation::whereJobId($id)->with('user')->get();
-		$candidates = Candidate::whereJobId($id)->with('user')->get();
-		$underinterviews = Interview::whereJobId($id)->with('user')->get();
-		$underreviews = Evaluation::whereJobId($id)->with('user')->get();
-		
-		// $candidates = Candidate::all();
+		$jobrequests = $this->pendingjobrequest->get_jobs_with_user_by_id($id);
 
+		$invitations = $this->invitation->get_jobs_with_user_by_id($id);
+
+		$candidates = $this->candidate->get_jobs_with_user_by_id($id);	
+
+		$underinterviews = $this->interview->get_jobs_with_user_by_id($id);
+
+		$underreviews = $this->evaluation->get_jobs_with_user_by_id($id);
+		
 		return View::make('admin.adminjobcandidates')
 		->withJobrequests($jobrequests)
 		->withInvitations($invitations)
@@ -37,80 +54,18 @@ class CandidateController extends \BaseController {
 
 	function admindeclineApplicantUnderReview()
 	{
-		$candidate = Candidate::whereJobId(Input::get('jobid'))->whereApplicantId(Input::get('applicantid'))->first();
-		$candidate->status = 'declined';
-		$candidate->save();
+		$candidate = $this->candidate->set_candidate_status_to_declined(Input::all());
 
-		$notification = $this->notification->sendSorryNoteForBeingDeclined(Input::get('applicantid'), Input::get('jobid'));
+		$notification = $this->notification->sendSorryNoteForBeingDeclined(Input::all());
 
 		return $candidate;
 	}
 
 	function adminjobhires($id)
 	{
-		$recruitcontracts = Recruitcontract::whereJobId($id)->get();
+		$recruitcontracts = $this->contract->get_employee_contract_by_id($id);
 
 		return View::make('admin.adminjobhires')
 		->withRecruitcontracts($recruitcontracts);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-// function listcandidates()
-	// {
-	// 	$candidates = $this->candidate->listcandidates(Input::all());
-
-	// 	return $candidates;
-	// }
-
-	// function acceptinvitation()
-	// {
-	// 	$candidate = $this->candidate->acceptinvitation(Input::all());
-
-	// 	// $employerid = $candidate->job()->first()->employer()->first()->id;
-
-	// 	$userid = $candidate->user()->first()->id;
-
-	// 	$jobid = $candidate->job_id;
-
-	// 	if ( checkIfUserHasTakenTests(Auth::user()->id) != 'all tests taken!' )
-	// 	{
-	// 		$testStatus = checkIfUserHasTakenTests(Auth::user()->id);
-
-	// 		if ( $testStatus == 'did not take personality test')
-	// 		{
-	// 			$candidate->hastakenpersonalitytest = 1;
-	// 		}
-
-	// 		if ( $testStatus == 'did not take iq test' )
-	// 		{
-	// 			$candidate->hastakeniqtest = 1;
-	// 		}
-	// 	}
-
-	// 	return $candidate;
-	// }
-
-	// function declineinvitation()
-	// {
-	// 	$candidate = $this->candidate->declineinvitation(Input::all());
-
-	// 	return $candidate;
-	// }
-
-	// function adminjobinvitations()
-	// {
-	// 	$candidates = Candidate::all();
-
-	// 	return View::make('admin.adminjobinvitations')
-	// 	->withCandidates($candidates);
-	// }

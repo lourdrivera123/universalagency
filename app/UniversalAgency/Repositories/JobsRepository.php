@@ -190,4 +190,61 @@ class JobsRepository {
 
 		return $job;
 	}
+
+	function get_job_by_id($id)
+	{
+		$job = Job::findOrFail($id);
+
+		return $job;
+	}
+
+	function get_jobs_by_employer_id($id)
+	{
+		$job = Job::whereCompany($id)->get();
+
+		return $job;
+	}
+
+	function get_all_jobs()
+	{
+		$jobs = Job::all();
+
+		return $jobs;
+	}
+
+	function get_jobs_by_category_id($id)
+	{
+		$jobs2 = Job::whereJobCategory($id)->get();
+
+		return $jobs2;
+	}
+
+	function get_all_jobs_with_trashed()
+	{
+		$jobs = Job::withTrashed()->get();
+
+		return $jobs;
+	}
+
+	function get_job_with_trashed_by_id($id)
+	{
+		$job = Job::withTrashed()->findOrFail($id);
+
+		return $job;
+	}
+
+	function get_jobs_by_job_title($keyword)
+	{
+		$searchjobs = Job::where('job_title', 'LIKE', '%'.$keyword.'%')->get();
+
+		return $searchjobs;
+	}
+
+	function get_job_by_location($keyword)
+	{
+		$searchlocation = Job::where('location', 'LIKE', '%'.$keyword.'%')->get();
+
+		return $searchlocation;
+	}
+
 }

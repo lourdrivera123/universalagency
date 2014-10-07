@@ -67,4 +67,10 @@ class InvitationRepository {
 		return 1;
 	}
 	
+	function get_jobs_with_user_by_id($id)
+	{
+		$invitations = Invitation::whereJobId($id)->with('user')->get();
+
+		return $invitations;
+	}
 }

@@ -15,7 +15,7 @@ class StaffController extends \BaseController {
 	}
 
 	function staff() {
-		$staff = Staff::all();
+		$staff = $this->staff->get_all_staffs();
 
 		return View::make('admin.adminviewstaff')
 		->withStaff($staff);
@@ -23,7 +23,7 @@ class StaffController extends \BaseController {
 
 	function checkStaffPhoneNumber()
 	{
-		$staff = Staff::wherePhoneNumber(Input::get('phone_number'))->first();
+		$staff = $this->staff->get_staff_by_phone_number(Input::get('phone_number'));
 
 		if(count($staff) > 0){
 

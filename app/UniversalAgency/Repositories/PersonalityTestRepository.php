@@ -95,4 +95,18 @@ class PersonalityTestRepository {
 	{
 		return Personalityresult::whereHash($hash)->first();
 	}
+
+	function get_all_personality_results()
+	{
+		$personality = Personalityresult::all();
+
+		return $personality;
+	}
+
+	function get_personality_result_by_id($id)
+	{
+		$personalityresult = Personalityresult::findOrFail($id);
+
+		return $personalityresult;
+	}
 }

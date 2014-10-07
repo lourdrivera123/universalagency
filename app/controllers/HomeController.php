@@ -1,12 +1,28 @@
 <?php
 
+use UniversalAgency\Repositories\EmployersRepository;
+use UniversalAgency\Repositories\JobCategoriesRepository;
+use UniversalAgency\Repositories\JobsRepository;
+use UniversalAgency\Repositories\ResumeRepository;
+
 class HomeController extends BaseController {
+
+	protected $employer;
+	protected $jobcategory;
+	protected $job;
+	protected $resume;
+
+	function __construct(EmployersRepository $employer, Jobcategory $jobcategory 
+		JobsRepository $job, ResumeRepository $resume)
+	{
+		$this->employer = $employer;
+		$this->jobcategory = $jobcategory;
+		$this->job = $job;
+		$this->resume = $resume;
+	}
 
 	function mainhome()
 	{
-		if(Request::root() == "http://admin.teamlaravel.com")
-			return View::make('admin.loggedinadmin');
-
 		return View::make('countdown');
 	}
 
@@ -23,22 +39,13 @@ class HomeController extends BaseController {
 		return View::make('admin.adminlogin');
 	}
 
-	function sample() {
-		$sss = Sss::all();
-		$incometax = Incometax::all();
-		$phic = Phic::all();
-
-		return View::make('sample')
-		->withSss($sss)
-		->withIncometax($incometax)
-		->withPhic($phic);
-	}
-
 	function home()
 	{
-		$employers = Employer::orderBy(DB::raw('RAND()'))->take(4)->get();
-		$categories = Jobcategory::all();
-		$jobs = Job::all();
+		$employers = $this->employer->get_random_employers_and_take_only(4);
+
+		$categories = $this->jobcategory->get_all_categories();
+		
+		$jobs = $this->job->get_all_jobs();
 
 		return View::make('home')
 		->withEmployers($employers)
@@ -52,7 +59,7 @@ class HomeController extends BaseController {
 
 	function partners()
 	{
-		$employers = Employer::all();
+		$employers = $this->employer->get_all_employers();
 
 		return View::make('partners')
 		->withEmployers($employers);
@@ -101,8 +108,9 @@ class HomeController extends BaseController {
 
 	function joblist()
 	{
-		$jobs = Job::all();
-		$categories = Jobcategory::all();
+		$jobs = $this->job->get_all_jobs();
+
+		$categories = $this->jobcategory->get_all_categories();
 
 		return View::make('applicant.joblist')
 		->withJobs($jobs)
@@ -112,9 +120,12 @@ class HomeController extends BaseController {
 	function getjoblist($id)
 	{
 		try{
-			$jobs2 = Job::whereJobCategory($id)->get();
-			$categories = Jobcategory::all();
-			$categoryname = Jobcategory::findOrFail($id)->category; 
+
+			$jobs2 = $this->job->get_jobs_by_category_id($id);
+
+			$categories = $this->jobcategory->get_all_categories();
+
+			$categoryname = $this->jobcategory->get_category_name_by_id($id);
 
 			return View::make('applicant.joblist')
 			->withJobs2($jobs2)
@@ -128,9 +139,11 @@ class HomeController extends BaseController {
 
 	function employerjoblist($id) {
 
-		$employer = Employer::findOrFail($id);
-		$employers = Employer::all();
-		$jobs3 = Job::whereCompany($employer->id)->get();
+		$employer = $this->employer->get_employer_by_id($id);
+
+		$employers = $this->employer->get_all_employers();
+		
+		$jobs3 = $this->job->get_jobs_by_employer_id($employer->id);
 
 		return View::make('applicant.joblist')
 		->withJobs3($jobs3)
@@ -140,10 +153,14 @@ class HomeController extends BaseController {
 
 	function getapplicant($id)
 	{
-		$resume = Resume::findOrFail($id);
+		$resume = $this->resume->get_resume_by_id($id);
+
 		$educations = $resume->education()->get();
+		
 		$jobs = $resume->jobhistory()->get();
+		
 		$resumepdf = $resume->resumepdf()->first();
+		
 		$attachments = $resume->user()->first()->userattachment()->get();
 
 

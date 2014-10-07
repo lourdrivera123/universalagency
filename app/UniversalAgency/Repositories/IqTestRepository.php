@@ -89,4 +89,19 @@ class IqTestRepository {
 	
 		return $result;
 	}
+
+	function get_all_iq_results()
+	{
+		$iq = Iqresult::all();
+
+		return $iq;
+	}
+
+	function get_iqresult_by_id($id)
+	{
+		$iqresult = Iqresult::findOrFail($id);
+
+		return $iqresult;
+	}
+
 }

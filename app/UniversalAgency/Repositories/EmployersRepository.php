@@ -113,14 +113,14 @@ class EmployersRepository {
 
 		if(count($employer) > 0){
 
-		if( !is_null($input['employer_id']) && $input['employer_id'] == $employer->id )
-		{
+			if( !is_null($input['employer_id']) && $input['employer_id'] == $employer->id )
+			{
 
-			return 'true';
-		} else {
+				return 'true';
+			} else {
 
-			return 'false';
-		}
+				return 'false';
+			}
 
 		}
 		return 'true';
@@ -132,14 +132,14 @@ class EmployersRepository {
 
 		if(count($employer) > 0){
 
-		if( !is_null($input['employer_id']) && $input['employer_id'] == $employer->id )
-		{
+			if( !is_null($input['employer_id']) && $input['employer_id'] == $employer->id )
+			{
 
-			return 'true';
-		} else {
+				return 'true';
+			} else {
 
-			return 'false';
-		}
+				return 'false';
+			}
 
 		}
 		return 'true';
@@ -148,6 +148,34 @@ class EmployersRepository {
 	function listemployers()
 	{
 		$employers = Employer::lists('businessname', 'user_id');
+
+		return $employers;
+	}
+
+	function get_employer_by_id($id)
+	{
+		$employer = Employer::findOrFail($id);
+
+		return $employer;
+	}
+
+	function get_all_employers()
+	{
+		$employers = Employer::all();
+
+		return $employers;
+	}
+
+	function get_random_employers_and_take_only($num_of_employers)
+	{
+		$employers = Employer::orderBy(DB::raw('RAND()'))->take($num_of_employers)->get();
+
+		return $employers;
+	}
+
+	function get_employers_by_businessname($keyword)
+	{
+		$employers = Employer::where('businessname', 'LIKE', '%'.$keyword.'%')->get();
 
 		return $employers;
 	}

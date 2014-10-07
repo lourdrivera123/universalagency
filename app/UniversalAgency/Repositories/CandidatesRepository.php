@@ -35,4 +35,21 @@ class CandidatesRepository {
 		return $candidate;
 	}
 
+	function get_jobs_with_user_by_id($id)
+	{
+		$candidates = Candidate::whereJobId($id)->with('user')->get();
+
+		return $candidates;
+	}
+
+	function get_job_by_applicant_and_job_id($input)
+	{
+		$candidate = Candidate::whereJobId($input['jobid'])->whereApplicantId($input['applicantid'])->first();
+		$candidate->status = 'declined';
+		$candidate->save();
+
+		return $candidate;
+
+	}
+
 }

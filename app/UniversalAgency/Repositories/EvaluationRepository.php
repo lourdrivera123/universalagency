@@ -28,4 +28,18 @@ class EvaluationRepository {
 		return $evaluation;
 	}
 
+	function get_jobs_with_user_by_id($id)
+	{
+		$underreviews = Evaluation::whereJobId($id)->with('user')->get();
+
+		return $underreviews;
+	}
+
+	function get_evaluation_with_job_and_user_by_id($id)
+	{
+		$evaluation = Evaluation::with('user', 'job')->findOrFail($id);
+
+		return $evaluation;
+	}
+
 }

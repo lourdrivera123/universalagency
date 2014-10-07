@@ -18,8 +18,6 @@ class InvitationController extends \BaseController {
 	{
 		$invitation = $this->invitation->acceptinvitation(Input::all());
 
-		// $employerid = $candidate->job()->first()->employer()->first()->id;
-
 		$userid = $invitation->user()->first()->id;
 
 		$jobid = $invitation->job_id;
