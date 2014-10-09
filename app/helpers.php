@@ -395,10 +395,9 @@ function getCandidateUsingEvaluationId($evaluation)
 
 function getEmployerIdUsingJobName($jobname)
 {
-    $contract = Contract::whereJob($jobname)->first();
-    $employer = $contract->employer()->first()->user()->first();
+    $employer = Contract::whereJob($jobname)->first()->employer;
 
-    return $employer->id;
+    return $employer;
 }
 
 
@@ -469,4 +468,27 @@ function getEmail($id)
     $employee = User::findOrFail($id);
 
     return $employee->email;
+}
+
+function check_if_slot_is_not_available($jobid)
+    {
+        $jobtitle = Job::withTrashed()->findOrFail($jobid)->job_title;
+
+        $num_of_employees = count(Recruitcontract::whereJobId($jobid)->get());
+
+        $num_of_employees_from_contract = Contract::whereJob($jobtitle)->first()->num_of_employees;
+
+        if($num_of_employees >= $num_of_employees_from_contract )
+        {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+function getContractIDByJobTitle($title)
+{
+     $contractid = Contract::whereJob($title)->first()->id;
+
+    return $contractid;
 }

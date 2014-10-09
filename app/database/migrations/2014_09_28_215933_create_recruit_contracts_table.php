@@ -24,6 +24,9 @@ class CreateRecruitContractsTable extends Migration {
 
 			$table->integer('job_id')->index()->unsigned();
 			$table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
+
+			$table->integer('contract_id')->index()->unsigned();
+			$table->foreign('contract_id')->references('id')->on('contracts')->onDelete('cascade');
 			
 			$table->integer('percentage');
 			$table->double('basic_pay');

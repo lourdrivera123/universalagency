@@ -59,6 +59,7 @@
 										<th>Name</th>
 										<th>Applicant Status</th>
 										<th>Date</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody id="requestedtable">
@@ -68,6 +69,7 @@
 										<td><a href="{{ URL::to('applicant/'.getEmployeeByRecruitContract($recruitcontract->employee_id)->id) }}" target="_blank">{{ getEmployeeByRecruitContract($recruitcontract->employee_id)->first_name.' '.getEmployeeByRecruitContract($recruitcontract->employee_id)->last_name }}</a></td>
 										<td>{{ getEmployeeByRecruitContract($recruitcontract->employee_id)->status }}</td>
 										<td>{{ datedifference($recruitcontract->created_at) }}</td>
+										<td><a href="{{ URL::to('../../admindeleteemployeecontract/'.$recruitcontract->id) }}" class="btn btn-danger">Remove Employee</a></td>
 									</tr>
 									@endforeach
 									@endif

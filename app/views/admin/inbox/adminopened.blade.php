@@ -47,9 +47,11 @@
 	<p>
 	{{ $resume->firstname.' '.$resume->last_name }} has taken all the tests. You can now review the results:
 
-	<a href="{{ URL::to('iqtestresult/'.$iqresult->hash) }}" class="btn btn-success" target="blank">IQ Result</a>
+	<!-- <a href="{{ URL::to('iqtestresult/'.$iqresult->hash) }}" class="btn btn-success" target="blank">IQ Result</a>
 	<br/>
 	<a href="{{ URL::to('personalityresult/'.$personalityresult->hash) }}" class="btn btn-success" target="blank">Personality Result</a>
+	<br/> -->
+	<a href="{{ URL::to('applicant/'.$resume->user_id) }}" class="btn btn-success" target="blank">Review Profile</a>
 	</p>	
 	
 	<p>

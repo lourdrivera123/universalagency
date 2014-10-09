@@ -45,6 +45,19 @@
 						<!-- end widget edit box -->
 						<!-- widget content -->
 						<div class="widget-body no-padding">
+							<br/>
+							<div id="tabs">
+									<ul>
+										<li>
+											<a href="#tabs-a">Active Contracts</a>
+										</li>
+										<li>
+											<a href="#tabs-b">Expired Contarcts</a>
+										</li>
+									</ul>
+
+									<div id="tabs-a">
+
 							<div class="dt-toolbar">
 							</div>
 							<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
@@ -63,6 +76,7 @@
 									<tbody id="employercontracttable">
 										@if(count($contracts) > 0)
 										@foreach($contracts as $contract)
+										@if(!$contract->trashed())
 										<tr id="{{ $contract->id }}">
 											<td>{{ $contract->id }}</td>
 											<td>{{ $contract->salary }}</td>
@@ -72,10 +86,50 @@
 											<td>{{ getEmployerName($contract->employer) }}</td>
 											<td><a href="#" class="btn btn-danger btn-circle" onclick="disablecontract($(this))"><i class="fa fa-times"></i></a></td>
 										</tr>
+										@endif
 										@endforeach
 										@endif
 									</tbody>
 								</table>
+									</div>
+
+
+									<div id="tabs-b">
+										<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+								<thead>
+									<tr>
+										<th><i class="fa fa-fw fa-key text-muted hidden-md hidden-sm hidden-xs"></i> ID</th>
+										<th><i class="fa fa-fw fa-info-circle text-muted hidden-md hidden-sm hidden-xs"></i> Salary </th>
+										<th><i class="fa fa-fw fa-info-circle text-muted hidden-md hidden-sm hidden-xs"></i> Cut-off Period </th>
+										<th><i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"></i> Job Title </th>
+										<th><i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"></i> Number of Employees </th>
+										<th><i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"></i> Employer </th>
+										<th><i class="fa fa-fw fa-check text-muted hidden-md hidden-sm hidden-xs"></i> Renew </th>
+										</tr>
+									</thead>
+									<tbody id="employercontracttable">
+										@if(count($contracts) > 0)
+										@foreach($contracts as $contract)
+										@if($contract->trashed())
+										<tr id="{{ $contract->id }}">
+											<td>{{ $contract->id }}</td>
+											<td>{{ $contract->salary }}</td>
+											<td>{{ $contract->cut_off_period }}</td>
+											<td>{{ $contract->job }}</td>
+											<td>{{ $contract->num_of_employees }}</td>
+											<td>{{ getEmployerName($contract->employer) }}</td>
+											<td><a href="#" class="btn btn-success" ><i class="fa fa-check"></i> Modal for renew contract</a></td>
+											<!-- <td><a href="#" class="btn btn-danger btn-circle" onclick="disablecontract($(this))"><i class="fa fa-times"></i></a></td> -->
+										</tr>
+										@endif
+										@endforeach
+										@endif
+									</tbody>
+								</table>
+									</div>
+
+
+								</div>
 							</div> <!-- end widget content -->
 						</div> <!-- end widget div -->
 					</div> <!-- end widget -->
@@ -89,6 +143,124 @@
 @section('modals')
 <!-- Add Modal -->
 <div class="modal fade" id="addemployercontractmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel1">Set Contract Form</h4>
+			</div>
+			<div class="modal-body">
+
+				<div class="widget-body no-padding">
+					{{ Form::open(['id' => 'contract_form', 'class' => 'smart-form']) }}
+					<header>
+						Contract Information
+					</header>
+
+					<fieldset>
+						<div class="row">
+
+							<section class="col col-6">
+								<label for="salary" class="label">Salary</label>
+								<label class="input"> <i class="icon-append fa fa-user"></i>
+									<input type="text" name="salary" placeholder="Salary">
+								</label>
+							</section>
+
+							<section class="col col-6">
+								<label class="label"><i>Employment Type</i></label>
+								<label class="select">
+									{{ Form::select('employmenttype', ['Full-time' => 'Full-time', 'Part-time' => 'Part-time'], null, ['class' => 'form-control']) }}
+									<i></i>
+								</label>
+							</section>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<div class="row">
+							<section class="col col-6">
+								<label for="starting_date">Starting Date</label>
+								<label class="input"> <i class="icon-append fa fa-briefcase"></i>
+									{{ Form::text('starting_date', null, ['id' => 'starting_date', 'placeholder' => 'yyyy-mm-dd']) }}
+								</label>
+							</section>
+							<section class="col col-6">
+								<label for="closing_date">Closing Date</label>
+								<label class="input"> <i class="icon-append fa fa-briefcase"></i>
+									{{ Form::text('closing_date', null, ['id' => 'closing_date', 'placeholder' => 'yyyy-mm-dd']) }}
+								</label>
+							</section>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<div class="row">
+							<section class="col col-6">
+								<label class="label" for="cut_off_period">Cut Off Period</label>
+								<label class="select">
+									<select name="cut_off_period">
+										<option value="daily">Daily</option>
+										<option value="weekly">Weekly</option>
+										<option value="semi_monthly">Semi-monthly</option>
+										<option value="monthly">Monthly</option>
+										<option value="consultation">Consultation</option>
+									</select> <i></i> </label>
+								</section>
+
+								<section class="col col-6">
+									<label class="label" for="job">Job Title</label>
+									<label class="input"> <i class="icon-append fa fa-briefcase"></i>
+										<input type="text" name="job" placeholder="Job Title">
+									</label>
+								</section>
+
+								<section class="col col-6">
+									<label class="label" for="employer">Number of Employees</label>
+									<label class="input"> <i class="icon-append fa fa-user"></i>
+										<input type="number" name="num_of_employees" placeholder="Number of employees"/>
+									</label>
+								</section>
+
+								<section class="col col-6">
+									<label class="label" for="employer">Employer</label>
+									<label class="input"> 
+										{{ Form::select('employer', $employers, null, ['class' => 'form-control']) }}
+									</label>
+								</section>
+							</div>
+						</fieldset>
+
+						<fieldset>
+							<div class="row">
+								<section class="col col-md-12 col-xs-12 col-lg-12">
+									<label class="label" for="others">Specific Terms and Regulations</label>
+									<label class="textarea"> <i class="icon-append fa fa-user"></i>
+										<textarea name="others" placeholder="Specified Terms and Regulations" rows="15" class="form-control"></textarea>
+									</label>
+								</section>
+							</div>
+						</fieldset>
+					</div>
+
+					<div class="modal-footer" id="addemployercontractfooter">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							Cancel
+						</button>
+						<button id="addemployercontractsubmit" type="submit" class="btn btn-primary">
+							Save
+						</button>
+					</div>
+					{{ Form::close() }}
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+	</div>
+
+	<!-- Renew modal -->
+	<div class="modal fade" id="addemployercontractmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -228,5 +400,7 @@
 
 		$("#starting_date").mask("9999-99-99");
 		$("#closing_date").mask("9999-99-99");
+$('#tabs').tabs();
+		
 	</script>
 	@stop

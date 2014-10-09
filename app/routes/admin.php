@@ -54,6 +54,8 @@ Route::post('admin', 'SessionsController@adminstore');
 
 //ajax actions
 
+Route::post('/admininviteapplicants', 'InvitationController@admininviteapplicants');
+
 Route::post('/admindeclineApplicantUnderReview', 'CandidateController@admindeclineApplicantUnderReview');
 
 Route::get('/adminFetchInterviewEvents', 'InterviewController@adminFetchInterviewEvents');

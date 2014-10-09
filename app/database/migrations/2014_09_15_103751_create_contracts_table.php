@@ -25,8 +25,8 @@ class CreateContractsTable extends Migration {
             $table->date('starting_date');
 			$table->date('closing_date');
 			$table->string('employmenttype');
-			$table->string('other');
-			$table->string('path');
+			$table->longtext('other');
+			$table->softDeletes();
 			$table->timestamps();
 		});
 	}

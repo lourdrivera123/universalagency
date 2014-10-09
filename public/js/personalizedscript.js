@@ -1787,11 +1787,11 @@ $('#contract_form').validate({
 			required: true
 		},
 		starting_date : {
-            required : true
-        }, 
-        closing_date : {
-            required : true
-        }
+			required : true
+		}, 
+		closing_date : {
+			required : true
+		}
 	},
 
 				// Messages for form validation
@@ -1894,27 +1894,45 @@ $('#addeventform').validate({
 
 //End of Code
 
+//Invite applicant manually
+$('#invite_applicants_form').validate({
+	submitHandler: function(form) {
+		
+		var invitedapplicant = $('[name="invitedapplicant"]').val();
+		var _token = $('[name="_token"]').val();
+		var invite_applicant_jobid = $('[name="invite_applicant_jobid"]').val();
 
-//Save Applicant Evaluation
-// $('#evaluate_applicant_form').validate({
-// 	submitHandler: function(form) {
-// 		console.log('submitted');
-// 	}, 
+		$('#invite_applicant_submit_button').addClass("disabled");
+		$('#invite_applicant_submit_button').html('<i class="fa fa-gear fa-spin"></i>');
+		$('#invite_applicant_footer').prepend('<div class="alert alert-success" role="alert">Please be Patient, while we invite the applicant</div>');
 
-// 	rules : {
-// 		asterisks_rating : {
-// 			required : true
-// 		}, 
-// 		mymarkdown : {
-// 			required : true
-// 		}
-// 	},
+		$.post('/admininviteapplicants', { _token : _token, invitedapplicant : invitedapplicant, invite_applicant_jobid : invite_applicant_jobid }, function(data){
+			
+			$("#invite_applicants_form")[0].reset();
 
-// 	// Do not change code below
-// 	errorPlacement : function(error, element) {
-// 		error.insertAfter(element.parent());
-// 	}
+			$('#inviteapplicantsmodal').modal('hide');
+			$('#invite_applicant_submit_button').removeClass("disabled");
+			$('#invite_applicant_submit_button').html('Save');
+			$('#invite_applicant_footer').children('div').remove();
 
-// });
+			$.smallBox({
+				title : 'Applicant has been invited',
+				content : "<i class='fa fa-clock-o'></i> <i>just now...</i>",
+				color : "#296191",
+				iconSmall : "fa fa-thumbs-up bounce animated",
+				timeout : 5000
+			});
+		});
+	},
+
+	rules : {
+		invitedapplicant : {
+			required : true
+		}
+	},
+
+	errorPlacement : function(error, element) {
+		error.insertAfter(element.parent());
+	}
+});
 //End of Code
-

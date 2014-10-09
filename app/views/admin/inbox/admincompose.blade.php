@@ -97,8 +97,6 @@
 	 		formData.append('_token', token);
 	 		formData.append('message', message);
 
-	 		console.log(message);
-
 	 		$.ajax({
           url: '/sendMessageFromAdmin',  //Server script to process data
           type: 'POST',
@@ -130,7 +128,15 @@
 
 	 		function completeHandler(data)
 	 		{
-	 			// console.log(data);
+	 			$.smallBox({
+	 				title : 'Message Sent !',
+	 				content : "<i class='fa fa-clock-o'></i> <i>just now...</i>",
+	 				color : "#296191",
+	 				iconSmall : "fa fa-thumbs-up bounce animated",
+	 				timeout : 5000
+	 			});
+
+	 			window.location = '../../admininbox';
 	 		}
 	 	},
 

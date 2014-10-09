@@ -7,11 +7,11 @@ class Evaluation extends \Eloquent {
 
 	function user()
 	{
-		return $this->belongsTo('User', 'applicant_id');
+		return $this->belongsTo('User', 'applicant_id')->withTrashed();
 	}
 
 	function job()
 	{
-		return $this->belongsTo('Job', 'job_id');
+		return $this->belongsTo('Job', 'job_id')->withTrashed();
 	}
 }

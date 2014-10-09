@@ -48,9 +48,9 @@ class ContractsController extends \BaseController {
 
 	function generateEmployerContract()
 	{
-		$generatedpdf = $this->pdfgenerator->generateEmployerContract(Input::all());
+		// $generatedpdf = $this->pdfgenerator->generateEmployerContract(Input::all());
 
-		$contract = $this->contract->adminsaveemployercontract(Input::all(), $generatedpdf);
+		$contract = $this->contract->adminsaveemployercontract(Input::all());
 
 		return Response::json(['id' => $contract->id, 'contract_title' => $contract->contract_title ,'salary' => $contract->salary, 'job_title' => $contract->job, 'num_of_employees' => $contract->num_of_employees, 'businessname' => getEmployerName($contract->employer), 'cut_off_period' => $contract->cut_off_period ]);
 	}
