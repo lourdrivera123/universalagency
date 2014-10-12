@@ -20,7 +20,7 @@ foreach (File::allFiles(__DIR__.'/routes') as $partial )
 Route::get('excelent', function(){
 
 
-	$table = Excel::selectSheets('Sheet2')->load('C:\Users\Zem\Desktop\dtr_form.xls', function($reader) {
+	$table = Excel::selectSheets('Sheet2')->load(public_path().'/dtruploads/dtr_form.xls', function($reader) {
 
 	    $reader->noHeading()->skip(11)->take(32)->formatDates(false);
 	

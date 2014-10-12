@@ -69,6 +69,7 @@
 										<th><i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"></i> Job Title </th>
 										<th><i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"></i> Number of Employees </th>
 										<th><i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"></i> Employer </th>
+										<th>Closing Date</th>
 										<th><i class="fa fa-fw fa-check text-muted hidden-md hidden-sm hidden-xs"></i>
 											/<i class="fa fa-fw fa-times text-muted hidden-md hidden-sm hidden-xs"></i> Enable/Disable </th>
 										</tr>
@@ -84,8 +85,8 @@
 											<td>{{ $contract->job }}</td>
 											<td>{{ $contract->num_of_employees }}</td>
 											<td>{{ getEmployerName($contract->employer) }}</td>
+											<td>{{ $contract->closing_date }}</td>												
 											<td><a href="#" class="btn btn-danger btn-circle" onclick="disablecontract($(this))"><i class="fa fa-times"></i></a></td>
-										</tr>
 										@endif
 										@endforeach
 										@endif
@@ -118,7 +119,8 @@
 											<td>{{ $contract->job }}</td>
 											<td>{{ $contract->num_of_employees }}</td>
 											<td>{{ getEmployerName($contract->employer) }}</td>
-											<td><a href="#" class="btn btn-success" ><i class="fa fa-check"></i> Modal for renew contract</a></td>
+											<!-- <td><a href="#" class="btn btn-success" ><i class="fa fa-check"></i> Modal for renew contract</a></td> -->
+											<td><button data-toggle="modal" data-target="#renewemployercontractmodal" class="btn btn-success" onclick="populate_renew_contract_form($(this))" data-contractid="{{ $contract->id }}"><i class="fa fa-check"></i>&nbsp;Renew Contract</button></td>
 											<!-- <td><a href="#" class="btn btn-danger btn-circle" onclick="disablecontract($(this))"><i class="fa fa-times"></i></a></td> -->
 										</tr>
 										@endif
@@ -260,19 +262,20 @@
 	</div>
 
 	<!-- Renew modal -->
-	<div class="modal fade" id="addemployercontractmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal fade" id="renewemployercontractmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 					&times;
 				</button>
-				<h4 class="modal-title" id="myModalLabel1">Set Contract Form</h4>
+				<h4 class="modal-title" id="myModalLabel1">Renew Contract Form</h4>
 			</div>
 			<div class="modal-body">
 
 				<div class="widget-body no-padding">
-					{{ Form::open(['id' => 'contract_form', 'class' => 'smart-form']) }}
+					{{ Form::open(['id' => 'renew_contract_form', 'class' => 'smart-form']) }}
+					<input type="hidden" name="contract_id_renew" id="contract_id_renew" value=""/>
 					<header>
 						Contract Information
 					</header>
@@ -283,14 +286,14 @@
 							<section class="col col-6">
 								<label for="salary" class="label">Salary</label>
 								<label class="input"> <i class="icon-append fa fa-user"></i>
-									<input type="text" name="salary" placeholder="Salary">
+									<input type="text" name="salary_renew" placeholder="Salary" id="salary_renew">
 								</label>
 							</section>
 
 							<section class="col col-6">
 								<label class="label"><i>Employment Type</i></label>
 								<label class="select">
-									{{ Form::select('employmenttype', ['Full-time' => 'Full-time', 'Part-time' => 'Part-time'], null, ['class' => 'form-control']) }}
+									{{ Form::select('employmenttype_renew', ['Full-time' => 'Full-time', 'Part-time' => 'Part-time'], null, ['class' => 'form-control', 'id' => 'employmenttype_renew']) }}
 									<i></i>
 								</label>
 							</section>
@@ -302,13 +305,13 @@
 							<section class="col col-6">
 								<label for="starting_date">Starting Date</label>
 								<label class="input"> <i class="icon-append fa fa-briefcase"></i>
-									{{ Form::text('starting_date', null, ['id' => 'starting_date', 'placeholder' => 'yyyy-mm-dd']) }}
+									{{ Form::text('starting_date_renew', null, ['id' => 'starting_date_renew', 'placeholder' => 'yyyy-mm-dd']) }}
 								</label>
 							</section>
 							<section class="col col-6">
 								<label for="closing_date">Closing Date</label>
 								<label class="input"> <i class="icon-append fa fa-briefcase"></i>
-									{{ Form::text('closing_date', null, ['id' => 'closing_date', 'placeholder' => 'yyyy-mm-dd']) }}
+									{{ Form::text('closing_date_renew', null, ['id' => 'closing_date_renew', 'placeholder' => 'yyyy-mm-dd']) }}
 								</label>
 							</section>
 						</div>
@@ -319,7 +322,7 @@
 							<section class="col col-6">
 								<label class="label" for="cut_off_period">Cut Off Period</label>
 								<label class="select">
-									<select name="cut_off_period">
+									<select name="cut_off_period_renew" id="cut_off_period_renew">
 										<option value="daily">Daily</option>
 										<option value="weekly">Weekly</option>
 										<option value="semi_monthly">Semi-monthly</option>
@@ -331,21 +334,14 @@
 								<section class="col col-6">
 									<label class="label" for="job">Job Title</label>
 									<label class="input"> <i class="icon-append fa fa-briefcase"></i>
-										<input type="text" name="job" placeholder="Job Title">
+										<input type="text" name="job_renew" placeholder="Job Title" id="job_renew">
 									</label>
 								</section>
 
 								<section class="col col-6">
 									<label class="label" for="employer">Number of Employees</label>
 									<label class="input"> <i class="icon-append fa fa-user"></i>
-										<input type="number" name="num_of_employees" placeholder="Number of employees"/>
-									</label>
-								</section>
-
-								<section class="col col-6">
-									<label class="label" for="employer">Employer</label>
-									<label class="input"> 
-										{{ Form::select('employer', $employers, null, ['class' => 'form-control']) }}
+										<input type="number" name="num_of_employees_renew" placeholder="Number of employees" id="num_of_employees_renew"/>
 									</label>
 								</section>
 							</div>
@@ -356,18 +352,18 @@
 								<section class="col col-md-12 col-xs-12 col-lg-12">
 									<label class="label" for="others">Specific Terms and Regulations</label>
 									<label class="textarea"> <i class="icon-append fa fa-user"></i>
-										<textarea name="others" placeholder="Specified Terms and Regulations" rows="15" class="form-control"></textarea>
+										<textarea name="others_renew" placeholder="Specified Terms and Regulations" rows="15" class="form-control" id="others_renew"></textarea>
 									</label>
 								</section>
 							</div>
 						</fieldset>
 					</div>
 
-					<div class="modal-footer" id="addemployercontractfooter">
+					<div class="modal-footer" id="addemployercontractfooterrenew">
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 							Cancel
 						</button>
-						<button id="addemployercontractsubmit" type="submit" class="btn btn-primary">
+						<button id="addemployercontractsubmitrenew" type="submit" class="btn btn-primary">
 							Save
 						</button>
 					</div>
@@ -401,6 +397,7 @@
 		$("#starting_date").mask("9999-99-99");
 		$("#closing_date").mask("9999-99-99");
 $('#tabs').tabs();
+
 		
 	</script>
 	@stop

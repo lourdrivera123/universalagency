@@ -8,6 +8,8 @@ Route::get('employer/{id}', 'EmployersController@getemployer');
 
 Route::get('employerdtrupload', 'EmployersController@employerdtrupload');
 
+Route::get('employershowreports', 'EmployersController@showreports');
+
 Route::post('employerdtrupload', 'DtrController@store');
 
 /*Route::get('employersalaryupload', );*/

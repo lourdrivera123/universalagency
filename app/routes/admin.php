@@ -2,6 +2,10 @@
 
 /* Admin Routes */
 
+// Route::get();
+
+Route::get('/admindeleteemployeecontract/{id}', 'ContractsController@admindeleteemployeecontract');
+
 Route::get('adminapplicantevaluation/{id}', 'EvaluationController@adminapplicantevaluation')->before('role:admin');
 
 Route::get('adminemployercontracts', 'ContractsController@adminemployercontracts')->before('role:admin');
@@ -52,7 +56,11 @@ Route::get('adminjobhires/{id}', 'CandidateController@adminjobhires');
 
 Route::post('admin', 'SessionsController@adminstore');
 
+Route::get('/adminpoplulaterenewcontract', 'ContractsController@adminpoplulaterenewcontract'); 
+
 //ajax actions
+
+Route::post('/adminsaveemployercontractrenew', 'ContractsController@adminsaveemployercontractrenew');
 
 Route::post('/admininviteapplicants', 'InvitationController@admininviteapplicants');
 

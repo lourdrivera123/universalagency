@@ -1936,3 +1936,123 @@ $('#invite_applicants_form').validate({
 	}
 });
 //End of Code
+
+//Populate employer contract
+	function populate_renew_contract_form(obj)
+	{
+		var contract_id = obj.attr('data-contractid');
+
+		$.get('/adminpoplulaterenewcontract', { contract_id : contract_id }, function(data){
+			$('#salary_renew').val(data.salary);
+			$('#employmenttype_renew').val(data.employmenttype);
+			$('#starting_date_renew').val(data.starting_date);
+			$('#closing_date_renew').val(data.closing_date);
+			$('#cut_off_period_renew').val(data.cut_off_period);
+			$('#job_renew').val(data.job);
+			$('#num_of_employees_renew').val(data.num_of_employees);
+			$('#others_renew').val(data.other);
+			$('[name="contract_id_renew"]').val(data.id);
+			console.log(data);
+		});
+	}
+//End of Code
+
+//Save Contract Renewal
+	$('#renew_contract_form').validate({
+	submitHandler: function(form) {
+		var formData = new FormData($('#renew_contract_form')[0]);
+		var token = $('#renew_contract_form > input[name="_token"]').val();
+		var contract_id_renew = $('#renew_contract_form > input[name="contract_id_renew"]');
+		formData.append('_token', token);
+		formData.append('contract_id_renew', contract_id_renew);
+
+		$.ajax({
+          url: '/adminsaveemployercontractrenew',  //Server script to process data
+          type: 'POST',
+
+          xhr: function() {  // Custom XMLHttpRequest
+          	var myXhr = $.ajaxSettings.xhr();
+                          if(myXhr.upload){ // Check if upload property exists
+                              myXhr.upload.addEventListener('progress',progressHandler, false); // For handling the progress of the upload
+                          }
+                          return myXhr;
+                      },
+                      success: completeHandler,
+
+          // Form data
+          data: formData,
+          
+          //Options to tell jQuery not to process data or worry about content-type.
+          cache: false,
+          contentType: false,
+          processData: false,// what type of data do we expect back from the server
+          encode	: true
+      });
+
+		function progressHandler(e){
+			if(e.lengthComputable){
+				// console.log('processing');
+				$('#addemployercontractsubmitrenew').addClass("disabled");
+				$('#addemployercontractsubmitrenew').html('<i class="fa fa-gear fa-spin"></i>');
+				$('#addemployercontractfooterrenew').prepend('<div class="alert alert-success" role="alert">Please be Patient, we are saving Contract Information</div>');
+
+			}
+		}
+
+		function completeHandler(data)
+		{
+			// console.log(data);
+			// $('#employercontracttable').append('<tr id="'+data.id+'""><td>'+data.id+'</td><td>'+data.salary+'</td><td>'+data.cut_off_period+'</td><td>'+data.job_title+'</td><td>'+data.num_of_employees+'</td><td>'+data.businessname+'</td><td><a href="#" class="btn btn-danger btn-circle" onclick="disablecontract($(this))"><i class="fa fa-times"></i></a></td></tr>');
+			
+			// $("#contract_form")[0].reset();
+
+			$('#renewemployercontractmodal').modal('hide');
+			$('#addemployercontractsubmitrenew').removeClass("disabled");
+			$('#addemployercontractsubmitrenew').html('Save');
+			$('#addemployercontractfooterrenew').children('div').remove();
+
+			$.smallBox({
+				title : data.contract_title+' renewed',
+				content : "<i class='fa fa-clock-o'></i> <i>just now...</i>",
+				color : "#296191",
+				iconSmall : "fa fa-thumbs-up bounce animated",
+				timeout : 5000
+			});
+		}
+	},
+	
+	// Rules for form validation
+	rules : {
+		salary : {
+			required : true,
+			number: true
+		},
+		cut_off_period : {
+			required : true
+		},
+		job : {
+			required : true
+		},
+		num_of_employees : {
+			required : true,
+			number : true
+		},
+		employer : {
+			required: true
+		},
+		starting_date : {
+			required : true
+		}, 
+		closing_date : {
+			required : true
+		}
+	},
+				// Do not change code below
+				errorPlacement : function(error, element) {
+					error.insertAfter(element.parent());
+				}
+
+			});
+
+
+//End of Code

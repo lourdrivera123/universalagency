@@ -48,7 +48,7 @@ class EvaluationController extends \BaseController {
 	{
 		$evaluation = Evaluation::with('user', 'job')->findOrFail($id);
 		
-		return View::make('admin.applicantevaluation')
+		return View::make('admin.applicantevaluation1')
 		->withEvaluation($evaluation);
 	}
 }

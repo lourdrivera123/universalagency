@@ -101,4 +101,12 @@ class EmployersController extends \BaseController {
 
 		return View::make('employer.employerdtrupload')->withEmployees($collection->lists('last_name', 'user_id'));
 	}
+
+	function showreports()
+	{
+		$dtrs = Dtr::whereEmployerid(Auth::user()->id)->get();
+
+		return View::make('employer.employerreports')
+		->withDtrs($dtrs);
+	}
 }
