@@ -440,7 +440,7 @@ function getEmployeePhoto($id)
 
 function getJobTitle($id)
 {
-    $job = Job::findOrFail($id);
+    $job = Job::withTrashed()->findOrFail($id);
 
     return $job;
 }

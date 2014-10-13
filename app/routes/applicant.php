@@ -2,12 +2,34 @@
 
 /* Applicant Routes */ 
 
+Route::get('excelent', function(){
+
+
+	$table = Excel::selectSheets('Sheet2')->load(public_path().'/dtruploads/dtr_form.xls', function($reader) {
+
+	    $reader->noHeading()->skip(11)->take(32)->formatDates(false);
+	
+	})->get();
+
+	
+	return View::make('excel')->withTable($table);
+
+	
+});
+
 Route::get('pleasetakepersonalitytest', function(){
 	return View::make('applicant.pleasetakepersonalitytest');
 });
 
 Route::get('pleasetakeiqtest', function(){
 	return View::make('applicant.pleasetakeiqtest');
+});
+
+Route::get('payroll_reports', function(){
+
+	$payroll_reports = Payrollsummary::whereEmployeeid(Auth::user()->id)->get();
+
+	return View::make('applicant.payroll_reports')->withPayrollReports($payroll_reports);
 });
 
 Route::get('/notifystaffaboutid', 'NotificationController@notifystaffaboutid');

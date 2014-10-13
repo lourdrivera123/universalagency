@@ -202,4 +202,17 @@ class NotificationRepository {
 
 		return $notification;
 	}
+
+	function notify_about_payroll($fromid, $toid, $payrollid)
+	{
+		$notification = new Notification;
+		$notification->from_userid = $fromid;
+		$notification->to_userid = $toid;
+		$notification->subject = 'Payroll Report';
+		$notification->message = 'Please go to this <a style="color:blue" href="../../payroll_report/'.$payrollid.'">link</a> to view the payroll report';
+		$notification->save();
+
+		return $notification;
+
+	}
 }
