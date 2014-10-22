@@ -14,3 +14,5 @@
 Artisan::resolve('InvitationExpiration');
 
 Artisan::resolve('InterviewEvent');
+
+Artisan::resolve('ContractExpiration');

@@ -75,6 +75,7 @@
 													<th> Location </th>
 													<th> Company </th>
 													<th> Candidates </th>
+													<th> Hired </th>
 													<th><i class="fa fa-fw fa-edit text-muted hidden-md hidden-sm hidden-xs"></i> Edit </th>
 													<th><i class="fa fa-fw fa-check text-muted hidden-md hidden-sm hidden-xs"></i>
 														/<i class="fa fa-fw fa-times text-muted hidden-md hidden-sm hidden-xs"></i> Enable/Disable </th>
@@ -110,6 +111,7 @@
 														<td class="hide">{{ $job->invitationexpiration }}</td>
 														<!-- <td><a href="#" class="btn btn-primary btn-circle" data-toggle="modal" data-target="#listcandidatesmodal" onclick="listcandidates($(this))"><i class="fa fa-user"></i></a></td> -->
 														<td><a href="{{ URL::to('adminjobcandidates/'.$job->id) }}" class="btn btn-primary btn-circle" ><i class="fa fa-user"></i></a></td>
+														<td><a href="{{ URL::to('adminjobhires/'.$job->id) }}" class="btn btn-primary" ><i class="fa fa-user"></i></a></td>
 														<td><a href="javascript:void(0)" class="btn btn-success btn-circle" data-toggle="modal" data-target="#editjobmodal" onclick="editjob($(this))"><i class="fa fa-edit"></i></a></td>
 														@if($job->trashed())
 														<td><a href="javascript:void(0)" class="btn btn-success btn-circle" onclick="enablejob($(this))"><i class="fa fa-check"></i></a></td>

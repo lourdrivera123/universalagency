@@ -189,34 +189,46 @@ class NotificationRepository {
 		$notification->to_userid = $employee_id;
 		$notification->subject = 'You\'re Hired !';
 		$notification->message = 'We would like to inform you that you are now hired for the job "'.$job_title.'". Happy Working ! :)';
-		$notification->save();
+$notification->save();
 
-		return $notification;
-	}
+return $notification;
+}
 
-	function notify_employer_about_contract($employer_id, $job_title)
-	{
-		$notification = new Notification;
-		$notification->from_userid = getAdminId();
-		$notification->to_userid = $employer_id;
-		$notification->subject = 'You now have a trusted worker';
-		$notification->message = 'We would like to inform you that we have selected the qualifying worker for your job "'.$job_title.'". Happy Working ! :)';
-		$notification->save();
+function notify_employer_about_contract($employer_id, $job_title)
+{
+	$notification = new Notification;
+	$notification->from_userid = getAdminId();
+	$notification->to_userid = $employer_id;
+	$notification->subject = 'You now have a trusted worker';
+	$notification->message = 'We would like to inform you that we have selected the qualifying worker for your job "'.$job_title.'". Happy Working ! :)';
+$notification->save();
 
-		return $notification;
-	}
+return $notification;
+}
 
-	function get_notifications_for_loggedin_user($id)
-	{
-		$notifications = Notification::whereToUserid($id)->orderBy('created_at', 'DESC')->get();
+function get_notifications_for_loggedin_user($id)
+{
+	$notifications = Notification::whereToUserid($id)->orderBy('created_at', 'DESC')->get();
 
-		return $notifications;
-	}
+	return $notifications;
+}
 
-	function get_notification_by_id($id)
-	{
-		$notification = Notification::findOrFail($id);
+function get_notification_by_id($id)
+{
+	$notification = Notification::findOrFail($id);
 
-		return $notification;
-	}
+	return $notification;
+}
+function notify_about_payroll($fromid, $toid, $payrollid)
+{
+	$notification = new Notification;
+	$notification->from_userid = $fromid;
+	$notification->to_userid = $toid;
+	$notification->subject = 'Payroll Report';
+	$notification->message = 'Please go to this <a style="color:blue" href="../../payroll_report/'.$payrollid.'">link</a> to view the payroll report';
+	$notification->save();
+
+	return $notification;
+
+}
 }

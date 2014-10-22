@@ -138,8 +138,6 @@
    <script type="text/javascript">
       var interviewid = $('#my-id').val();
 
-      alert(interviewid);
-
       $.get('/notifystaffaboutid', { interviewid: interviewid }, function(data){
           console.log('passed');
       });

@@ -2,16 +2,22 @@
 
 use UniversalAgency\Repositories\InvitationRepository;
 use UniversalAgency\Repositories\CandidatesRepository;
+use UniversalAgency\Repositories\NotificationRepository;
 
 class InvitationController extends \BaseController {
 
 	protected $invitation;
 	protected $candidate;
+	protected $notification;
 
-	function __construct(InvitationRepository $invitation, CandidatesRepository $candidate)
+	function __construct(InvitationRepository $invitation, CandidatesRepository $candidate,
+	 NotificationRepository $notification)
 	{
 		$this->invitation = $invitation;
 		$this->candidate = $candidate;
+		$this->notification = $notification;
+	
+		Event::listen('applicant.invite','UniversalAgency\Mailers\ApplicantInvitationMailer@send');
 	}
 
 	function acceptinvitation()
@@ -47,6 +53,21 @@ class InvitationController extends \BaseController {
 		return $invitation;
 	}
 
+	function admininviteapplicants()
+	{
+		$userid = Input::get('invitedapplicant');
 
+		$user = User::findOrFail($userid);
+
+		$job = Job::findOrFail(Input::get('invite_applicant_jobid'));
+
+		$invitation = $this->invitation->create($userid, $job->id, $job->job_category);
+
+		$subject = 'You have been invited for a job "'.$job->job_title.'".';
+
+		$notification = $this->notification->createInvitationNotification($job , Auth::user()->id, $user->id, $subject, $job->company);
+
+		Event::fire('applicant.invite', [$user, $notification, $job]);
+	}
 
 }

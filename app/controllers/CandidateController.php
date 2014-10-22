@@ -34,11 +34,16 @@ class CandidateController extends \BaseController {
 
 	function adminjobcandidates($id)
 	{
-		$jobrequests = $this->pendingjobrequest->get_jobs_with_user_by_id($id);
+		$jobrequests = Pendingjobrequest::whereJobId($id)->with('user')->get();
+		$invitations = Invitation::whereJobId($id)->with('user')->get();
+		$candidates = Candidate::whereJobId($id)->with('user')->get();
+		$underinterviews = Interview::whereJobId($id)->with('user')->get();
+		$underreviews = Evaluation::whereJobId($id)->with('user')->get();
+		
+		$available_resumes = Resume::whereStatus('Available')->lists('last_name', 'user_id');
 
-		$invitations = $this->invitation->get_jobs_with_user_by_id($id);
-
-		$candidates = $this->candidate->get_jobs_with_user_by_id($id);	
+		// $available_applicants = User::lists('email', 'id');
+		// $candidates = Candidate::all();
 
 		$underinterviews = $this->interview->get_jobs_with_user_by_id($id);
 
@@ -49,7 +54,9 @@ class CandidateController extends \BaseController {
 		->withInvitations($invitations)
 		->withUnderinterviews($underinterviews)
 		->withUnderreviews($underreviews)
-		->withCandidates($candidates);
+		->withCandidates($candidates)
+		->withAvailableResumes($available_resumes)
+		->withJobId($id);
 	}
 
 	function admindeclineApplicantUnderReview()

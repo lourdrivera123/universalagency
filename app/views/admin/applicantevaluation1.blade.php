@@ -69,7 +69,9 @@
                             <div class="title-seperator"></div>
                         </div> 
 
-                        @if( getCandidateUsingEvaluationId($evaluation)->status == 'declined' )
+                        @if(check_if_slot_is_not_available($evaluation->job_id))
+                        <div id="decisionarea"><div class="alert alert-danger"><div class="msg">There are no available vacancy for this job, to change employees, you have to remove an employee first in the closed jobs table.</div></div></div>
+                        @elseif( getCandidateUsingEvaluationId($evaluation)->status == 'declined' )
                         <div id="decisionarea">
                             <div class="alert alert-danger"><div class="msg">This Applicant has been declined for this Job.</div></div>
                         </div>
@@ -118,6 +120,7 @@
                     <input type="hidden" name="jobidrecruitmentform" value="{{ $evaluation->job_id }}"/>
                     <input type="hidden" name="applicantidrecruitmentform" value="{{ $evaluation->applicant_id }}" />
                     <input type="hidden" name="employeridrecruitmentform" value="{{ getEmployerIdUsingJobName($evaluation->job()->first()->job_title) }}" />
+                    <input type="hidden" name="contract_id" value="{{ getContractIDByJobTitle($evaluation->job()->first()->job_title) }}" />
 
 
                     <div class="col-md-12">
@@ -139,7 +142,7 @@
                         <div class="form-inline">
                             <div class="row">
                                 <div class="col-md-6 col-sm-12 col-lg-6">
-                                    <label for="percentage">Processing Fee (%)</label>
+                                    <label for="percentage">Recruitment Fee (%)</label>
                                     {{ Form::number('percentage', null, ['class' => 'form-control']) }}
                                 </div>
                                 <div class="col-md-6 col-sm-12 col-lg-6">

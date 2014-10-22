@@ -217,7 +217,7 @@
 
 
 							<div id="tabs-d">
-									<!-- widget div-->
+								<!-- widget div-->
 								<div>
 
 									<!-- widget edit box -->
@@ -263,7 +263,7 @@
 
 
 							<div id="tabs-e">
-									<!-- widget div-->
+								<!-- widget div-->
 								<div>
 
 									<!-- widget edit box -->
@@ -328,6 +328,57 @@
 <!-- END MAIN PANEL -->	
 @stop
 
+@section('modals')
+
+<!-- Invite Applicants Modal -->
+<div class="modal fade" id="inviteapplicantsmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel1">Invite Applicant for this Job</h4>
+			</div>
+			<div class="modal-body">
+
+				<div class="widget-body no-padding">
+					{{ Form::open(['id' => 'invite_applicants_form', 'class' => 'smart-form']) }}
+					<header>
+						Manually invite applicant
+					</header>
+
+					<fieldset>
+						<div class="row">
+							<section>
+								<label class="label"><i>Just Select the Applicant you want to invite</i></label>
+								<label class="select">
+									<input type="hidden" name="invite_applicant_jobid" value="{{ $job_id }}"/>
+									{{ Form::select('invitedapplicant', $available_resumes, null, ['class' => 'form-control']) }}
+									<i></i>
+								</label>
+							</section>
+						</div>
+					</fieldset>
+
+				</div>
+
+				<div class="modal-footer" id="invite_applicant_footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Cancel
+					</button>
+					<button id="invite_applicant_submit_button" type="submit" class="btn btn-primary">
+						Invite
+					</button>
+				</div>
+
+				{{ Form::close() }}
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+</div>
+@stop
+
 @section('additional_scripts')
 
 <!-- PAGE RELATED PLUGIN(S) -->
@@ -349,7 +400,7 @@
 
 		var otable = $('#dt_basic').DataTable({
 
-			"sDom": "<'dt-toolbar'<'col-xs-6'<'toolbar'>l><'col-xs-6'f>>"
+			"sDom": "<'dt-toolbar'<'col-xs-6'><'col-xs-6'f>>"
 
 		});
 
@@ -361,23 +412,23 @@
 
 		var otable2 = $('#dt_basic2').DataTable({
 
-			"sDom": "<'dt-toolbar'<'col-xs-6'<'toolbar'>l><'col-xs-6'f>>"
+			"sDom": "<'dt-toolbar'<'col-xs-6'><'col-xs-6'f>>"
 
 		});
 
 		var otable3 = $('#dt_basic3').DataTable({
 
-			"sDom": "<'dt-toolbar'<'col-xs-6'<'toolbar'>l><'col-xs-6'f>>"
+			"sDom": "<'dt-toolbar'<'col-xs-6'><'col-xs-6'f>>"
 
 		});
 
 		var otable4 = $('#dt_basic4').DataTable({
 
-			"sDom": "<'dt-toolbar'<'col-xs-6'<'toolbar'>l><'col-xs-6'f>>"
+			"sDom": "<'dt-toolbar'<'col-xs-6'><'col-xs-6'f>>"
 
 		});
 
-		// $("div.toolbar").html('<div class="ColVis"><button data-toggle="modal" data-target="#addjobcategorymodal" class="ColVis_Button ColVis_MasterButton"><i class="fa fa-plus"></i>&nbsp;Add Job Category</button></div>');
+		$("div.toolbar").html('<div class="ColVis"><button data-toggle="modal" data-target="#inviteapplicantsmodal" class="ColVis_Button ColVis_MasterButton"><i class="fa fa-plus"></i>&nbsp;Invite Applicant</button></div>');
 
 
 		/* END TABLETOOLS */
@@ -405,7 +456,7 @@
 				{
 					return 0;
 				}
-				
+
 			});
 		});
 

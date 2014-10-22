@@ -48,9 +48,9 @@ class ContractsController extends \BaseController {
 
 	function generateEmployerContract()
 	{
-		$generatedpdf = $this->pdfgenerator->generateEmployerContract(Input::all());
+		// $generatedpdf = $this->pdfgenerator->generateEmployerContract(Input::all());
 
-		$contract = $this->contract->adminsaveemployercontract(Input::all(), $generatedpdf);
+		$contract = $this->contract->adminsaveemployercontract(Input::all());
 
 		return Response::json(['id' => $contract->id, 'contract_title' => $contract->contract_title ,'salary' => $contract->salary, 'job_title' => $contract->job, 'num_of_employees' => $contract->num_of_employees, 'businessname' => getEmployerName($contract->employer), 'cut_off_period' => $contract->cut_off_period ]);
 	}
@@ -70,7 +70,10 @@ class ContractsController extends \BaseController {
 
 		$employer_notification = $this->notification->notify_employer_about_contract($contract->employer_id, $job->job_title );
 
-		$job->delete();
+		if(check_if_slot_is_not_available($job->id))
+		{
+			$job->delete();
+		}
 
 		return Response::json($contract);
 	}
@@ -89,4 +92,26 @@ class ContractsController extends \BaseController {
 		->withEmployers($employers);
 	}
 
+	function adminpoplulaterenewcontract()
+	{
+		$id = Input::get('contract_id');
+
+		$contract = Contract::withTrashed()->findOrFail($id);
+
+		return Response::json($contract);
+	}
+
+	function adminsaveemployercontractrenew()
+	{
+		$contract = $this->contract->adminsaveemployercontractrenew(Input::all());
+
+		return $contract;
+	}
+
+	function admindeleteemployeecontract($id)
+	{
+		$recruitcontract = $this->contract->admindeleteemployeecontract($id);
+
+		return Redirect::back();
+	}
 }

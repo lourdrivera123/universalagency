@@ -68,6 +68,8 @@
                     <li>
                         <a href="{{ URL::to('loggedin') }}"><span class="label-nav"><i class="fa fa-user"></i> {{ Auth::user()->employer()->first()->businessname }} </span></a>
                         <ul>
+                            <li><a href="{{ URL::to('employerdtrupload') }}"><i class="fa fa-edit"> </i>Upload DTR</a></li>
+                            <li><a href="{{ URL::to('employer_payroll_summary_upload') }}"><i class="fa fa-edit"> </i>Upload Payroll Summary</a></li>
                             <li><a href="{{ URL::to('employerchangepassword') }}"> <i class="fa fa-edit"> </i>Change Password </a></li>
                             <li><a href="{{ URL::to('signout') }}"> <i class="fa fa-sign-out"> </i>Logout </a></li>
                         </ul>

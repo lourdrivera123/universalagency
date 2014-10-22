@@ -108,4 +108,29 @@ class EmployersController extends \BaseController {
 
 		return View::make('employer.employerdtrupload')->withEmployees($collection->lists('last_name', 'user_id'));
 	}
+
+	function showreports()
+	{
+		$dtrs = Dtr::whereEmployerid(Auth::user()->id)->get();
+
+		return View::make('employer.employerreports')
+		->withDtrs($dtrs);
+	}
+
+	function employer_payroll_summary_upload()
+	{
+		$recruitcontracts = Recruitcontract::whereEmployerId(Auth::user()->id)->get();
+
+		$collection = new Collection;
+
+		foreach( $recruitcontracts as $recruitcontract )
+		{
+			$user = User::findOrFail($recruitcontract->employee_id);
+			$resume = $user->resume()->first();
+
+			$collection->push($resume);
+		}
+
+		return View::make('employer.employer_payroll_summary_upload')->withEmployees($collection->lists('last_name', 'user_id'));
+	}
 }

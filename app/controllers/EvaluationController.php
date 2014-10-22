@@ -52,7 +52,7 @@ class EvaluationController extends \BaseController {
 	{
 		$evaluation = $this->evaluation->get_evaluation_with_job_and_user_by_id($id);
 		
-		return View::make('admin.applicantevaluation')
+		return View::make('admin.applicantevaluation1')
 		->withEvaluation($evaluation);
 	}
 }

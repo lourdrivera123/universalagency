@@ -29,7 +29,7 @@ class CreateResumeInfoTable extends Migration {
 			$table->integer('position_desired')->unsigned()->index();
 			$table->foreign('position_desired')->references('id')->on('jobcategories')->onDelete('cascade');
 			$table->string('titleofexpertise');
-			$table->string('status');
+			$table->string('status')->default('Available');
 			$table->timestamps();
 		});
 	}

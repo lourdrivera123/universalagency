@@ -83,15 +83,7 @@ class JobsRepository {
 
 				$invitation = $this->invitation->create($possiblecandidate->user()->first()->id, $job->id, $job->job_category);
 
-				// Log::info($candidate->id );
-
 				$user = $possiblecandidate->user()->first();
-
-				// $resume = $user->resume()->first();
-
-				// $resume->status = 'pending invitation';
-
-				// $resume->save();
 
 				$subject = 'You have been invited for a job "'.$job->job_title.'".';
 
@@ -99,7 +91,6 @@ class JobsRepository {
 
 				Event::fire('applicant.invite', [$user, $notification, $job]);
 
-				// $this->invitationlist->subscribeTo( 'lessonSubscribers', $user->email );
 			}
 		}
 
